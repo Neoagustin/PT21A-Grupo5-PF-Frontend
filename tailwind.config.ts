@@ -22,6 +22,10 @@ const config: Config = {
         violetTransparent: '#A435F01F',
         lightgrayTransparent: '#D9D9D9A8'
       },
+      fontFamily: {
+        inknutAntiqua: ['InknutAntiqua', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

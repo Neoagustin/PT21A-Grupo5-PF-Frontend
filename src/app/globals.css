@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'InknutAntiqua';
+    src: url('/fonts/InknutAntiqua.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
+}
