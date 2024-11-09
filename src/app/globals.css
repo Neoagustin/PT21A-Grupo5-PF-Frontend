@@ -2,20 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+    font-family: 'InknutAntiqua';
+    src: url('/fonts/InknutAntiqua.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
 }
