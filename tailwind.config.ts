@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        black: '#222222',
-        white: '#FAFAFA',
+        blackPage: '#222222',
+        whitePage: '#FAFAFA',
         violet: '#A435F0',
         skyblue: '#1E90FF',
         darkgray: '#6C757D',
