@@ -12,7 +12,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
 
     <html lang="es">
       <body className='antialiased'>
-        {children}
+        <main className="my-5 mx-1">
+          {children}
+        </main>
       </body>
     </html>
 
