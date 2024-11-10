@@ -1,12 +1,12 @@
-import React from "react";
+import LanguageView from "@/components/LanguageComponents/LanguageView";
 
 export const Language: React.FC = (): React.ReactElement => {
 
     return (
 
-        <div>
-
-        </div>
+        <>
+        <LanguageView/>
+        </>
 
     );
 
