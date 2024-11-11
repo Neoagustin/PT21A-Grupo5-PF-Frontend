@@ -1,21 +1,22 @@
-import { IUserRegister } from "@/helpers/validateForms/types";
+import { IUserLogin } from "@/helpers/validateForms/types";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchRegisterUser = async (userData: IUserRegister) => {
+export const fetchLoginUser = async (userData: IUserLogin) => {
 
     try {
 
-        const response = await axios.post(`${API_URL}/auth/signup`, userData, {
+        const response = await axios.post(`${API_URL}/auth/signin`, userData, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
         Swal.fire({
-            title: "¡Usuario registrado con éxito!",
+            title: "¡Has iniciado sesión con éxito!",
+            text: `¡Bienvenido, ${response.data.user.name}!`,
             icon: "success",
             timer: 1500,
             timerProgressBar: true,
@@ -27,7 +28,7 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
     } catch (err: any) {
 
         Swal.fire({
-            title: "¡Error al registrarse!",
+            title: "¡Error al iniciar sesión!",
             text: `${err.response.data.message}`,
             icon: "error",
             timer: 1500,
