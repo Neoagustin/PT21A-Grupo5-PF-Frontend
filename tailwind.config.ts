@@ -21,6 +21,7 @@ const config: Config = {
         greenTransparent: "#34AE9A1F",
         violetTransparent: "#A435F01F",
         lightgrayTransparent: "#D9D9D9A8",
+        offWhite: "#F3F3F3",
         violetHover: "#8E2BC7",
       },
       fontFamily: {
