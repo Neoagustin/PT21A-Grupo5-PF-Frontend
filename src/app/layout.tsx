@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  icons: '/assets/icons/logo.png',
   title: "Rompiendo Barreras",
   description: "Plataforma de cursos de idiomas.",
 };
