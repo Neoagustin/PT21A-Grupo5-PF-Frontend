@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope, faGlobe, faLocationDot} from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -12,7 +14,7 @@ const Footer = () => {
  
               <div className="flex flex-col gap-[100px] md:flex-row lg:flex-row xl:flex-row items-center h-full justify-center">
 
-                  <img src="/assets/images/logoRB.png" alt="logoRB" className="hidden lg:block w-[230px] h-[230px]" />
+              <FontAwesomeIcon icon={faGlobe} className="hidden lg:block w-[230px] h-[230px] text-[#A435F0]" />
 
                  <div className="flex flex-col gap-[20px]">
                     <div className="flex justify-center">
@@ -20,16 +22,16 @@ const Footer = () => {
                     </div>
                     <div className="flex flex-col gap-[10px] justify-center">
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/youtubeRB.png" alt="youtubeRB"/><p>/rompiendobarreras</p>                      
+                      <FontAwesomeIcon icon={faYoutube} className="text-[#A435F0] w-[40px] h-[39px]" /><p>/rompiendobarreras</p>                      
                       </div>
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/twitterRB.png" alt="twitterRB" /><p>/rompiendobarreras</p>
+                      <FontAwesomeIcon icon={faTwitter} className="text-[#A435F0] w-[40px] h-[40px]" /><p>/rompiendobarreras</p>
                       </div>
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/linkedinRB.png" alt="linkedinRB" /><p>/rompiendobarreras</p>
+                      <FontAwesomeIcon icon={faLinkedin} className="text-[#A435F0] w-[40px] h-[40px]" /><p>/rompiendobarreras</p>
                       </div>
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/instagramRB.png" alt="instagramRB" /><p>/rompiendobarreras</p>
+                      <FontAwesomeIcon icon={faInstagram} className="text-[#A435F0] w-[40px] h-[39px]" /><p>/rompiendobarreras</p>
                     </div>
                     </div>
                   </div>
@@ -40,29 +42,16 @@ const Footer = () => {
                     </div>
                     <div className="flex flex-col gap-[10px] justify-center">
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/locationRB.png" alt="locationRB"/><p>Av. Rompiendo Barreras 2870</p>                      
+                      <FontAwesomeIcon icon={faLocationDot} className="text-[#A435F0] w-[40px] h-[39px]"/><p>Av. Rompiendo Barreras 2870</p>                      
                       </div>
                       <div className="flex gap-[5px] items-center justify-center">
-                      <img src="/assets/images/mailRB.png" alt="mailRB" /><p>rompiendobarreras@gmail.com</p>
+                      <FontAwesomeIcon icon={faEnvelope} className="text-[#A435F0] w-[40px] h-[39px]" /><p>rompiendobarreras@gmail.com</p>
                       </div>
                     </div>
                   </div>
 
               </div>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <div className="flex flex-col items-center justify-center absolute bottom-0 gap-[8px] mb-[8px] w-full">
 
