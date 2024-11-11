@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react"
-import CardCourse from "../GeneralComponents/CardCourse"
+import CardCourse from "../GeneralComponents/CardCourse/CardCourse"
 import { getLanguageByName } from "@/services/languages.helpers"
 import { ILanguage } from "./types"
 
