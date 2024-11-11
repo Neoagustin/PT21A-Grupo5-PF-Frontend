@@ -1,12 +1,12 @@
-import React from "react";
+import LanguageView from "@/components/LanguageComponents/LanguageView";
 
-export const Language: React.FC = (): React.ReactElement => {
+export const Language: React.FC <{params: { slug: string }}> = ({params}: {params:{slug:string}}): React.ReactElement => {
 
     return (
 
-        <div>
-
-        </div>
+        <>
+        <LanguageView slug={params.slug}/>
+        </>
 
     );
 
