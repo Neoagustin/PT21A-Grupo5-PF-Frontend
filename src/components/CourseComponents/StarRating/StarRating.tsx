@@ -11,7 +11,7 @@ export const StarRating: React.FC = (): React.ReactElement => {
         <div className="flex items-center">
             {
                 [1, 2, 3, 4, 5].map((star) => (
-                    <span className={`cursor-pointer text-xs ${star <= hover ? 'text-[#b4690e]' : 'text-blackPage'}`} key={star} onMouseEnter={() => setHover(star)} onMouseLeave={() => setHover(0)}>★</span>
+                    <span className={`cursor-pointer text-xs transition-all ${star <= hover ? 'text-[#b4690e]' : 'text-blackPage'}`} key={star} onMouseEnter={() => setHover(star)} onMouseLeave={() => setHover(0)}>★</span>
                 ))
             }
         </div>
