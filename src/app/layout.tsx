@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/HeaderComponents/Header";
 
 export const metadata: Metadata = {
+  icons: '/assets/icons/logo.png',
   title: "Rompiendo Barreras",
   description: "Plataforma de cursos de idiomas.",
 };
