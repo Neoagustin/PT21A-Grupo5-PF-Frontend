@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/FooterComponents/Footer";
-import Header from "@/components/HeaderComponents/Header";
 
 export const metadata: Metadata = {
   icons: '/assets/icons/logo.png',
@@ -13,7 +12,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="es">
       <body className='antialiased'>
-        <Header />
           {children}
         <Footer/>
       </body>

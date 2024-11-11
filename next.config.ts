@@ -19,7 +19,6 @@ const nextConfig: NextConfig = {
       "www.shutterstock.com"
     ],
   },
-  // Otras configuraciones opcionales aquí
 };
 
 export default nextConfig;
