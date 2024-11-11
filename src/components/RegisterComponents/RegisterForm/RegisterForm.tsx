@@ -4,11 +4,13 @@ import ButtonForm from "@/components/GeneralComponents/ButtonForm/ButtonForm";
 import { validateRegister } from "@/helpers/validateForms/validateRegister";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import ButtonGoogle from "../../GeneralComponents/ButtonGoogle/ButtonGoogle";
 import Link from "next/link";
 import { fetchRegisterUser } from "@/services/fetchRegisterUser";
+import { useRouter } from "next/navigation";
 
 export const RegisterForm: React.FC = (): React.ReactElement => {
+
+    const router = useRouter();
 
     return (
 
@@ -17,7 +19,11 @@ export const RegisterForm: React.FC = (): React.ReactElement => {
             validate={validateRegister}
             onSubmit={async (userData, { resetForm }) => {
 
-                await fetchRegisterUser(userData);
+                const data = await fetchRegisterUser(userData);
+
+                data ? router.push('/login') : null;
+
+                resetForm();
 
             }}
         >
@@ -45,12 +51,6 @@ export const RegisterForm: React.FC = (): React.ReactElement => {
                             {errors.repeatPassword && touched.repeatPassword && <ErrorMessage className="inputMessageError" name="repeatPassword" component='p' />}
                         </div>
                         <ButtonForm name="REGISTRATE" />
-                        <div className="flex items-center justify-between">
-                            <div className="w-[90px] h-[1px] bg-gray sm:w-[150px]"></div>
-                            <h6 className="text-gray text-xs font-light">Registrate con Google</h6>
-                            <div className="w-[90px] h-[1px] bg-gray sm:w-[150px]"></div>
-                        </div>
-                        <ButtonGoogle name="Registrarse con google" />
                         <p className="text-center">¿Ya tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/login'>Inicia sesión acá</Link></p>
                     </Form>
                 )
