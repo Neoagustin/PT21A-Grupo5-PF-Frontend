@@ -1,5 +1,6 @@
 "use client";
 import CardLanguage from "@/components/GeneralComponents/CardLanguage/CardLanguage";
+import Loading from "@/components/GeneralComponents/Loading/Loading";
 import useLanguages from "@/hooks/useLanguage";
 import ILanguage from "@/interfaces/ILanguage";
 import React from "react";
@@ -7,7 +8,7 @@ import React from "react";
 const LanguagesList = () => {
   const { languages, loading, error } = useLanguages();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (error) {
     return (

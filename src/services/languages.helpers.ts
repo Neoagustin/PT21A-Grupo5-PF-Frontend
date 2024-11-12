@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ILanguage } from "@/components/LanguageComponents/types";
+import { ILanguage } from "@/components/LanguageComponents/LanguageView/types";
 
 
 
@@ -31,5 +31,3 @@ export async function getLanguageByName(name: string): Promise<ILanguage> {
         throw new Error(error)
     }
 };
-
-
