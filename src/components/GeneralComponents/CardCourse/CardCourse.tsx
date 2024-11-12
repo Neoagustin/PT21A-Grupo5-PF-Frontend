@@ -20,7 +20,7 @@ const CardCourse: React.FC<ICardCourseProps> = ({ course }) => {
       <div className="p-2 text-center">
         <h3 className="text-[16px] font-semibold pb-2 lg:text-[18px]">{course.title}</h3>
         <p className="font-light text-gray text-[12px] md:text-[13px] lg:text-[15px] line-clamp-4">
-          {course.description}
+          {course.brief_description}
         </p>
       </div>
     </div>
