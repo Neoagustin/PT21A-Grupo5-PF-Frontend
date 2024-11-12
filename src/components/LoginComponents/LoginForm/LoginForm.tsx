@@ -10,51 +10,51 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 export const LoginForm: React.FC = (): React.ReactElement => {
+  const router = useRouter();
 
-    const router = useRouter();
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validate={validateLogin}
+      onSubmit={async (userData, { resetForm }) => {
+        const data = await fetchLoginUser(userData);
 
-    return (
+        if (data) {
+          localStorage.setItem("userToken", JSON.stringify(data.token));
+          localStorage.setItem("userData", JSON.stringify(data.user));
 
-        <Formik
-            initialValues={{ email: '', password: '' }}
-            validate={validateLogin}
-            onSubmit={async (userData, { resetForm }) => {
+          Cookies.set("userToken", data.token);
 
-                const data = await fetchLoginUser(userData);
+          router.push("/");
+        }
 
-                if (data) {
-
-                    localStorage.setItem('userToken', JSON.stringify(data.token));
-                    localStorage.setItem('userData', JSON.stringify(data.user));
-
-                    Cookies.set('userToken', data.token);
-
-                    router.push('/');
-
-                };
-
-                resetForm();
-
-            }}
-        >
-            {
-                ({ errors, touched }) => (
-                    <Form className="flex flex-col gap-5">
-                        <div>
-                            <Field className='input' type='email' name='email' placeholder='Correo electrónico...' />
-                        </div>
-                        <div>
-                            <Field className='input' type='password' name='password' placeholder='Contraseña...' />
-                        </div>
-                        <ButtonForm name="INICIAR SESIÓN" />
-                        <p className="text-center">¿No tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/register'>Registrate acá</Link></p>
-                    </Form>
-                )
-            }
-        </Formik>
-
-    );
-
+        resetForm();
+      }}
+    >
+      {({ errors, touched }) => (
+        <Form className="flex flex-col gap-5">
+          <div>
+            <Field
+              className="input"
+              type="email"
+              name="email"
+              placeholder="Correo electrónico..."
+            />
+          </div>
+          <div>
+            <Field className="input" type="password" name="password" placeholder="Contraseña..." />
+          </div>
+          <ButtonForm name="INICIAR SESIÓN" />
+          <p className="text-center text-sm">
+            ¿No tenés una cuenta?{" "}
+            <Link className="text-violet underline hover:no-underline" href="/register">
+              Registrate acá
+            </Link>
+          </p>
+        </Form>
+      )}
+    </Formik>
+  );
 };
 
 export default LoginForm;

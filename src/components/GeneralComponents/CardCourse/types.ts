@@ -1,9 +1,7 @@
-import { StaticImageData } from "next/image";
+import ILanguage from "@/interfaces/ILanguage";
 
 interface ICardCourseProps {
-  img: string | StaticImageData;
-  title: string;
-  description: string;
+  language: ILanguage;
 }
 
 export default ICardCourseProps;
