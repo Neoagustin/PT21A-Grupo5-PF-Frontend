@@ -1,8 +1,11 @@
 import Image from "next/image";
 import React from "react";
-import ICardCourseProps from "./types";
+import ICardLanguageProps from "./types";
 
-const CardCourse: React.FC<ICardCourseProps> = ({ img, title }) => {
+
+const CardLanguage: React.FC<ICardLanguageProps> = ({ language }) => {
+  console.log(language);
+
   return (
     <div
       className="
@@ -12,21 +15,21 @@ const CardCourse: React.FC<ICardCourseProps> = ({ img, title }) => {
   "
     >
       <Image
-        className="rounded-t-[7px]"
-        src={img}
+        className="rounded-t-[7px] max-h-[160px] min-h-[160px]"
+        src={language.image_url}
         width={500}
         height={500}
         priority
         alt="imagen de ingles"
       />
       <div className="p-2 text-center">
-        <h3 className="text-[16px] font-semibold pb-2 lg:text-[18px]">{title}</h3>
-        <p className="font-light text-gray text-[12px] md:text-[13px] lg:text-[15px]">
-          Aqui iria la descripcion del curso
+        <h3 className="text-[16px] font-semibold pb-2 lg:text-[18px]">{language.name}</h3>
+        <p className="font-light text-gray text-[12px] md:text-[13px] lg:text-[15px] line-clamp-4">
+          {language.description}
         </p>
       </div>
     </div>
   );
 };
 
-export default CardCourse;
+export default CardLanguage;
