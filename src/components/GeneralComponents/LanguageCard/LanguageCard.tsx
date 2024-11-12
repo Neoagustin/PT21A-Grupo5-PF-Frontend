@@ -24,7 +24,7 @@ const LanguageCard: React.FC<ILanguageCardProps> = ({ language }): React.ReactEl
       <div className="p-2 text-center">
         <h3 className="text-[16px] font-semibold pb-2 lg:text-[18px]">{language.name}</h3>
         <p className="font-light text-gray text-[12px] md:text-[13px] lg:text-[15px] line-clamp-4">
-          {language.description}
+          {language.brief_description}
         </p>
       </div>
     </Link>
