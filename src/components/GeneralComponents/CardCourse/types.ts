@@ -1,11 +1,7 @@
-
-
-import { StaticImageData } from "next/image";
+import ICourse from "@/interfaces/ICourseCard";
 
 interface ICardCourseProps {
-  img: string | StaticImageData;
-  title: string;
-  description?: string;
+  course: ICourse;
 }
 
 export default ICardCourseProps;
