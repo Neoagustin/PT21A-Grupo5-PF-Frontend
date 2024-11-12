@@ -1,9 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import ICardLanguageProps from "./types";
+import ILanguageCardProps from "./types";
 
-
-const CardLanguage: React.FC<ICardLanguageProps> = ({ language }) => {
+const LanguageCard: React.FC<ILanguageCardProps> = ({ language }) => {
   console.log(language);
 
   return (
@@ -32,4 +31,4 @@ const CardLanguage: React.FC<ICardLanguageProps> = ({ language }) => {
   );
 };
 
-export default CardLanguage;
+export default LanguageCard;
