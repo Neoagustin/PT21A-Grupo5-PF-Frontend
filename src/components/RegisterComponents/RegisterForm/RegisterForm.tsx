@@ -2,11 +2,12 @@
 
 import ButtonForm from "@/components/GeneralComponents/ButtonForm/ButtonForm";
 import { validateRegister } from "@/helpers/validateForms/validateRegister";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import React from "react";
 import Link from "next/link";
 import { fetchRegisterUser } from "@/services/fetchRegisterUser";
 import { useRouter } from "next/navigation";
+import { IUserRegister } from "@/helpers/validateForms/types";
 
 export const RegisterForm: React.FC = (): React.ReactElement => {
   const router = useRouter();
@@ -16,14 +17,16 @@ export const RegisterForm: React.FC = (): React.ReactElement => {
       initialValues={{ name: "", email: "", idNumber: "", password: "", repeatPassword: "" }}
       validate={validateRegister}
       onSubmit={async (userData, { resetForm }) => {
+
         const data = await fetchRegisterUser(userData);
 
-        data ? router.push("/login") : null;
+        if (data) router.push('/login');
 
         resetForm();
+
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched }: FormikProps<IUserRegister>) => (
         <Form className="flex flex-col gap-5">
           <div>
             <Field
