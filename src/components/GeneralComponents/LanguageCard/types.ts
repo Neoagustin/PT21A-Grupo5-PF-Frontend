@@ -1,8 +1,7 @@
-
 import ILanguage from "@/interfaces/ILanguage";
 
-interface ICardLanguageProps {
+interface ILanguageCardProps {
   language: ILanguage;
 }
 
-export default ICardLanguageProps;
+export default ILanguageCardProps;
