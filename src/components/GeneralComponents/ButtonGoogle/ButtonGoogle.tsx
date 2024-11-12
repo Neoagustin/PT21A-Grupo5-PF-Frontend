@@ -7,7 +7,7 @@ export const ButtonGoogle: React.FC<IButtonGoogleProps> = ({ name }: IButtonGoog
     return (
 
         <button className="flex items-center w-[319px] gap-3 border-blackPage border-[1px] justify-center sm:w-[459px]">
-            <Image src={'/assets/icons/logoGoogle.png'} alt="Logo de Google" width={27} height={41} />
+            <Image src={'/assets/icons/logoGoogle.png'} alt="Logo de Google" width={27} height={41}/>
             {name}
         </button>
 
