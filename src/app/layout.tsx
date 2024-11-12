@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "@/components/FooterComponents/Footer";
+import Footer from "@/components/FooterComponents/Footer/Footer";
 
 export const metadata: Metadata = {
   icons: '/assets/icons/logo.png',
