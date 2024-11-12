@@ -14,9 +14,9 @@ export const LoginInfo: React.FC = (): React.ReactElement => {
                 <h2 className="text-blackPage text-4xl font-bold text-center my-5">Inicia sesión</h2>
                 <LoginForm />
                 <div className="flex items-center justify-between">
-                    <div className="w-[90px] h-[1px] bg-gray sm:w-[150px]"></div>
+                    <div className="w-[80px] h-[1px] bg-gray sm:w-[150px]"></div>
                     <h6 className="text-gray text-xs font-light">Inicia sesión con Google</h6>
-                    <div className="w-[90px] h-[1px] bg-gray sm:w-[150px]"></div>
+                    <div className="w-[80px] h-[1px] bg-gray sm:w-[150px]"></div>
                 </div>
                 <ButtonGoogle name="Inicia sesión con google" />
             </div>

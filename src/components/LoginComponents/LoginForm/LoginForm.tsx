@@ -47,7 +47,7 @@ export const LoginForm: React.FC = (): React.ReactElement => {
                             <Field className='input' type='password' name='password' placeholder='Contraseña...' />
                         </div>
                         <ButtonForm name="INICIAR SESIÓN" />
-                        <p className="text-center">¿No tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/register'>Registrate acá</Link></p>
+                        <p className="text-center text-sm">¿No tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/register'>Registrate acá</Link></p>
                     </Form>
                 )
             }

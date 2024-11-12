@@ -51,7 +51,7 @@ export const RegisterForm: React.FC = (): React.ReactElement => {
                             {errors.repeatPassword && touched.repeatPassword && <ErrorMessage className="inputMessageError" name="repeatPassword" component='p' />}
                         </div>
                         <ButtonForm name="REGISTRATE" />
-                        <p className="text-center">¿Ya tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/login'>Inicia sesión acá</Link></p>
+                        <p className="text-center text-sm">¿Ya tenés una cuenta? <Link className="text-violet underline hover:no-underline" href='/login'>Inicia sesión acá</Link></p>
                     </Form>
                 )
             }
