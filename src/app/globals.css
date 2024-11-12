@@ -13,3 +13,25 @@
     src: url('/fonts/Poppins.ttf');
     font-weight: 100 200 300 400 500 600 700 800 900;
 }
+
+body {
+    font-family: 'Poppins';
+    background-color: #FAFAFA;
+    color: #222222;
+}
+
+.input {
+    @apply w-[319px] h-[49px] bg-whitePage shadow-md shadow-lightgray px-2 outline-none transition-all border-b-[2px] border-transparent focus:border-b-violet sm:w-[459px]
+}
+
+.inputError {
+    @apply border-red
+}
+
+.inputSuccess {
+    @apply border-green
+}
+
+.inputMessageError {
+    @apply w-[319px] text-red text-[10px] sm:w-[459px]
+}

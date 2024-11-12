@@ -1,4 +1,5 @@
 
+
 import { StaticImageData } from "next/image";
 
 interface ICardCourseProps {
@@ -8,3 +9,12 @@ interface ICardCourseProps {
 }
 
 export default ICardCourseProps;
+
+// import ILanguage from "@/interfaces/ILanguage";
+
+// interface ICardCourseProps {
+//   language: ILanguage;
+// }
+
+// export default ICardCourseProps;
+
