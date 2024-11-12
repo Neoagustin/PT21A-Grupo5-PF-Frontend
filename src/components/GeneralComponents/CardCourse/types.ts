@@ -1,7 +1,7 @@
-import ILanguage from "@/interfaces/ILanguage";
+import ICourse from "@/interfaces/ICourseCard";
 
 interface ICardCourseProps {
-  language: ILanguage;
+  course: ICourse;
 }
 
 export default ICardCourseProps;
