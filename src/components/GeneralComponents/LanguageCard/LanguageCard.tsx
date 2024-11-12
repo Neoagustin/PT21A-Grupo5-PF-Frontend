@@ -4,7 +4,6 @@ import ILanguageCardProps from "./types";
 import Link from "next/link";
 
 const LanguageCard: React.FC<ILanguageCardProps> = ({ language }): React.ReactElement => {
-
   return (
     <Link
       href={`/language/${language.name.toLowerCase()}`}

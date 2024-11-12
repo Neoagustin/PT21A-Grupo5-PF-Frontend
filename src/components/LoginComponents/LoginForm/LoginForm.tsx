@@ -9,9 +9,11 @@ import { fetchLoginUser } from "@/services/fetchLoginUser";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { IUserLogin } from "@/helpers/validateForms/types";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 export const LoginForm: React.FC = (): React.ReactElement => {
   const router = useRouter();
+  const { setToken } = useToken();
 
   return (
     <Formik
@@ -23,8 +25,8 @@ export const LoginForm: React.FC = (): React.ReactElement => {
         if (data) {
           localStorage.setItem("userToken", JSON.stringify(data.token));
           localStorage.setItem("userData", JSON.stringify(data.user));
-
           Cookies.set("userToken", data.token);
+          setToken(data.token);
 
           router.push("/");
         }
