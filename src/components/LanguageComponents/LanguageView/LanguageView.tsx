@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
 import CardCourse from "../../GeneralComponents/CardCourse/CardCourse";
@@ -22,7 +23,7 @@ const LanguageView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 
     return (
 
-        <div className="max-w-[1200px] mx-auto mt-[100px] sm:mt-[110px] md:mt-[115px] lg:mt-[115px] xl:mt-[115px] bg-white font-poppins">
+        <div className="max-w-[1200px] mx-auto mt-[100px] sm:mt-[110px] md:mt-[115px] lg:mt-[115px] xl:mt-[115px] bg-whitePage font-poppins">
             <div className="flex flex-col items-center gap-[50px] mb-[40px] sm:mb-[60px] md:mb-[80px] lg:mb-[80px] xl:mb-[80px] sm:flex-row md:flex-row lg:flex-row xl:flex-row sm:justify-center md:justify-center lg:justify-center xl:justify-center">
                 <div className="flex flex-col relative">
                     <img
