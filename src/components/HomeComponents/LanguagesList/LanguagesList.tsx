@@ -6,7 +6,7 @@ import useLanguages from "@/hooks/useLanguage";
 import ILanguage from "@/interfaces/ILanguage";
 import React from "react";
 
-const LanguagesList = () => {
+const LanguagesList: React.FC = (): React.ReactElement => {
   const { languages, loading, error } = useLanguages();
 
   if (loading) return <Loading />;

@@ -1,12 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import ILanguageCardProps from "./types";
+import Link from "next/link";
 
-const LanguageCard: React.FC<ILanguageCardProps> = ({ language }) => {
-  console.log(language);
+const LanguageCard: React.FC<ILanguageCardProps> = ({ language }): React.ReactElement => {
 
   return (
-    <div
+    <Link
+      href={`/language/${language.name.toLowerCase()}`}
       className="
     mx-auto w-[80%] max-w-[360px] border border-solid border-lightgray rounded-[7px] cursor-pointer transition-all duration-300 ease-in-out 
     hover:border-[#fff0] hover:shadow-lg hover:scale-[1.02]
@@ -27,7 +28,7 @@ const LanguageCard: React.FC<ILanguageCardProps> = ({ language }) => {
           {language.description}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

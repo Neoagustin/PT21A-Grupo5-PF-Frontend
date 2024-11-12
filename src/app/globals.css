@@ -35,3 +35,11 @@ body {
 .inputMessageError {
     @apply w-[319px] text-red text-[10px] sm:w-[459px]
 }
+
+.buttonFilterCategory {
+    @apply shadow-md shadow-[#c5c5c5] p-[4px] pl-[10px] pr-[10px] text-[12px] sm:text-[18px] md:text-[18px] lg:text-[20px] xl:text-[22px] lg:pl-[45px] lg:pr-[45px] xl:pl-[45px] xl:pr-[45px]
+}
+
+.buttonFilterCategoryActive {
+    @apply bg-violet text-whitePage
+}
