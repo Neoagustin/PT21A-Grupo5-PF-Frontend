@@ -6,7 +6,9 @@ export interface ILanguage {
   image_url: string;
   flag_url: string;
   country_photo_url: string;
-  description: string;
+  brief_description: string;
+  general_description: string;
+  path: string;
   courses: ICourse[];
 }
 
