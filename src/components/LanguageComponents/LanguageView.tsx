@@ -107,4 +107,3 @@ const LanguageView = ({ slug }: { slug: string }) => {
 };
 
 export default LanguageView;
-
