@@ -38,7 +38,7 @@ useEffect(()=>{
           </div>
           
 
-          <div className="flex flex-col gap-[15px] items-start sm:h-[200px] md:h-[250px] lg:h-[280px] xl:h-[280px]">
+          <div className="flex flex-col gap-[15px] items-start">
             <h1 className="w-[88px] h-[21px] flex-shrink-0 justify-center text-center text-[24px] font-bold leading-none text-black">{language?.name}</h1>
             <p className="w-[283px] flex-shrink-0 md:w-[340px] lg:w-[393px] text-[12px] md:text-[16px] lg:text-[16px] xl:text-[18px] font-normal leading-none text-gray">{language?.description}</p>
             </div>
