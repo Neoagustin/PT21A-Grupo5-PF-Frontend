@@ -6,6 +6,7 @@ import Link from "next/link";
 import ISubscriptionPlanCardProps from "./types";
 import CheckList from "./CheckListPlan/CheckListPlan";
 import useSubscriptionPlan from "@/hooks/useSubscriptionPlan ";
+import Loading from "../Loading/Loading";
 
 const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   subName,
@@ -15,7 +16,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   const { subscriptionPlan, loading, error, isFree } = useSubscriptionPlan(subName);
 
   if (loading || error || !subscriptionPlan) {
-    return <div>{loading ? "Cargando Planes..." : error || "No se encontró el plan"}</div>;
+    return <div>{loading ? <Loading /> : error || "No se encontró el plan"}</div>;
   }
 
   const { name, price, description } = subscriptionPlan;

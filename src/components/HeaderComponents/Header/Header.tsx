@@ -1,6 +1,6 @@
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ButtonHeader from "./ButtonHeader/ButtonHeader";
+import ButtonHeader from "../ButtonHeader/ButtonHeader";
 import Link from "next/link";
 
 const Header: React.FC = () => {
@@ -24,8 +24,8 @@ const Header: React.FC = () => {
         </Link>
 
         <div className="flex gap-2 sm:gap-4">
-          <ButtonHeader href="#" label="INICIAR SESIÓN" />
-          <ButtonHeader href="#" label="REGISTRARSE" isPrimary />
+          <ButtonHeader href="/login" label="INICIAR SESIÓN" />
+          <ButtonHeader href="/register" label="REGISTRARSE" isPrimary />
         </div>
       </div>
     </header>

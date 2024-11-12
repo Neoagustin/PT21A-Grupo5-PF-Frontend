@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CardCourse from "../GeneralComponents/CardCourse/CardCourse";
 import { getLanguageByName } from "@/services/languages.helpers";
-import { ILanguage } from "./types";
+import ILanguage from "@/interfaces/ILanguage";
 
 const LanguageView = ({ slug }: { slug: string }) => {
   const [language, setLanguage] = useState<ILanguage | null>(null);
@@ -107,3 +107,4 @@ const LanguageView = ({ slug }: { slug: string }) => {
 };
 
 export default LanguageView;
+

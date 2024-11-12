@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/FooterComponents/Footer/Footer";
-import Header from "@/components/HeaderComponents/Header";
+import Header from "@/components/HeaderComponents/Header/Header";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",
