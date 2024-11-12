@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       "ih1.redbubble.net",
       "thumbs.dreamstime.com",
       "www.shutterstock.com",
+      "i.ytimg.com",
+      "oliversfrance.com",
+      "www.learn-portuguese-now.com",
     ],
   },
 };
