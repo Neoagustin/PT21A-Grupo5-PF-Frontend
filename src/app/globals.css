@@ -2,20 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+    font-family: 'InknutAntiqua';
+    src: url('/fonts/InknutAntiqua.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins.ttf');
+    font-weight: 100 200 300 400 500 600 700 800 900;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins';
+    background-color: #FAFAFA;
+    color: #222222;
+}
+
+.input {
+    @apply w-[319px] h-[49px] bg-whitePage shadow-md shadow-lightgray px-2 outline-none transition-all border-b-[2px] border-transparent focus:border-b-violet sm:w-[459px]
+}
+
+.inputError {
+    @apply border-red
+}
+
+.inputSuccess {
+    @apply border-green
+}
+
+.inputMessageError {
+    @apply w-[319px] text-red text-[10px] sm:w-[459px]
+}
+
+.buttonFilterCategory {
+    @apply shadow-md shadow-[#c5c5c5] p-[4px] pl-[10px] pr-[10px] text-[12px] sm:text-[18px] md:text-[18px] lg:text-[20px] xl:text-[22px] lg:pl-[45px] lg:pr-[45px] xl:pl-[45px] xl:pr-[45px]
+}
+
+.buttonFilterCategoryActive {
+    @apply bg-violet text-whitePage
 }
