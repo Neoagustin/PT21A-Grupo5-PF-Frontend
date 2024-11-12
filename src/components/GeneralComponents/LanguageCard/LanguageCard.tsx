@@ -3,8 +3,6 @@ import React from "react";
 import ILanguageCardProps from "./types";
 
 const LanguageCard: React.FC<ILanguageCardProps> = ({ language }) => {
-  console.log(language);
-
   return (
     <div
       className="

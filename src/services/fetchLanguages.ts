@@ -5,8 +5,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export const fetchGetLanguage = async () => {
   try {
     const response = await axios.get(`${API_URL}/language`);
-    console.log(response.data);
-
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
