@@ -1,13 +1,14 @@
 "use client";
 
 import ButtonForm from "@/components/GeneralComponents/ButtonForm/ButtonForm";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikProps } from "formik";
 import React from "react";
 import Link from "next/link";
 import { validateLogin } from "@/helpers/validateForms/validateLogin";
 import { fetchLoginUser } from "@/services/fetchLoginUser";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { IUserLogin } from "@/helpers/validateForms/types";
 import { useToken } from "@/context/TokenContext/TokenContext";
 
 export const LoginForm: React.FC = (): React.ReactElement => {
@@ -33,7 +34,7 @@ export const LoginForm: React.FC = (): React.ReactElement => {
         resetForm();
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched }: FormikProps<IUserLogin>) => (
         <Form className="flex flex-col gap-5">
           <div>
             <Field
