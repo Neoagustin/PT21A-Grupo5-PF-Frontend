@@ -1,16 +1,13 @@
-import CardVideo from "@/components/CourseComponents/CardVideo/CardVideo";
-import CourseIntro from "@/components/CourseComponents/CourseIntro/CourseIntro";
-import CourseLearning from "@/components/CourseComponents/CourseLearning/CourseLearning";
 import React from "react";
+import { ICourseDetailProps } from "./types";
+import CourseIntro from "@/components/CourseDetailComponents/CourseIntro/CourseIntro";
 
-export const Course: React.FC = (): React.ReactElement => {
+export const Course: React.FC<ICourseDetailProps> = ({params}: ICourseDetailProps): React.ReactElement => {
 
     return (
 
         <div className="m-auto max-w-[318px] md:max-w-[860px] xl:max-w-[1200px] flex flex-col gap-10">
-            <CourseIntro />
-            <CardVideo />
-            <CourseLearning />
+            <CourseIntro courseDetail={params.courseDetail} />
         </div>
 
     );

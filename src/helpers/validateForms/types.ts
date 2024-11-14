@@ -11,10 +11,22 @@ export interface IUserLogin {
     password: string;
 };
 
+export interface IUserUpdate {
+    name: string;
+    email: string;
+    idNumber: string;
+};
+
+export interface IChangePassword {
+    password: string;
+    newPassword: string;
+};
+
 export interface IError {
     name?: string;
     email?: string;
     idNumber?: string;
     password?: string;
     repeatPassword?: string;
+    newPassword?: string;
 };

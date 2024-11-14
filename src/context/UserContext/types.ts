@@ -1,8 +1,11 @@
 import { IUser } from "@/interfaces/IUser";
 
 export interface IUserContextProps {
-  user: IUser | null;
-  setUser: (user: IUser) => void;
-  isTeacher: boolean;
-  isAdmin: boolean;
-}
+    user: IUser | null;
+    modal: boolean;
+    setUser: (user: IUser) => void;
+    handleOpenModal: () => void;
+    handleCloseModal: () => void;
+    isTeacher: boolean;
+    isAdmin: boolean;
+};

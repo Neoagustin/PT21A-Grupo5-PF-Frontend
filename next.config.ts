@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
       "i.ytimg.com",
       "oliversfrance.com",
       "www.learn-portuguese-now.com",
+      "i.pinimg.com",
+      "cdn.britannica.com",
     ],
   },
 };
