@@ -2,12 +2,15 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React from "react";
+import ILogoHeaderProps from "./types";
 
-const LogoHeader = () => {
+const LogoHeader: React.FC<ILogoHeaderProps> = ({ label, animation = true }) => {
   return (
     <Link
       href="/"
-      className="flex items-center gap-1 cursor-pointer select-none transition-all duration-200 hover:scale-[.95]"
+      className={`flex items-center gap-1 cursor-pointer select-none transition-all duration-200 ${
+        animation ? "hover:scale-[.95]" : null
+      }`}
     >
       <FontAwesomeIcon
         icon={faGlobe}
@@ -18,6 +21,9 @@ const LogoHeader = () => {
       />
       <p className=" text-2xl font-inknutAntiqua text-blackPage sm:text-[28px] md:text-[32px]">
         RB
+      </p>
+      <p className=" text-2xl font-inknutAntiqua text-blackPage sm:text-[28px] md:text-[32px]">
+        {label}
       </p>
     </Link>
   );

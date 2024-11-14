@@ -6,38 +6,31 @@ import { IUser } from "@/interfaces/IUser";
 
 const UserContext = createContext<IUserContextProps | null>(null);
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }): React.ReactElement => {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}): React.ReactElement => {
+  const [user, setUser] = useState<IUser | null>(null);
 
-    const [user, setUser] = useState<IUser | null>(null);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("userData");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
-    useEffect(() => {
+  const isAdmin = user?.role === "admin";
+  const isTeacher = user?.role === "teacher";
 
-        const savedUser = localStorage.getItem("userData");
-
-        if (savedUser) {
-
-            setUser(JSON.parse(savedUser));
-
-        };
-
-    }, []);
-
-    return (
-
-        <UserContext.Provider value={{ user, setUser }}>
-            {children}
-        </UserContext.Provider>
-
-    );
-
+  return (
+    <UserContext.Provider value={{ user, setUser, isAdmin, isTeacher }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUser = () => {
-
-    const context = useContext(UserContext);
-
-    if (context === null) throw new Error("El contexto debe ser utilizado dentro de un TokenProvider.");
-
-    return context;
-
+  const context = useContext(UserContext);
+  if (context === null)
+    throw new Error("El contexto debe ser utilizado dentro de un TokenProvider.");
+  return context;
 };
