@@ -6,4 +6,6 @@ export interface IUserContextProps {
     setUser: (user: IUser) => void;
     handleOpenModal: () => void;
     handleCloseModal: () => void;
+    isTeacher: boolean;
+    isAdmin: boolean;
 };

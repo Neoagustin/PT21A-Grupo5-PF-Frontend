@@ -11,7 +11,8 @@ const CardCourse: React.FC<ICardCourseProps> = ({ course, slug }: ICardCoursePro
       className="
         mx-auto w-[80%] max-w-[360px] border border-solid border-lightgray rounded-[7px] cursor-pointer transition-all duration-300 ease-in-out 
         hover:border-[#fff0] hover:shadow-lg hover:scale-[1.02]
-        sm:w-[100%] max">
+        sm:w-[100%] max"
+    >
       <Image
         className="rounded-t-[7px] max-h-[160px] min-h-[160px]"
         src={course.img_url}
