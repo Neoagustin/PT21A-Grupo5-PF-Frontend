@@ -1,10 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import ICardCourseProps from "./types";
+import Link from "next/link";
 
-const CardCourse: React.FC<ICardCourseProps> = ({ course }) => {
+const CardCourse: React.FC<ICardCourseProps> = ({ course, slug }: ICardCourseProps) => {
+
   return (
-    <div
+    <Link
+      href={`/language/${slug}/${course.title.toLowerCase()}`}
       className="
         mx-auto w-[80%] max-w-[360px] border border-solid border-lightgray rounded-[7px] cursor-pointer transition-all duration-300 ease-in-out 
         hover:border-[#fff0] hover:shadow-lg hover:scale-[1.02]
@@ -23,7 +26,7 @@ const CardCourse: React.FC<ICardCourseProps> = ({ course }) => {
           {course.brief_description}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

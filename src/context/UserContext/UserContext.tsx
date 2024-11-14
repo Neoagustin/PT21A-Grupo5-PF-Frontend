@@ -9,6 +9,11 @@ const UserContext = createContext<IUserContextProps | null>(null);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }): React.ReactElement => {
 
     const [user, setUser] = useState<IUser | null>(null);
+    const [modal, setModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => setModal(true);
+
+    const handleCloseModal = () => setModal(false);
 
     useEffect(() => {
 
@@ -24,7 +29,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return (
 
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, modal, handleOpenModal, handleCloseModal }}>
             {children}
         </UserContext.Provider>
 

@@ -1,5 +1,6 @@
-const data = [
+export const data = [
     {
+        id: 1,
         learning: [
             'Domina el inglés básico necesario para comunicarte en tus viajes.',
             'Conoce frases clave en inglés para situaciones en aeropuertos y hoteles.',
