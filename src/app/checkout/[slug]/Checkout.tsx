@@ -1,12 +1,13 @@
+import CheckoutView from "@/components/CheckoutComponents/checkoutView/CheckoutView";
 import React from "react";
 
-export const Checkout: React.FC = (): React.ReactElement => {
+export const Checkout: React.FC<{ params: { slug: string } }> = ({ params }: { params: { slug: string } }): React.ReactElement => {
 
     return (
 
-        <div>
-            
-        </div>
+    
+        <CheckoutView slug={params.slug} />
+        
 
     );
 
