@@ -18,8 +18,9 @@ export interface IUserUpdate {
 };
 
 export interface IChangePassword {
-    password: string;
+    oldPassword: string;
     newPassword: string;
+    repeatPassword: string;
 };
 
 export interface IError {
@@ -27,6 +28,7 @@ export interface IError {
     email?: string;
     idNumber?: string;
     password?: string;
+    oldPassword?: string;
     repeatPassword?: string;
     newPassword?: string;
 };

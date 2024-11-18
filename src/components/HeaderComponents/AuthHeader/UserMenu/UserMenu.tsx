@@ -42,14 +42,14 @@ const UserMenu = () => {
             <LinkUserMenu
               text={"Mis Alumnos"}
               icon={faUsers}
-              href={"/dashboard"}
+              href={"/dashboard/profile"}
               onClick={closeMenu}
             />
           ) : null}
           <LinkUserMenu
             text={"Cerrar sesión"}
             icon={faSignOutAlt}
-            href={"#"}
+            href={"/"}
             onClick={logOutAndCloseMenu}
           />
         </div>

@@ -12,8 +12,6 @@ export const ChangePassword: React.FC = (): React.ReactElement => {
 
     const { user } = useUser();
 
-    console.log(user)
-
     if (!user) return <div></div>;
 
     return (
@@ -21,13 +19,11 @@ export const ChangePassword: React.FC = (): React.ReactElement => {
         <div className="w-full flex flex-col gap-5 xl:w-[626px]">
             <Subtitle label="Cambiar contraseña:" />
             <Formik
-                initialValues={{ password: '', newPassword: '' }}
-                validate={(values) => validateChangePassword(values)}
+                initialValues={{ oldPassword: '', newPassword: '', repeatPassword: '' }}
+                validate={(values) => validateChangePassword(values, user.id)}
                 onSubmit={async (userData, { resetForm }) => {
 
-                    const data = await fetchChangePassword(user.id, userData);
-
-                    console.log(data)
+                    await fetchChangePassword(user.id, userData);
 
                     resetForm();
 
@@ -37,15 +33,21 @@ export const ChangePassword: React.FC = (): React.ReactElement => {
                     ({ errors, touched }: FormikProps<IChangePassword>) => (
                         <Form className="w-full flex flex-col gap-5 xl:w-[626px]">
                             <div>
-                                <Field className="inputChangePassword" type="password" name="password" placeholder="Contraseña..." />
-                                {errors.password && touched.password && (
-                                    <ErrorMessage className="inputMessageError" name="password" component="p" />
+                                <Field className="inputChangePassword" type="password" name="oldPassword" placeholder="Contraseña..." />
+                                {errors.oldPassword && touched.oldPassword && (
+                                    <ErrorMessage className="inputMessageError" name="oldPassword" component="p" />
                                 )}
                             </div>
                             <div>
                                 <Field className="inputChangePassword" type="password" name="newPassword" placeholder="Nueva contraseña..." />
                                 {errors.newPassword && touched.newPassword && (
                                     <ErrorMessage className="inputMessageError" name="newPassword" component="p" />
+                                )}
+                            </div>
+                            <div>
+                                <Field className="inputChangePassword" type="password" name="repeatPassword" placeholder="Repetir contraseña...." />
+                                {errors.repeatPassword && touched.repeatPassword && (
+                                    <ErrorMessage className="inputMessageError" name="repeatPassword" component="p" />
                                 )}
                             </div>
                             <button className="w-[152px] h-[36px] text-sm font-bold border-[1px] border-transparent rounded-[4px] self-center bg-violet transition-all text-whitePage sm:w-[230px] sm:h-[38px] hover:border-violet hover:text-violet hover:bg-whitePage" type="submit">CONFIRMAR</button>

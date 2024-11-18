@@ -1,21 +1,22 @@
-import { fetchUsers } from "@/services/fetchUsers";
+import { fetchUserById } from "@/services/fetchUserById";
+import bcrypt from "bcryptjs";
 import { IChangePassword, IError } from "./types";
 
-export const validateChangePassword = async (input: IChangePassword) => {
+export const validateChangePassword = async (input: IChangePassword, id: string) => {
 
     const errors: IError = {};
 
-    const users = await fetchUsers();
+    const user = await fetchUserById(id);
 
-    for await (const user of users) {
+    const isPasswordValid = await bcrypt.compare(input.oldPassword, user.password);
 
-        console.log(user)
+    if (!isPasswordValid) errors.oldPassword = "La contraseña ingresada no coincide con la actual.";
 
-        if (user.password !== input.password) errors.password = 'La contraseña no coincide con la actual.';
+    const isNewPasswordSameAsOld = await bcrypt.compare(input.newPassword, user.password);
 
-    };
+    if (isNewPasswordSameAsOld) errors.newPassword = "La nueva contraseña no puede ser igual a la actual.";
 
-    if (input.password === input.newPassword) errors.newPassword = 'La contraseña debe ser distinta a la actual.'
+    if (input.newPassword !== input.repeatPassword) errors.repeatPassword = "Las contraseñas no coinciden.";
 
     return errors;
 

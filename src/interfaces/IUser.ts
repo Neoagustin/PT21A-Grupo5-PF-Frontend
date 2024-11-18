@@ -1,3 +1,5 @@
+import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
+
 export interface IUser {
     id: string;
     name: string;
@@ -6,4 +8,5 @@ export interface IUser {
     password: string;
     photo: string;
     role: string;
+    subscription: ISubscription
 };

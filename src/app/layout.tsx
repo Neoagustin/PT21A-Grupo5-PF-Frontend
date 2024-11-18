@@ -1,6 +1,7 @@
 import { TokenProvider } from "@/context/TokenContext/TokenContext";
 import { UserProvider } from "@/context/UserContext/UserContext";
 import { UserMenuProvider } from "@/context/UserMenuContext/UserMenuContext";
+import { MenuProvider } from "@/context/MenuContext/MenuContext";
 import Header from "@/components/HeaderComponents/Header/Header";
 import Footer from "@/components/FooterComponents/Footer/Footer";
 import type { Metadata } from "next";
@@ -19,9 +20,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <TokenProvider>
           <UserProvider>
             <UserMenuProvider>
-              <Header />
-              {children}
-              <Footer />
+              <MenuProvider>
+                <Header />
+                {children}
+                <Footer />
+              </MenuProvider>
             </UserMenuProvider>
           </UserProvider>
         </TokenProvider>

@@ -32,7 +32,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
       <div>
         <div
           className={`${
-            name === "standard" ? "bg-lightgray" : name === "premium" ? "bg-skyblue" : "bg-violet"
+            name === "Standard" ? "bg-lightgray" : name === "Premium" ? "bg-skyblue" : "bg-violet"
           } 
         h-[11px] rounded-t-[7px]`}
         ></div>
