@@ -1,4 +1,4 @@
-import { ILanguage } from "@/components/LanguageComponents/LanguageView/types";
+import ILanguage from "@/interfaces/ILanguage";
 import { fetchGetLanguage } from "./fetchLanguages";
 
 export const fetchLanguageByName = async (name: string) => {

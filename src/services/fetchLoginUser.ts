@@ -22,14 +22,25 @@ export const fetchLoginUser = async (userData: IUserLogin) => {
     });
 
     return response.data;
-  } catch (err: any) {
-    Swal.fire({
-      title: "¡Error al iniciar sesión!",
-      text: `${err.response.data.message}`,
-      icon: "error",
-      timer: 1500,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err) && err.response) {
+      Swal.fire({
+        title: "¡Error al iniciar sesión!",
+        text: `${err.response.data.message}`,
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    } else {
+      Swal.fire({
+        title: "¡Error desconocido!",
+        text: "Ocurrió un error inesperado al iniciar sesión.",
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
   }
 };
