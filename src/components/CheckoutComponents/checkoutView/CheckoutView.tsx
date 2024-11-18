@@ -22,7 +22,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 
     <div className="flex flex-col gap-[50px] lg:flex-row items-center justify-center mt-[50px]">
 
-           <div className="flex flex-col self-start gap-[25px] shadow-md shadow-gray p-[3px] w-full sm:w-[80%] md:w-[80%] lg:w-[75%] xl:w-[60%] lg:ml-[15px]"> {/* APERTURA DIV ESPACIO 1 */}
+           <div className="flex flex-col self-center gap-[25px] shadow-md shadow-gray p-[3px] w-full sm:w-[80%] md:w-[80%] lg:w-[75%] xl:w-[60%] lg:ml-[15px]"> {/* APERTURA DIV ESPACIO 1 */}
                   <div className="flex justify-between items-center ml-[5px] mr-[5px] sm:ml-[20px] sm:mr-[20px] sm:text-[19px] md:ml-[40px] md:mr-[40px] md:text-[22px]">
                     <p className="font-bold">Método de Pago</p>
                     <p className="text-gray">Seguro y encriptado 🔓</p>
@@ -248,7 +248,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                                 width={31}
                                 height={30}
                                 />
-                              <span className="text-[15px] sm:text-[17px] md:text-[20px]">Transferencia Bancaria</span>
+                              <span className="text-[15px] sm:text-[17px] md:text-[20px]"> Transferencia Mercado Pago.</span>
                               </div>
                               <div>
                               <Image
