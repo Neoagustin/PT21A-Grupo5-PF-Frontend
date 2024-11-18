@@ -5,7 +5,7 @@ import LanguagesList from "../LanguagesList/LanguagesList";
 
 const HomeSectionsList = () => {
   return (
-    <div className="px-3 sm:px-5 lg:px-0">
+    <div id="languages" className="px-3 sm:px-5 lg:px-0">
       {/* TITULO Y BIENVENIDA */}
       <section className="pt-4 pb-8 sm:py-9 xl:pb-20">
         <h1 className="text-[18px] tracking-[1px] font-medium sm:text-[22px] md:text-[24px] lg:text-[28px] xl:text-[32px]">
@@ -23,7 +23,7 @@ const HomeSectionsList = () => {
       </section>
 
       {/* SECCION DE PLANES */}
-      <section className="pb-12 xl:pb-20">
+      <section id="subscriptions" className="pb-12 xl:pb-20">
         <Subtitle label="Elige tu suscripción" />
         <SubscriptionsList />
       </section>

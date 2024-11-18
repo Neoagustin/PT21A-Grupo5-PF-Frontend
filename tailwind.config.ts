@@ -13,10 +13,12 @@ const config: Config = {
         whitePage: "#FAFAFA",
         violet: "#A435F0",
         skyblue: "#1E90FF",
+        skyblueHover: "#187BCE",
         darkgray: "#6C757D",
         gray: "#8D8D8D",
         lightgray: "#D9D9D9",
         red: "#FF6F61",
+        redHover: "#D55A50", // Nuevo color más oscuro para hover
         green: "#34AE9A",
         greenTransparent: "#34AE9A1F",
         violetTransparent: "#A435F01F",
@@ -32,4 +34,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;
