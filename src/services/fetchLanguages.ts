@@ -14,15 +14,4 @@ export const fetchGetLanguage = async () => {
       throw new Error("Unknown error occurred");
     }
   }
-
-  try {
-    const response = await axios.get(`${API_URL}/language`);
-    return response.data;
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
-    } else {
-      throw new Error("Unknown error occurred");
-    }
-  }
 };

@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Footer from "@/components/FooterComponents/Footer/Footer";
-import Header from "@/components/HeaderComponents/Header/Header";
 import { TokenProvider } from "@/context/TokenContext/TokenContext";
 import { UserProvider } from "@/context/UserContext/UserContext";
 import { UserMenuProvider } from "@/context/UserMenuContext/UserMenuContext";
+import Header from "@/components/HeaderComponents/Header/Header";
+import Footer from "@/components/FooterComponents/Footer/Footer";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",

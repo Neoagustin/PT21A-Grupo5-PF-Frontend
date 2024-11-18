@@ -25,12 +25,17 @@ const UserMenu = () => {
           sm:w-[200px] sm:mt-[15px]
           "
         >
-          <LinkUserMenu text={"Mi cuenta"} icon={faUser} href={"/dashboard"} onClick={closeMenu} />
+          <LinkUserMenu
+            text={"Mi cuenta"}
+            icon={faUser}
+            href={`/dashboard/profile`}
+            onClick={closeMenu}
+          />
           {isAdmin ? (
             <LinkUserMenu
               text={"Configuración"}
               icon={faCog}
-              href={"/dashboard"}
+              href={"/admin/students"}
               onClick={closeMenu}
             />
           ) : isTeacher ? (
