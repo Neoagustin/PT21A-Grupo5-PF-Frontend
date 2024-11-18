@@ -1,31 +1,34 @@
-import LogoHeader from "@/components/HeaderComponents/LogoHeader/LogoHeader";
-import {
-  faArrowRightFromBracket,
-  faBookAtlas,
-  faUserGraduate,
-  faUserTie,
-} from "@fortawesome/free-solid-svg-icons";
+"use client";
 import React from "react";
-import MenuAdminItems from "./MenuAdminItems/MenuAdminItems";
+import LogoHeader from "@/components/HeaderComponents/LogoHeader/LogoHeader";
+import { useAdminMenu } from "@/context/AdminMenuContext/AdminMenuContext";
+import MenuAdminNav from "./MenuAdminNav/MenuAdminNav";
+import OpenMenuAdminButton from "./OpenMenuAdminButton/OpenMenuAdminButton";
+import CloseMenuAdminButton from "./CloseMenuAdminButton/CloseMenuAdminButton";
 
 const MenuAdmin = () => {
-  return (
-    <div className="shadow-[2px_2px_8px_4px_rgba(0,0,0,0.10)] h-[100vh] w-[330px] p-[20px] pl-0">
-      <div className="pl-[20px] mt-10">
-        <LogoHeader label="Admin" animation={false} />
-      </div>
+  const { isVisible } = useAdminMenu();
 
-      <nav className="flex flex-col gap-[12px] mt-8">
-        <MenuAdminItems text="Alumnos" href="#" icon={faUserGraduate} isSelected={true} />
-        <MenuAdminItems text="Profesores" href="#" icon={faUserTie} isSelected={false} />
-        <MenuAdminItems text="Cursos" href="#" icon={faBookAtlas} isSelected={false} />
-        <MenuAdminItems
-          text="Salir del admin"
-          href="#"
-          icon={faArrowRightFromBracket}
-          isSelected={false}
-        />
-      </nav>
+  return (
+    <div>
+      {!isVisible && <OpenMenuAdminButton />}
+
+      <div
+        className={`
+          fixed top-0 left-0 h-[100vh] z-10 w-[100vw] bg-whitePage p-0 pl-0 shadow-[2px_2px_8px_4px_rgba(0,0,0,0.10)] 
+          transition-transform duration-300 ease-in-out 
+          ${isVisible ? "translate-x-0" : "-translate-x-full"}
+          lg:w-[50vw]
+          xl:w-[20vw]
+      `}
+      >
+        <CloseMenuAdminButton />
+        <div className="flex justify-center pt-20">
+          <LogoHeader label="Admin" animation={false} />
+        </div>
+
+        <MenuAdminNav />
+      </div>
     </div>
   );
 };
