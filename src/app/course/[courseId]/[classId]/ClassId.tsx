@@ -1,10 +1,16 @@
 import React from "react";
-import { IClassIdProps } from "./types";
 import ListClassesView from "@/components/ClassComponents/ListClassesView/ListClassesView";
 
-export const ClassId: React.FC<IClassIdProps> = async ({ params }: IClassIdProps) => {
+interface IClassIdProps {
+    params: {
+        courseId: string;
+        classId: string;
+    };
+}
 
-    const {courseId, classId} = await params;
+export const ClassId: React.FC<IClassIdProps> = ({ params }: IClassIdProps) => {
+
+    const {courseId, classId} = params;
 
     return (
 

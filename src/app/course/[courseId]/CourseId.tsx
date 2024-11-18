@@ -1,10 +1,15 @@
 import VideoIntroductory from "@/components/ClassesComponents/VideoIntro/VideoIntro";
 import React from "react";
-import { ICourseIdProps } from "./types";
 
-export const CourseId: React.FC<ICourseIdProps> = async ({ params }: ICourseIdProps) => {
+interface ICourseIdProps {
+    params: {
+        courseId: string;
+    };
+}
 
-    const { courseId } = await params;
+export const CourseId: React.FC<ICourseIdProps> = ({ params }: ICourseIdProps) => {
+
+    const { courseId } = params;
 
     return (
 

@@ -1,10 +1,15 @@
 import React from "react";
-import { ICourseDetailProps } from "./types";
 import CourseIntro from "@/components/CourseDetailComponents/CourseIntro/CourseIntro";
 
-export const Course: React.FC<ICourseDetailProps> = async ({ params }: ICourseDetailProps) => {
+interface ICourseDetailProps {
+    params: {
+        courseDetail: string;
+    };
+}
 
-    const { courseDetail } = await params;
+export const Course: React.FC<ICourseDetailProps> = ({ params }: ICourseDetailProps) => {
+
+    const { courseDetail } = params;
 
     return (
 
