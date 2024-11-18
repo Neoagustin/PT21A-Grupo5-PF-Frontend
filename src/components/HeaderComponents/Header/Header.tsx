@@ -5,9 +5,13 @@ import GuestHeader from "../GuestHeader/GuestHeader";
 import LogoHeader from "../LogoHeader/LogoHeader";
 import AuthHeader from "../AuthHeader/AuthHeader";
 import Menu from "../Menu/Menu";
+import useSegment from "@/hooks/useSegment";
 
 const Header: React.FC = () => {
   const { token } = useToken();
+  const { isAdmin } = useSegment();
+
+  if (isAdmin) return null;
 
   return (
     <header className="p-3 shadow-sm bg-whitePage shadow-lightgray sticky top-0 z-50 sm:px-5">
