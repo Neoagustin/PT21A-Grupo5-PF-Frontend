@@ -1,10 +1,14 @@
 import LanguageView from "@/components/LanguageComponents/LanguageView/LanguageView";
-import { ILanguageProps } from "./types";
 
+interface ILanguageProps {
+    params: {
+        slug: string;
+    };
+}
 
-export const Language: React.FC<ILanguageProps> = async ({ params }: ILanguageProps) => {
+export const Language: React.FC<ILanguageProps> = ({ params }: ILanguageProps) => {
 
-    const { slug } = await params;
+    const { slug } = params;
 
     return (
 

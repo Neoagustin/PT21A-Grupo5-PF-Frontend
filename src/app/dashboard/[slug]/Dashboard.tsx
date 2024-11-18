@@ -1,10 +1,15 @@
 import UserInfo from "@/components/DashboardComponents/UserInfo/UserInfo";
 import React from "react";
-import { IDashboardProps } from "./types";
 
-export const Dashboard: React.FC<IDashboardProps> = async ({ params }: IDashboardProps) => {
+interface IDashboardProps {
+    params: {
+        slug: string;
+    };
+}
 
-    const { slug } = await params;
+export const Dashboard: React.FC<IDashboardProps> = ({ params }: IDashboardProps) => {
+
+    const { slug } = params;
 
     return (
 
