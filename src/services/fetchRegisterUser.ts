@@ -21,14 +21,25 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
     });
 
     return response.data;
-  } catch (err: any) {
-    Swal.fire({
-      title: "¡Error al registrarse!",
-      text: `${err.response.data.message}`,
-      icon: "error",
-      timer: 1500,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err) && err.response) {
+      Swal.fire({
+        title: "¡Error al registrarse!",
+        text: `${err.response.data.message}`,
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    } else {
+      Swal.fire({
+        title: "¡Error desconocido!",
+        text: "Ocurrió un error inesperado durante el registro.",
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
   }
 };
