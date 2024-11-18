@@ -21,14 +21,25 @@ export const fetchUpdateUser = async (id: string, userData: IUserUpdate) => {
     });
 
     return response.data;
-  } catch (err: any) {
-    Swal.fire({
-      title: "¡Error al actualizar datos!",
-      text: `${err.response.data.message}`,
-      icon: "error",
-      timer: 1500,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err) && err.response) {
+      Swal.fire({
+        title: "¡Error al actualizar datos!",
+        text: `${err.response.data.message}`,
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    } else {
+      Swal.fire({
+        title: "¡Error desconocido!",
+        text: "Ocurrió un error inesperado durante la actualización.",
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
   }
 };

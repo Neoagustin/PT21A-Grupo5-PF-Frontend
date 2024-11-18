@@ -7,7 +7,11 @@ export const fetchCourses = async () => {
     const response = await axios.get(`${API_URL}/courses`);
 
     return response.data;
-  } catch (err: any) {
-    throw new Error(err.message);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
   }
 };
