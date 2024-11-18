@@ -1,9 +1,7 @@
-import { IError, IUserLogin } from "./types";
+import { IError } from "./types";
 
-export const validateLogin = (input: IUserLogin) => {
+export const validateLogin = () => {
+  const errors: IError = {};
 
-    const errors: IError = {};
-
-    return errors;
-
+  return errors;
 };
