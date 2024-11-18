@@ -1,13 +1,16 @@
 import CheckoutView from "@/components/CheckoutComponents/checkoutView/CheckoutView";
 import React from "react";
+import { ICheckoutProps } from "../types";
 
-export const Checkout: React.FC<{ params: { slug: string } }> = ({ params }: { params: { slug: string } }): React.ReactElement => {
+export const Checkout: React.FC<ICheckoutProps> = async ({ params }: ICheckoutProps) => {
+
+    const { slug } = await params;
 
     return (
 
-    
-        <CheckoutView slug={params.slug} />
-        
+
+        <CheckoutView slug={slug} />
+
 
     );
 
