@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
       "oliversfrance.com",
       "www.learn-portuguese-now.com",
       "i.pinimg.com",
+      "cdn.britannica.com",
     ],
   },
 };

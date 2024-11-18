@@ -7,12 +7,15 @@ import ILanguage from "@/interfaces/ILanguage";
 import useLanguages from "@/hooks/useLanguage";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
+import Image from "next/image";
 
 const LanguageView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): React.ReactElement => {
 
     const { languages, loading } = useLanguages();
 
     const findLanguage = languages.find((language: ILanguage) => slug === language.path.toLowerCase())
+
+    if (!findLanguage) return <Loading />;
 
     return (
 
@@ -22,15 +25,19 @@ const LanguageView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                     <div className="w-full sm:px-[16px] flex flex-col gap-16">
                         <div className="flex flex-col items-center gap-[50px] sm:flex-row md:flex-row lg:flex-row xl:flex-row md:justify-center lg:justify-center xl:justify-center">
                             <div className="w-full flex flex-col items-end relative sm:w-[50%]">
-                                <img
+                                <Image
                                     src={findLanguage?.country_photo_url}
                                     alt="languageImage"
                                     className="w-[269px] h-[236px] flex-shrink-0 rounded-[20px] shadow-md shadow-gray md:w-[300px] lg:w-[345px] xl:w-[433px] md:h-[280px] lg:h-[280px] xl:h-[280px]"
+                                    width={269}
+                                    height={236}
                                 />
-                                <img
+                                <Image
                                     src={findLanguage?.flag_url}
                                     alt="languageFlag"
                                     className="w-[122px] h-[70px] rounded-md absolute bottom-[-35px] left-0 flex-shrink-0 lg:left-[0px] xl:left-[80px]"
+                                    width={269}
+                                    height={236}
                                 />
                             </div>
 
@@ -58,7 +65,7 @@ const LanguageView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                         <div className="shadow-md shadow-lightgray py-6 px-2 mx-auto grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
                             {findLanguage &&
                                 findLanguage?.courses.map((course) => {
-                                    return <CardCourse key={course.id} course={course} />;
+                                    return <CardCourse key={course.id} course={course} slug={slug} />;
                                 })}
                         </div>
                     </div>

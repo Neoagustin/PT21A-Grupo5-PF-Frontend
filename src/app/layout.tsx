@@ -3,6 +3,8 @@ import "./globals.css";
 import Footer from "@/components/FooterComponents/Footer/Footer";
 import Header from "@/components/HeaderComponents/Header/Header";
 import { TokenProvider } from "@/context/TokenContext/TokenContext";
+import { UserProvider } from "@/context/UserContext/UserContext";
+import { UserMenuProvider } from "@/context/UserMenuContext/UserMenuContext";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",
@@ -15,9 +17,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="es">
       <body className="antialiased">
         <TokenProvider>
-          <Header />
-          {children}
-          <Footer />
+          <UserProvider>
+            <UserMenuProvider>
+              <Header />
+              {children}
+              <Footer />
+            </UserMenuProvider>
+          </UserProvider>
         </TokenProvider>
       </body>
     </html>
