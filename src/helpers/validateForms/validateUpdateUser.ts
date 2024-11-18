@@ -10,7 +10,7 @@ export const validateUpdateUser = async (input: IUserUpdate, currentEmail: strin
 
     for await (const user of users) {
 
-        if (currentEmail !== input.email && user.email === input.email) errors.email = 'La dirección de correo ya se encuentra registrada.';
+        if (currentEmail !== input.email.toLowerCase() && user.email.toLowerCase() === input.email.toLowerCase()) errors.email = 'La dirección de correo ya se encuentra registrada.';
 
         if (currentIdNumber !== input.idNumber && user.idNumber === input.idNumber) errors.idNumber = 'El número de documento ya se encuentra registrado.';
 

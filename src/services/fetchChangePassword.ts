@@ -8,7 +8,7 @@ export const fetchChangePassword = async (id: string, userData: IChangePassword)
 
     try {
 
-        const response = await axios.patch(`${API_URL}/users/${id}`, userData, {
+        const response = await axios.put(`${API_URL}/users/${id}`, userData, {
             headers: {
                 'Content-Type': 'application/json',
             },

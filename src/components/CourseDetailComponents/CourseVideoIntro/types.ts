@@ -1,3 +1,5 @@
+import ICourse from "@/interfaces/ICourse";
+
 export interface ICourseVideoIntroProps {
-    videoUrl: string;
+    course: ICourse;
 };

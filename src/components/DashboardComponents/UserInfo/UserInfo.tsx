@@ -8,7 +8,7 @@ import { faGem, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import UserData from "../UserData/UserData";
 import { IUserInfoProps } from "./types";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import SuscriptionInfo from "../SuscriptionInfo/SuscriptionInfo";
+import SubscriptionInfo from "../SubscriptionInfo/SubscriptionInfo";
 
 export const UserInfo: React.FC<IUserInfoProps> = ({ slug }: IUserInfoProps): React.ReactElement => {
 
@@ -27,7 +27,7 @@ export const UserInfo: React.FC<IUserInfoProps> = ({ slug }: IUserInfoProps): Re
                     </div>
                     <div className="w-full flex flex-wrap justify-center gap-5 sm:justify-between xl:flex-col xl:items-start">
                         <ButtonData logo={faUser} name='MI PERFIL' isActive={slug === 'profile'} path='profile' />
-                        <ButtonData logo={faGem} name='SUSCRIPCIONES' isActive={slug === 'suscription'} path='suscription' />
+                        <ButtonData logo={faGem} name='SUSCRIPCIONES' isActive={slug === 'subscription'} path='subscription' />
                         <ButtonData logo={faLock} name='SEGURIDAD DE LA CUENTA' isActive={slug === 'security'} path='security' />
                     </div>
                 </div>
@@ -39,8 +39,8 @@ export const UserInfo: React.FC<IUserInfoProps> = ({ slug }: IUserInfoProps): Re
                         <UserData user={user} />
                     ) : slug === 'security' ? (
                         <ChangePassword />
-                    ) : slug === 'suscription' ? (
-                        <SuscriptionInfo />
+                    ) : slug === 'subscription' ? (
+                        <SubscriptionInfo />
                     ) : null
                 }
             </div>

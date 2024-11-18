@@ -1,3 +1,7 @@
+import ILanguage from "./ILanguage";
+import { ILesson } from "./ILesson";
+import { IUser } from "./IUser";
+
 export interface ICourse {
   id: string;
   title: string;
@@ -8,6 +12,9 @@ export interface ICourse {
   brief_description: string;
   level: string;
   createdAt: string;
+  language: ILanguage;
+  lessons: ILesson[];
+  users: IUser[];
 }
 
 export default ICourse;

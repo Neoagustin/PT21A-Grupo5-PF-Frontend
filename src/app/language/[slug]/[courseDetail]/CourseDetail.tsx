@@ -6,7 +6,7 @@ export const Course: React.FC<ICourseDetailProps> = ({params}: ICourseDetailProp
 
     return (
 
-        <div className="m-auto max-w-[318px] md:max-w-[860px] xl:max-w-[1200px] flex flex-col gap-10">
+        <div className="m-auto relative max-w-[318px] sm:max-w-[640px] sm:px-4 md:max-w-[860px] xl:max-w-[1200px] flex flex-col gap-10">
             <CourseIntro courseDetail={params.courseDetail} />
         </div>
 

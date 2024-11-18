@@ -8,9 +8,8 @@ const LogoHeader: React.FC<ILogoHeaderProps> = ({ label, animation = true }) => 
   return (
     <Link
       href="/"
-      className={`flex items-center gap-1 cursor-pointer select-none transition-all duration-200 ${
-        animation ? "hover:scale-[.95]" : null
-      }`}
+      className={`w-[70px] flex items-center gap-1 cursor-pointer select-none transition-all duration-200 ${animation ? "hover:scale-[.95]" : null
+        }`}
     >
       <FontAwesomeIcon
         icon={faGlobe}

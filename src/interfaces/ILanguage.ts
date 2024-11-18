@@ -1,4 +1,4 @@
-import ICourse from "./ICourseCard";
+import ICourse from "./ICourse";
 
 export interface ILanguage {
   id: string;

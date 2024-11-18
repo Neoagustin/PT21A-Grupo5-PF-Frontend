@@ -16,7 +16,7 @@ const UserHeader = () => {
       onClick={toggleModal}
       className="flex items-center space-x-1.5 cursor-pointer select-none group p-1"
     >
-      <div className={`flex items-center justify-center rounded-[50px] p-[8px] ${color}`}>
+      <div className={`flex items-center justify-center rounded-full w-[34px] h-[34px] p-[8px] ${color} sm:w-[36px] sm:h-[36px]`}>
         <FontAwesomeIcon
           icon={icon}
           className="text-lg text-whitePage w-[18px] text-[18px] sm:text-[20px]"

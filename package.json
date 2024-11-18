@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
     "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "next": "15.0.2",
@@ -23,6 +24,7 @@
     "sweetalert2": "^11.14.5"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",

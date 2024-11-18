@@ -5,6 +5,7 @@ import Header from "@/components/HeaderComponents/Header/Header";
 import { TokenProvider } from "@/context/TokenContext/TokenContext";
 import { UserProvider } from "@/context/UserContext/UserContext";
 import { UserMenuProvider } from "@/context/UserMenuContext/UserMenuContext";
+import { MenuProvider } from "@/context/MenuContext/MenuContext";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",
@@ -19,9 +20,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <TokenProvider>
           <UserProvider>
             <UserMenuProvider>
-              <Header />
-              {children}
-              <Footer />
+              <MenuProvider>
+                <Header />
+                {children}
+                <Footer />
+              </MenuProvider>
             </UserMenuProvider>
           </UserProvider>
         </TokenProvider>
