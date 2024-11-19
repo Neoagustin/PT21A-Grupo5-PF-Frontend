@@ -32,7 +32,7 @@ export const ListClassesView: React.FC<IListClassesView> = async ({ courseId, cl
                             <Link className={`h-[62px] shadow-md shadow-lightgray flex items-center p-3 gap-3 ${findLesson.id === lesson.id ? 'bg-violetTransparent' : 'bg-whitePage'}`} href={`/course/${courseId}/${lesson.id}`} key={lesson.id}>
                                 <FontAwesomeIcon className="text-violet" icon={faPlay} />
                                 <h3 className="text-[10px] font-bold sm:text-base">Clase {i + 1}:</h3>
-                                <h4 className="text-[10px] text-gray sm:text-sm md:text-base">{lesson.title}</h4>
+                                <h4 className="text-[9px] text-gray sm:text-sm md:text-base lg:text-sm">{lesson.title}</h4>
                             </Link>
                         ))
                     }
