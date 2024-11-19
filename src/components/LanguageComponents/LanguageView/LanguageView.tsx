@@ -37,8 +37,6 @@ const LanguageView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 
     };
 
-    console.log(filterCourses)
-
     return (
 
         <div className="min-h-[calc(100vh-80px)] flex items-center mt-10">

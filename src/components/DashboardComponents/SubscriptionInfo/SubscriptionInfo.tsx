@@ -4,39 +4,36 @@ import { useUser } from "@/context/UserContext/UserContext";
 import React from "react";
 
 export const SubscriptionInfo: React.FC = () => {
+  const { user } = useUser();
 
-    const { user } = useUser();
+  if (!user) return;
 
-    if (!user) return;
+  const subscriptionName =
+    user.subscription.name.charAt(0).toUpperCase() +
+    user.subscription.name.slice(1).toLowerCase();
 
-    const subscriptionName = user.subscription.name.charAt(0).toUpperCase() + user.subscription.name.slice(1).toLowerCase();
+  const isValidSubscriptionName = (name: string): name is SubscriptionName => {
+    return ["Standard", "Premium", "Pro"].includes(name);
+  };
 
-    console.log(subscriptionName)
-
-    const isValidSubscriptionName = (name: string): name is SubscriptionName => {
-
-        return ["Standard", "Premium", "Pro"].includes(name);
-    };
-
-    return (
-
-        <div className="m-auto flex flex-col justify-evenly gap-3 sm:flex-row">
-            {
-                isValidSubscriptionName(subscriptionName) && (
-                    <>
-                        {
-                            subscriptionName !== 'Pro' && (
-                                <SubscriptionPlanCard subName={subscriptionName} />
-                            )
-                        }
-                        <SubscriptionPlanCard subName={subscriptionName === 'Standard' ? 'Premium' : 'Pro'} />
-                    </>
-                )
-            }
-        </div>
-
-    );
-
+  return (
+    <div className="m-auto flex flex-col justify-evenly gap-3 sm:flex-row">
+      {isValidSubscriptionName(subscriptionName) && (
+        <>
+          {subscriptionName !== "Pro" && (
+            <SubscriptionPlanCard
+              subName={subscriptionName}
+              button={false}
+              isCurrent={true}
+            />
+          )}
+          <SubscriptionPlanCard
+            subName={subscriptionName === "Standard" ? "Premium" : "Pro"}
+          />
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SubscriptionInfo;

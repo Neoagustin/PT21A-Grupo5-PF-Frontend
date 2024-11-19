@@ -1,16 +1,51 @@
 "use client"
-import React, { useState } from 'react';
-import { handleSaveCard, handleSelectCard, handleSelectPaymentMethod } from './types';
+import React, { useEffect, useState } from 'react';
+import { handleSelectPaymentMethod } from './types';
 import Image from 'next/image';
 import SubscriptionPlanCard from '@/components/GeneralComponents/SubscriptionPlanCard/SubscriptionPlanCard';
 import { SubscriptionName } from '@/components/GeneralComponents/SubscriptionPlanCard/types';
 import { Field, Form, Formik } from 'formik';
+import { useRouter } from 'next/navigation';
+
 
 const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): React.ReactElement => {
 
-  const [selectedCard, setSelectedCard] = useState<string | null>(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
-  const [saveCard, setSaveCard] = useState<boolean>(false)
+  const router = useRouter()
+
+  //const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>("Bank Transfer");
+  //const [saveCard, setSaveCard] = useState<boolean>(false)
+  const [suscription, setSuscription] = useState<string | null>(null)
+
+  useEffect(()=>{
+    setSuscription(slug)
+  }, [slug])
+
+
+  const handlePayment = (suscription: string | null) => {
+    if (suscription === "premium") {
+      const paymentUrl = "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c938084930f529801932bca1e2b09a5";
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=800,height=600");
+      const interval = setInterval(() => {
+        if (paymentWindow?.closed) {
+          clearInterval(interval);
+          router.push("http://localhost:3000"); 
+        }}, 500);
+    } else {
+      const paymentUrl = "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380849323ec5801932bcd00c00374";
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=800,height=600");
+      const interval = setInterval(() => {
+        if (paymentWindow?.closed) {
+          clearInterval(interval);
+          router.push("http://localhost:3000"); 
+      }}, 500);
+    }
+    
+  };
+
+
+
+
 
 
   return (
@@ -36,7 +71,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                               type="checkbox"
                               name="paymentMethod"
                               checked={selectedPaymentMethod === "Card"}
-                              onClick={() => handleSelectPaymentMethod(setSelectedPaymentMethod, "Card")}
+                              // onClick={() => handleSelectPaymentMethod(setSelectedPaymentMethod, "Card")}
                               className="hidden"
                             />
                             <span
@@ -90,12 +125,12 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                           <input
                             type="checkbox"
                             name="card"
-                            checked={selectedCard === "Credit Card"}
-                            onClick={() => handleSelectCard(setSelectedCard, "Credit Card")}
+                            //checked={selectedCard === "Credit Card"}
+                            //onClick={() => handleSelectCard(setSelectedCard, "Credit Card")}
                             className="hidden"
                           />
                           <span
-                            className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out ${selectedCard === "Credit Card" ? 'bg-blue-500 border-blue-500' : ''}`}
+                            className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out`}
                           ></span>
                           <span className="text-[13px] sm:text-[15px] md:text-[18px]">Tarjeta de Crédito</span>
                         </label>
@@ -106,12 +141,12 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                           <input
                             type="checkbox"
                             name="card"
-                            checked={selectedCard === "Debit Card"}
-                            onClick={() => handleSelectCard(setSelectedCard, "Debit Card")}
+                            //checked={selectedCard === "Debit Card"}
+                            //onClick={() => handleSelectCard(setSelectedCard, "Debit Card")}
                             className="hidden"
                           />
                           <span
-                            className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out ${selectedCard === "Debit Card" ? 'bg-blue-500 border-blue-500' : ''}`}
+                            className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out`}
                           ></span>
                           <span className="text-[13px] sm:text-[15px] md:text-[18px]">Tarjeta de Débito</span>
                         </label>
@@ -205,7 +240,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                                             </div>
 
                                             
-                                            <button type="submit" className="w-[250px] h-[40px] bg-violet text-whitePage font-bold transition-all hover:bg-violetHover justify-center">Confirmar Suscripción</button>
+                                            <button type="submit" className="w-[250px] h-[40px] bg-violet text-whitePage font-bold transition-all hover:bg-violetHover justify-center" onClick={() => alert("Método de pago no disponible")}>Confirmar Suscripción</button>
                                   </Form>
               
                       </Formik> 
@@ -216,20 +251,20 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                             <input
                               type="checkbox"
                               name="saveCard"
-                              checked={saveCard === true}
-                              onClick={() => handleSaveCard(setSaveCard, !saveCard)}
+                              //checked={saveCard === true}
+                              //onClick={() => handleSaveCard(setSaveCard, !saveCard)}
                               className="hidden"
                             />
                             <span
-                              className={`w-[15px] h-[15px] rounded-[1px] border-[2px] border-black bg-gray transition-colors duration-300 ease-in-out ${saveCard === true ? 'bg-violet' : ''}`}
+                              className={`w-[15px] h-[15px] rounded-[1px] border-[2px] border-black bg-gray transition-colors duration-300 ease-in-out`}
                             ></span>
                             <span className="text-[11px] font-bold sm:text-[13px] md:text-[16px]">Desea guardar los datos de la tarjeta para el futuro??</span>
                             </label>
                       </div>
 
 
-                      <div>
-                            <label className="flex cursor-pointer ml-[10px] mr-[10px] border-[1px] border-gray p-[2px] justify-between">
+                      <div className="flex flex-col gap-[20px] justify-center items-center mb-[20px]">
+                            <label className="flex cursor-pointer ml-[10px] mr-[10px] border-[1px] border-gray p-[2px] justify-between w-[90%]">
                               <div className="flex gap-[2px] items-center">
                               <input
                                 type="checkbox"
@@ -260,7 +295,15 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
                                 />
                               </div>  
                             </label>
-                        </div>
+
+                            <button 
+                            type="submit" className="w-[250px] h-[40px] bg-green text-whitePage 
+                            font-bold transition-all
+                             hover:bg-green 
+                             justify-center"
+                             onClick={() => handlePayment(suscription)}>
+                            Confirmar Suscripción</button>
+                              </div>
           </div> {/* CIERRE DIV ESPACIO 1 */}
 
           
@@ -268,7 +311,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 
                       <div className="flex items-center justify-center lg:mr-[15px]">
                       <div  className="w-fit h-fit">
-                      <SubscriptionPlanCard subName={slug as SubscriptionName} />
+                      <SubscriptionPlanCard button={false} subName={slug as SubscriptionName} />
                       </div>
                       </div>
 
@@ -287,3 +330,12 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 }
 
 export default CheckoutView
+
+
+
+
+//${selectedCard === "Credit Card" ? 'bg-blue-500 border-blue-500' : ''}
+
+//${selectedCard === "Debit Card" ? 'bg-blue-500 border-blue-500' : ''}
+
+//${saveCard === true ? 'bg-violet' : ''}

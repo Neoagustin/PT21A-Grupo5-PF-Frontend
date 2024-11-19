@@ -10,21 +10,18 @@ const useSegment = () => {
     return segments.length > 0 ? segments[segments.length - 1] : null;
   }, [pathname]);
 
-  const routeChecks = {
-    isAdmin: pathname.startsWith("/admin"),
-    isLanguageRoute: pathname === "/language",
-    isStudentsRoute: pathname === "/students",
-    isTeachersRoute: pathname === "/teachers",
-  };
+  const getLastTwoSegments = useCallback(() => {
+    const segments = pathname.split("/").filter(Boolean);
+    return segments.slice(-2);
+  }, [pathname]);
+
+  const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
     setSegment(getSegment());
   }, [pathname, getSegment]);
 
-  return {
-    segment,
-    ...routeChecks,
-  };
+  return { segment, isAdmin, getLastTwoSegments };
 };
 
 export default useSegment;
