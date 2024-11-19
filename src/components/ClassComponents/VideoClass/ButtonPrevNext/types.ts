@@ -1,8 +1,7 @@
 import { ILesson } from "@/interfaces/ILesson";
 
-export interface IVideoClass {
+export interface IButtonPrevNextProps {
     lessons: ILesson[];
-    lesson: ILesson;
     courseId: string;
     classId: string;
 };

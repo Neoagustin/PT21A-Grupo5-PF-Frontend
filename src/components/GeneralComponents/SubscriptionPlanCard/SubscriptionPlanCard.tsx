@@ -11,12 +11,14 @@ import Loading from "../Loading/Loading";
 const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   subName,
   isRecommended,
+  isCurrent,
   className,
+  button = true,
 }) => {
   const { subscriptionPlan, loading, error, isFree } = useSubscriptionPlan(subName);
 
   if (loading || error || !subscriptionPlan) {
-    return <div>{loading ? <Loading /> : error || "No se encontró el plan"}</div>;
+    return <div>{loading ? <Loading /> : error || "No se encontrÃ³ el plan"}</div>;
   }
 
   const { name, price, description } = subscriptionPlan;
@@ -61,6 +63,16 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
               <p className="text-violet font-bold text-[12px] md:text-[14px]">Recomendado</p>
             </div>
           ) : null}
+          {isCurrent ? (
+            <div
+              className="
+              px-[10px] h-7 flex items-center bg-greenTransparent border border-green
+              md:px-[14px] md:h-8
+              "
+            >
+              <p className="text-green font-bold text-[12px] md:text-[14px]">PLAN ACTUAL</p>
+            </div>
+          ) : null}
         </div>
 
         <div className="py-[11px] px-[9px]">
@@ -77,18 +89,20 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
         </div>
       </div>
 
-      <div className="mt-auto text-center pb-4">
-        <Link
-          href="#"
-          className="
+      {button ? (
+        <div className="mt-auto text-center pb-4">
+          <Link
+            href="#"
+            className="
           text-whitePage border border-violet text-[14px] tracking-[1px] bg-violet font-bold py-[7px] px-[22px] rounded-[4px] transition-all duration-300 ease-in-out 
           hover:bg-[#fff0] hover:text-violet
           md:text-[16px]
           "
-        >
-          {isFree ? "OBTENER GRATIS" : `ACTUALIZAR A ${name.toUpperCase()}`}
-        </Link>
-      </div>
+          >
+            {isFree ? "OBTENER GRATIS" : `ACTUALIZAR A ${name.toUpperCase()}`}
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };
