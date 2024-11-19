@@ -3,6 +3,7 @@ export type SubscriptionName = "Standard" | "Premium" | "Pro";
 export interface ISubscriptionPlanCardProps {
   subName: SubscriptionName;
   isRecommended?: boolean;
+  isCurrent?: boolean;
   className?: string;
   button?: boolean;
 }
