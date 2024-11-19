@@ -17,7 +17,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   const { subscriptionPlan, loading, error, isFree } = useSubscriptionPlan(subName);
 
   if (loading || error || !subscriptionPlan) {
-    return <div>{loading ? <Loading /> : error || "No se encontró el plan"}</div>;
+    return <div>{loading ? <Loading /> : error || "No se encontrÃ³ el plan"}</div>;
   }
 
   const { name, price, description } = subscriptionPlan;
