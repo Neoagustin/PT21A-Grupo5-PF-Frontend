@@ -3,65 +3,64 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'InknutAntiqua';
-    src: url('/fonts/InknutAntiqua.ttf');
-    font-weight: 100 200 300 400 500 600 700 800 900;
+  font-family: "InknutAntiqua";
+  src: url("/fonts/InknutAntiqua.ttf");
+  font-weight: 100 200 300 400 500 600 700 800 900;
 }
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('/fonts/Poppins.ttf');
-    font-weight: 100 200 300 400 500 600 700 800 900;
+  font-family: "Poppins";
+  src: url("/fonts/Poppins.ttf");
+  font-weight: 100 200 300 400 500 600 700 800 900;
 }
 
 *,
 *::after,
 *::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Poppins';
-    background-color: #FAFAFA;
-    color: #222222;
+  font-family: "Poppins";
+  background-color: #fafafa;
+  color: #222222;
 }
 
 .input {
-    @apply w-[319px] h-[49px] bg-whitePage shadow-md shadow-lightgray px-2 outline-none transition-all border-b-[2px] border-transparent focus:border-b-violet sm:w-[459px]
+  @apply w-[319px] h-[49px] bg-whitePage shadow-md shadow-lightgray px-2 outline-none transition-all border-b-[2px] border-transparent focus:border-b-violet sm:w-[459px];
 }
 
 .inputError {
-    @apply border-red
+  @apply border-red;
 }
 
 .inputSuccess {
-    @apply border-green
+  @apply border-green;
 }
 
 .inputMessageError {
-    @apply w-[294px] text-red text-[10px] sm:w-[459px]
+  @apply w-[294px] text-red text-[10px] sm:w-[459px];
 }
 
 .inputUpdateUser {
-    @apply outline-none transition-all w-full h-[49px] shadow-md shadow-lightgray flex border-b-[2px] border-transparent items-center px-3 text-sm sm:text-base focus:border-b-violet
+  @apply outline-none transition-all w-full h-[49px] shadow-md shadow-lightgray flex border-b-[2px] border-transparent items-center px-3 text-sm sm:text-base focus:border-b-violet;
 }
 
 .inputChangePassword {
-    @apply outline-none transition-all w-full h-[49px] shadow-md shadow-lightgray flex border-b-[2px] border-transparent items-center px-3 text-sm sm:text-base focus:border-b-violet
+  @apply outline-none transition-all w-full h-[49px] shadow-md shadow-lightgray flex border-b-[2px] border-transparent items-center px-3 text-sm sm:text-base focus:border-b-violet;
 }
 
 .buttonFilterCategory {
-    @apply shadow-md transition-all duration-300 shadow-[#c5c5c5] p-[4px] pl-[10px] pr-[10px] text-[12px] sm:text-[18px] md:text-[18px] lg:text-[20px] xl:text-[22px] lg:pl-[45px] lg:pr-[45px] xl:pl-[45px] xl:pr-[45px]
+  @apply shadow-md transition-all duration-300 shadow-[#c5c5c5] p-[4px] pl-[10px] pr-[10px] text-[12px] sm:text-[18px] md:text-[18px] lg:text-[20px] xl:text-[22px] lg:pl-[45px] lg:pr-[45px] xl:pl-[45px] xl:pr-[45px];
 }
 
 .buttonFilterCategoryActive {
-    @apply bg-violet text-whitePage
+  @apply bg-violet text-whitePage;
 }
 
 .links {
-    @apply bg-lightgrayTransparent p-2 rounded-[4px] transition-all hover:bg-violet hover:text-whitePage lg:border-b-[2px] lg:border-transparent lg:bg-transparent lg:text-blackPage lg:rounded-none lg:hover:text-violet lg:hover:border-violet lg:hover:bg-transparent lg:p-1
+  @apply bg-lightgrayTransparent p-2 rounded-[4px] transition-all hover:bg-violet hover:text-whitePage lg:border-b-[2px] lg:border-transparent lg:bg-transparent lg:text-blackPage lg:rounded-none lg:hover:text-violet lg:hover:border-violet lg:hover:bg-transparent lg:p-1;
 }

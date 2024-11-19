@@ -5,14 +5,13 @@ import useSegment from "@/hooks/useSegment";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 
 const PaginationAdmin: React.FC = () => {
-  const { isLanguageRoute } = useSegment();
+  const { segment } = useSegment();
 
   const languageContext = useLanguageAdminContext();
   const userContext = useUserAdminContext();
 
-  const { page, previousPage, nextPage, maxPages } = isLanguageRoute
-    ? languageContext
-    : userContext;
+  const { page, previousPage, nextPage, maxPages } =
+    segment === "languages" ? languageContext : userContext;
 
   return (
     <div className="flex items-center justify-between sm:text-[18px]">

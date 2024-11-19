@@ -21,6 +21,14 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   }
 
   const { name, price, description } = subscriptionPlan;
+  const href =
+    subName === "Standard"
+      ? "/login"
+      : subName === "Premium"
+      ? "/checkout/premium"
+      : subName === "Pro"
+      ? "/checkout/pro"
+      : "#";
 
   return (
     <div
@@ -70,7 +78,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
           font-bold text-[18px] tracking-[1px] 
           sm:text-[20px]"
           >
-            {isFree ? "Free" : `$${price}`}
+            {isFree ? "Gratis" : `$${price}`}
           </h3>
           <div className="">
             <CheckList description={description} />
@@ -81,7 +89,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
       {button ? (
         <div className="mt-auto text-center pb-4">
           <Link
-            href="#"
+            href={href}
             className="
           text-whitePage border border-violet text-[14px] tracking-[1px] bg-violet font-bold py-[7px] px-[22px] rounded-[4px] transition-all duration-300 ease-in-out 
           hover:bg-[#fff0] hover:text-violet

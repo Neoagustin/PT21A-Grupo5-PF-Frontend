@@ -30,7 +30,7 @@ const AdminUsersTable = () => {
           {users.length > 0 ? (
             users.map((item) => (
               <tr key={item.id} className="border-b border-lightgrayTransparent text-darkgray">
-                <td className="py-3 px-6">
+                <td className="pt-4 pb-0 pl-3 pr-0 flex items-center justify-center xl:pr-6 xl:pl-6">
                   <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -39,7 +39,7 @@ const AdminUsersTable = () => {
                     />
                   </label>
                 </td>
-                <td className="py-3 px-6 whitespace-nowrap">
+                <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
                     className="text-skyblue hover:underline"
                     onClick={() => handleOpenModal(item.id)}
