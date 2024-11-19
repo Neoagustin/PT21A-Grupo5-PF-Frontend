@@ -1,5 +1,6 @@
 interface ICourseAdminContextProps {
-  name: string;
+  loading: boolean;
+  error: string | null;
 }
 
 export default ICourseAdminContextProps;
