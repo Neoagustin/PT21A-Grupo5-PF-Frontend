@@ -13,8 +13,10 @@ const AdminTableBody = () => {
     <div className="overflow-auto mt-6 h-max">
       {segment === "students" || segment === "teachers" ? (
         <AdminUsersTable />
-      ) : (
+      ) : segment === "languages" ? (
         <AdminLanguagesTable />
+      ) : (
+        <p>Hola</p>
       )}
 
       <UserIdModal
