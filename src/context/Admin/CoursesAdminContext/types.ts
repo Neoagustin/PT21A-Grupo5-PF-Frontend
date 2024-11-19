@@ -1,6 +1,6 @@
-interface ICourseAdminContextProps {
-  loading: boolean;
-  error: string | null;
-}
+// interface ICourseAdminContextProps {
+//   loading: boolean;
+//   error: string | null;
+// }
 
-export default ICourseAdminContextProps;
+// export default ICourseAdminContextProps;
