@@ -21,6 +21,7 @@ const nextConfig = {
       "www.learn-portuguese-now.com",
       "i.pinimg.com",
       "cdn.britannica.com",
+      "imagizer.imageshack.com",
     ],
   },
 };
