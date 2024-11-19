@@ -19,7 +19,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const [languages, setLanguages] = useState<ILanguage[]>([]);
   const [page, setPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState<number>(0);
-  const recordsPerPage = 5;
+  const recordsPerPage = 3;
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);

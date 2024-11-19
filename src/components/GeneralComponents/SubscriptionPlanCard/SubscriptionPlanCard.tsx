@@ -12,6 +12,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   subName,
   isRecommended,
   className,
+  button = true,
 }) => {
   const { subscriptionPlan, loading, error, isFree } = useSubscriptionPlan(subName);
 
@@ -69,7 +70,7 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
           font-bold text-[18px] tracking-[1px] 
           sm:text-[20px]"
           >
-            {isFree ? "Free" : `$${price}`}
+            {isFree ? "Gratis" : `$${price}`}
           </h3>
           <div className="">
             <CheckList description={description} />
@@ -77,18 +78,20 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
         </div>
       </div>
 
-      <div className="mt-auto text-center pb-4">
-        <Link
-          href="#"
-          className="
+      {button ? (
+        <div className="mt-auto text-center pb-4">
+          <Link
+            href="#"
+            className="
           text-whitePage border border-violet text-[14px] tracking-[1px] bg-violet font-bold py-[7px] px-[22px] rounded-[4px] transition-all duration-300 ease-in-out 
           hover:bg-[#fff0] hover:text-violet
           md:text-[16px]
           "
-        >
-          {isFree ? "OBTENER GRATIS" : `ACTUALIZAR A ${name.toUpperCase()}`}
-        </Link>
-      </div>
+          >
+            {isFree ? "OBTENER GRATIS" : `ACTUALIZAR A ${name.toUpperCase()}`}
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };

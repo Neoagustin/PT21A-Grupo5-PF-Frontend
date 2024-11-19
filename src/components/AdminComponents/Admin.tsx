@@ -11,7 +11,7 @@ const Admin: React.FC = () => {
 
   return (
     <main
-      className="relative mx-auto bg-gray-50 min-h-screen p-3 pt-[70px] text-blackPage 
+      className="relative mx-auto bg-gray-50 min-h-screen p-[16px] pt-[70px] text-blackPage 
           sm:px-5 sm:max-w-[700px]
           md:max-w-[840px]
           xl:max-w-[1024px]"
