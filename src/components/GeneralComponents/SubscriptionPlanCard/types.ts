@@ -4,6 +4,7 @@ export interface ISubscriptionPlanCardProps {
   subName: SubscriptionName;
   isRecommended?: boolean;
   className?: string;
+  button?: boolean;
 }
 
 export interface ISubscription {
