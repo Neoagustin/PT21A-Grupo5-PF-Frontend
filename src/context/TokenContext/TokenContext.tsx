@@ -24,6 +24,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
     Cookies.remove("userToken");
+    Cookies.remove("userData");
     setToken(null);
     router.push('/');
   };
