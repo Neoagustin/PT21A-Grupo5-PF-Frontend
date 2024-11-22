@@ -5,7 +5,7 @@ import { useToken } from "@/context/TokenContext/TokenContext";
 import { useUser } from "@/context/UserContext/UserContext";
 import React from "react";
 
-const SubscriptionsList = () => {
+const SubscriptionsList: React.FC = () => {
   const { token } = useToken();
   const { user } = useUser();
 
@@ -14,17 +14,19 @@ const SubscriptionsList = () => {
       <SubscriptionPlanCard
         subName="Standard"
         button={!token}
-        isCurrent={!!(token && user && user.subscription.name === "Standard")}
+        isCurrent={!!(token && user && user.subscription?.name === "Standard")}
       />
       <SubscriptionPlanCard
         subName="Premium"
+        button={user?.role !== 'admin'}
         isRecommended={true}
-        isCurrent={!!(token && user && user.subscription.name === "Premium")}
+        isCurrent={!!(token && user && user.subscription?.name === "Premium")}
       />
       <SubscriptionPlanCard
         subName="Pro"
+        button={user?.role !== 'admin'}
         className="sm:col-span-2 sm:w-[50%] xl:w-[100%]"
-        isCurrent={!!(token && user && user.subscription.name === "Pro")}
+        isCurrent={!!(token && user && user.subscription?.name === "Pro")}
       />
     </div>
   );

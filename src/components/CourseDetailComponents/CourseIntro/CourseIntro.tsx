@@ -5,6 +5,7 @@ import ICourse from "@/interfaces/ICourse";
 import StarRating from "../StarRating/StarRating";
 import CourseVideoIntro from "../CourseVideoIntro/CourseVideoIntro";
 import CourseInfo from "../CourseInfo/CourseInfo";
+import { redirect } from "next/navigation";
 
 export const CourseIntro: React.FC<ICourseIntroProps> = async ({ courseDetail }: ICourseIntroProps): Promise<React.ReactElement> => {
     
@@ -13,6 +14,8 @@ export const CourseIntro: React.FC<ICourseIntroProps> = async ({ courseDetail }:
     const courseName = decodeURI(courseDetail);
 
     const findCourse = courses.find((course: ICourse) => course.title.toLowerCase() === courseName);
+
+    if (!findCourse) redirect('/not-found');
 
     return (
 

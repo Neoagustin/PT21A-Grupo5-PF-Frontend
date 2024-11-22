@@ -9,45 +9,68 @@ import UserData from "../UserData/UserData";
 import { IUserInfoProps } from "./types";
 import ChangePassword from "../ChangePassword/ChangePassword";
 import SubscriptionInfo from "../SubscriptionInfo/SubscriptionInfo";
+import { useRouter } from "next/navigation";
 
-export const UserInfo: React.FC<IUserInfoProps> = ({ slug }: IUserInfoProps): React.ReactElement => {
+export const UserInfo: React.FC<IUserInfoProps> = ({
+  slug,
+}: IUserInfoProps) => {
+  const { user } = useUser();
+  const router = useRouter();
 
-    const { user } = useUser();
+  if (!user) return;
 
-    if (!user) return <div></div>;
-    
-    return (
+  if (!['profile', 'subscription', 'security'].includes(slug)) router.push('/not-found');
 
-        <div className="mt-10 flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
-            <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
-                <div className="flex flex-col gap-5">
-                    <div className="flex flex-col items-center gap-5 xl:self-center">
-                        <Image className="rounded-full bg-gray" src={user?.photo} alt="Imagen del usuario" width={80} height={80} />
-                        <h1 className="text-lg font-medium">{user?.name}</h1>
-                    </div>
-                    <div className="w-full flex flex-wrap justify-center gap-5 sm:justify-between xl:flex-col xl:items-start">
-                        <ButtonData logo={faUser} name='MI PERFIL' isActive={slug === 'profile'} path='profile' />
-                        <ButtonData logo={faGem} name='SUSCRIPCIONES' isActive={slug === 'subscription'} path='subscription' />
-                        <ButtonData logo={faLock} name='SEGURIDAD DE LA CUENTA' isActive={slug === 'security'} path='security' />
-                    </div>
-                </div>
-                <div className="w-full h-[1px] bg-gray xl:w-[1px] xl:h-[500px]"></div>
-            </div>
-            <div className="w-full">
-                {
-                    slug === 'profile' ? (
-                        <UserData user={user} />
-                    ) : slug === 'security' ? (
-                        <ChangePassword />
-                    ) : slug === 'subscription' ? (
-                        <SubscriptionInfo />
-                    ) : null
-                }
-            </div>
+  return (
+    <div className="mt-10 flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
+      <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col items-center gap-5 xl:self-center">
+            <Image
+              className="rounded-full bg-gray"
+              src={user?.photo}
+              alt="Imagen del usuario"
+              width={80}
+              height={80}
+            />
+            <h1 className="text-lg font-medium">{user?.name}</h1>
+          </div>
+          <div className="w-full flex flex-wrap justify-center gap-5 sm:justify-between xl:flex-col xl:items-start">
+            <ButtonData
+              logo={faUser}
+              name="MI PERFIL"
+              isActive={slug === "profile"}
+              path="profile"
+            />
+            {user.role !== "admin" && (
+              <ButtonData
+                logo={faGem}
+                name="SUSCRIPCIONES"
+                isActive={slug === "subscription"}
+                path="subscription"
+              />
+            )}
+            <ButtonData
+              logo={faLock}
+              name="SEGURIDAD DE LA CUENTA"
+              isActive={slug === "security"}
+              path="security"
+            />
+          </div>
         </div>
-
-    );
-
+        <div className="w-full h-[1px] bg-gray xl:w-[1px] xl:h-[500px]"></div>
+      </div>
+      <div className="w-full">
+        {slug === "profile" ? (
+          <UserData user={user} />
+        ) : slug === "security" ? (
+          <ChangePassword />
+        ) : slug === "subscription" && user.role !== 'admin' ? (
+          <SubscriptionInfo />
+        ) : null}
+      </div>
+    </div>
+  );
 };
 
 export default UserInfo;
