@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/interfaces/IUser";
 import { fetchUsers } from "@/services/fetchUsers";
-import { deleteUser, fetchUsersPage } from "@/services/users/users.service";
+import { fetchDeactivateUser, fetchUsersPage } from "@/services/users/users.service";
 import IUserAdminContextProps from "./types";
 import { usePathname } from "next/navigation";
 
@@ -22,12 +22,14 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
-  const deleteUserById = async (id: string) => {
+  const deactivateUserById = async (id: string) => {
     try {
-      await deleteUser(id);
-      setUsers((prev) => prev.filter((user) => user.id !== id));
+      await fetchDeactivateUser(id);
+      setUsers((prev) =>
+        prev.map((user) => (user.id === id ? { ...user, isActive: false } : user))
+      );
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error eliminando usuario");
+      setError(err instanceof Error ? err.message : "Error desactivando usuario");
     }
   };
 
@@ -82,7 +84,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   return (
     <UserAdminContext.Provider
-      value={{ users, page, maxPages, previousPage, nextPage, deleteUserById, loading, error }}
+      value={{ users, page, maxPages, previousPage, nextPage, deactivateUserById, loading, error }}
     >
       {children}
     </UserAdminContext.Provider>

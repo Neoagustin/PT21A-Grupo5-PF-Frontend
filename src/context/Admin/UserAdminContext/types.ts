@@ -8,7 +8,7 @@ interface IUserAdminContextProps {
   maxPages: number;
   previousPage: () => void;
   nextPage: () => void;
-  deleteUserById: (id: string) => void;
+  deactivateUserById: (id: string) => void;
 }
 
 export default IUserAdminContextProps;

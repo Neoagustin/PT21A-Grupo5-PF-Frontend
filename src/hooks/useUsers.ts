@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchUsers } from "@/services/users/users.service"; // Ajusta la ruta según tu estructura de carpetas
+import { fetchUsers } from "@/services/users/users.service";
 import { IUser } from "@/interfaces/IUser";
 
 const useUsers = () => {

@@ -1,12 +1,28 @@
-import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
+import ICourse from "./ICourse";
 
-export interface IUser {
+interface IMembership {
+  id: string;
+  subscription: {
     id: string;
     name: string;
-    email: string;
-    idNumber: string;
-    password: string;
-    photo: string;
-    role: string;
-    subscription: ISubscription
-};
+    description: string[];
+    price: string;
+  };
+  payments: string[];
+}
+
+export interface IUser {
+  id: string;
+  authId: string | null;
+  name: string;
+  email: string;
+  idNumber: string;
+  password: string;
+  photo: string;
+  role: string;
+  isActive: boolean;
+  newsletter: boolean;
+  createdAt: string;
+  courses: ICourse[];
+  membership: IMembership;
+}

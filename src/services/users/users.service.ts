@@ -57,7 +57,7 @@ export const createUser = async (userData: IUser) => {
   }
 };
 
-export const updateUser = async (id: string, userData: IUser) => {
+export const fetchUpdateUser = async (id: string, userData: IUser) => {
   try {
     const response = await axios.patch(`${API_URL}/users/${id}`, userData);
     return response.data;
@@ -83,7 +83,7 @@ export const replaceUser = async (id: string, userData: IUser) => {
   }
 };
 
-export const deleteUser = async (id: string) => {
+export const fetchDeactivateUser = async (id: string) => {
   try {
     const response = await axios.delete(`${API_URL}/users/${id}`);
     return response.data;

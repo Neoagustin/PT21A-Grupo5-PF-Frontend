@@ -1,6 +1,6 @@
 export interface ISuscription {
-    id: string;
-    description: string[];
-    name: string;
-    price: string;
-};
+  id: string;
+  name: string;
+  description: string[];
+  price: string;
+}

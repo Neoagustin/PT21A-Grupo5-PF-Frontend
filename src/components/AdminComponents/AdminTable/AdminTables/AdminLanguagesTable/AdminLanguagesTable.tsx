@@ -1,9 +1,9 @@
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/Modals/useModal";
 import React from "react";
-import AdminTableHeader from "../AdminTableHeader/AdminTableHeader";
+import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../UserIdModal/UserIdModal";
+import UserIdModal from "../../IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
@@ -42,7 +42,7 @@ const AdminLanguagesTable = () => {
                 </td>
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
+                    className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                     onClick={() => handleOpenModal(item.id)}
                   >
                     Ver ID
@@ -52,13 +52,14 @@ const AdminLanguagesTable = () => {
                 <td className="py-3 px-6 whitespace-nowrap">
                   <Link
                     href={`/admin/languages/${item.name}/courses`}
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
+                    className="bg-skyblue text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                   >
                     Ver Cursos
                   </Link>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap text-red hover:text-redHover hover:underline cursor-pointer">
                   <button
+                    className="flex gap-1 items-center text-whitePage bg-red py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-redHover"
                     onClick={() =>
                       Swal.fire({
                         title: "¿Estás seguro?",
