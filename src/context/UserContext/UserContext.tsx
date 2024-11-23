@@ -21,22 +21,33 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const isAdmin = user?.role === "admin";
   const isTeacher = user?.role === "teacher";
-    
+
   const handleOpenModal = () => setModal(true);
 
   const handleCloseModal = () => setModal(false);
-console.log(user)
+  console.log(user);
   return (
-    <UserContext.Provider value={{ user, setUser, isAdmin, isTeacher, modal, handleOpenModal, handleCloseModal }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        isAdmin,
+        isTeacher,
+        modal,
+        handleOpenModal,
+        handleCloseModal,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
-
 };
 
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === null)
-    throw new Error("El contexto debe ser utilizado dentro de un TokenProvider.");
+    throw new Error(
+      "El contexto debe ser utilizado dentro de un UserProvider."
+    );
   return context;
 };
