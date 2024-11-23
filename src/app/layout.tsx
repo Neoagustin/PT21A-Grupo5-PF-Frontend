@@ -13,7 +13,9 @@ export const metadata: Metadata = {
   description: "Plataforma de cursos de idiomas.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
       <body className="antialiased">
@@ -22,7 +24,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <UserMenuProvider>
               <MenuProvider>
                 <Header />
-                {children}
+                <main className="min-h-[calc(100dvh-110px)] flex justify-center items-center py-10 sm:min-h-[calc(100dvh-120px)] md:min-h-[calc(100dvh-130px)]">
+                  {children}
+                </main>
                 <Footer />
               </MenuProvider>
             </UserMenuProvider>

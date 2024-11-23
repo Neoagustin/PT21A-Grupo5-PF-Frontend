@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -24,9 +25,10 @@ const config: Config = {
         green: "#34AE9A",
         greenHover: "#2A7F6B",
         greenTransparent: "#34AE9A1F",
-        violetTransparent: "#0033A00D",
+        violetTransparent: "#0033A022",
         lightgrayTransparent: "#D9D9D9A8",
         offWhite: "#F3F3F3",
+        violetHover: "#0033A0BB",
       },
       fontFamily: {
         inknutAntiqua: ["InknutAntiqua", "sans-serif"],

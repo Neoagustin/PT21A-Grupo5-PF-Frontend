@@ -15,7 +15,7 @@ const Footer: React.FC = (): React.ReactNode => {
   if (isAdmin) return null;
 
   return (
-    <footer className="flex flex-col gap-20 items-center px-2 mt-32">
+    <footer className="flex flex-col gap-20 items-center px-2 pt-10">
       <div className="flex flex-col gap-20 md:flex-row md:justify-between md:w-[740px] lg:w-[860px] xl:w-[1200px]">
         <FontAwesomeIcon
           className="hidden xl:block xl:w-[230px] xl:h-[230px] xl:text-violet"

@@ -27,11 +27,12 @@ export const LoginForm: React.FC = (): React.ReactElement => {
           localStorage.setItem("userToken", JSON.stringify(data.token));
           localStorage.setItem("userData", JSON.stringify(data.user));
           Cookies.set("userToken", data.token);
+          Cookies.set("userData", JSON.stringify(data.user));
           setToken(data.token);
           setUser(data.user);
 
           router.push("/");
-        };
+        }
 
         resetForm();
       }}
@@ -47,12 +48,20 @@ export const LoginForm: React.FC = (): React.ReactElement => {
             />
           </div>
           <div>
-            <Field className="input" type="password" name="password" placeholder="Contraseña..." />
+            <Field
+              className="input"
+              type="password"
+              name="password"
+              placeholder="Contraseña..."
+            />
           </div>
           <ButtonForm name="INICIAR SESIÓN" />
           <p className="text-center text-sm">
             ¿No tenés una cuenta?{" "}
-            <Link className="text-violet underline hover:no-underline" href="/register">
+            <Link
+              className="text-violet underline hover:no-underline"
+              href="/register"
+            >
               Registrate acá
             </Link>
           </p>
