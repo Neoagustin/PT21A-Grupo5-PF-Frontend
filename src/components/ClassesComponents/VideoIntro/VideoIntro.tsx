@@ -13,7 +13,7 @@ export const VideoIntro: React.FC<IVideoIntroProps> = async ({ courseId }) => {
   if (!findCourse) redirect("/not-found");
 
   return (
-    <div className="mt-10 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <h1 className="text-lg font-bold text-center sm:text-2xl">
         Video Introductorio
       </h1>

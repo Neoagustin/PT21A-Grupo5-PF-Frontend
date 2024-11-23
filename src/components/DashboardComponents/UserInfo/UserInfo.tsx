@@ -16,13 +16,13 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
 }: IUserInfoProps) => {
   const { user } = useUser();
   const router = useRouter();
-
+console.log(user)
   if (!user) return;
 
   if (!['profile', 'subscription', 'security'].includes(slug)) router.push('/not-found');
 
   return (
-    <div className="mt-10 flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
+    <div className="flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
       <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col items-center gap-5 xl:self-center">

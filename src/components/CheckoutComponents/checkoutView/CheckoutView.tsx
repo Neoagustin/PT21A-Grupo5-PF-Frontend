@@ -23,7 +23,8 @@ const CheckoutView: React.FC<{ slug: string }> = ({
 
   useEffect(() => {
     setSuscription(slug);
-    if (suscription && !['premium', 'pro'].includes(suscription)) router.push('/not-found');
+    if (suscription && !["premium", "pro"].includes(suscription))
+      router.push("/not-found");
   }, [slug, router, suscription]);
 
   const handlePayment = (suscription: string | null) => {
@@ -59,8 +60,8 @@ const CheckoutView: React.FC<{ slug: string }> = ({
   };
 
   return (
-    <>
-      <h1 className="font-bold text-[18px] mt-[20px] ml-[20px] sm:text-[21px] md:text-[23px] lg:text-[25px] xl:text-[28px] sm:mt-[25px] sm:ml-[25px] md:mt-[35px] md:ml-[35px] lg:mt-[40px] lg:ml-[45px] xl:mt-[40px] xl:ml-[40px]">
+    <div>
+      <h1 className="font-bold text-[18px] ml-[20px] sm:text-[21px] md:text-[23px] lg:text-[25px] xl:text-[28px] sm:mt-[25px] sm:ml-[25px] md:mt-[35px] md:ml-[35px] lg:mt-[40px] lg:ml-[45px] xl:mt-[40px] xl:ml-[40px]">
         Confirmar Suscripción
       </h1>
 
@@ -374,7 +375,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({
         </div>{" "}
         {/* CIERRE DIV ESPACIO 2 */}
       </div>
-    </>
+    </div>
   );
 };
 
