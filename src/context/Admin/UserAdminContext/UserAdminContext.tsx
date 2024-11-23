@@ -1,11 +1,18 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { IUser } from "@/interfaces/IUser";
+import { IUpdateUser, IUser } from "@/interfaces/IUser";
 import { fetchUsers } from "@/services/fetchUsers";
-import { fetchDeactivateUser, fetchUsersPage } from "@/services/users/users.service";
+import {
+  fetchDeactivateUser,
+  fetchUpdateUserAdmin,
+  fetchUsersPage,
+  fetchUsersSubscriptions,
+} from "@/services/users/users.service";
 import IUserAdminContextProps from "./types";
 import { usePathname } from "next/navigation";
+import { fetchGetSubscriptions } from "@/services/fetchSubscriptions";
+import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 
 const UserAdminContext = createContext<IUserAdminContextProps | undefined>(undefined);
 
@@ -21,6 +28,52 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
+
+  const usersSubscriptions = async (userId: string, subscriptionName: string) => {
+    try {
+      const allSubscriptions: ISubscription[] = await fetchGetSubscriptions();
+      const subscription = allSubscriptions.find(
+        (sub) => sub.name.toLocaleLowerCase() === subscriptionName.toLocaleLowerCase()
+      );
+
+      if (!subscription) throw new Error("Nombre de suscripcion inexistente.");
+
+      await fetchUsersSubscriptions(userId, subscription.id);
+
+      setUsers((prev) =>
+        prev.map((user) =>
+          user.id === userId
+            ? {
+                ...user,
+                membership: {
+                  ...user.membership,
+                  subscription: {
+                    ...user.membership.subscription,
+                    name: subscriptionName,
+                  },
+                },
+              }
+            : user
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar usuario");
+    }
+  };
+
+  const updateUserById = async (id: string, userData: IUpdateUser) => {
+    try {
+      await fetchUpdateUserAdmin(id, userData);
+
+      setUsers((prev) =>
+        prev.map((user) =>
+          user.id === id ? { ...user, ...userData, isActive: userData.isActive ?? false } : user
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar usuario");
+    }
+  };
 
   const deactivateUserById = async (id: string) => {
     try {
@@ -84,7 +137,18 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   return (
     <UserAdminContext.Provider
-      value={{ users, page, maxPages, previousPage, nextPage, deactivateUserById, loading, error }}
+      value={{
+        users,
+        deactivateUserById,
+        updateUserById,
+        usersSubscriptions,
+        page,
+        maxPages,
+        previousPage,
+        nextPage,
+        loading,
+        error,
+      }}
     >
       {children}
     </UserAdminContext.Provider>

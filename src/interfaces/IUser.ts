@@ -10,6 +10,25 @@ interface IMembership {
   };
   payments: string[];
 }
+export interface IUpdateUser {
+  name?: string;
+  email?: string;
+  idNumber?: string;
+  password?: string;
+  role?: string;
+  photo?: string;
+  newsletter?: boolean;
+  isActive?: boolean;
+}
+
+export interface IEditUserFormValues {
+  name?: string;
+  email?: string;
+  idNumber?: string;
+  subscriptionName?: string;
+  role?: string;
+  state?: string;
+}
 
 export interface IUser {
   id: string;

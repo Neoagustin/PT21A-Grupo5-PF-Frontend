@@ -1,4 +1,4 @@
-import { IUser } from "@/interfaces/IUser";
+import { IUpdateUser, IUser } from "@/interfaces/IUser";
 
 interface IUserAdminContextProps {
   loading: boolean;
@@ -9,6 +9,8 @@ interface IUserAdminContextProps {
   previousPage: () => void;
   nextPage: () => void;
   deactivateUserById: (id: string) => void;
+  updateUserById: (id: string, userData: IUpdateUser) => void;
+  usersSubscriptions: (userId: string, subscriptionId: string) => void;
 }
 
 export default IUserAdminContextProps;

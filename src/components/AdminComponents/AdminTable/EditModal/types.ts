@@ -1,6 +1,7 @@
 import { IUser } from "@/interfaces/IUser";
 
 export interface IFormValues {
+  id: string;
   name: string;
   email: string;
   idNumber: string;

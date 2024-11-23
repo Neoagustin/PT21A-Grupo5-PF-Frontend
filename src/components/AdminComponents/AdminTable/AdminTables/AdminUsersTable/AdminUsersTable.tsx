@@ -58,11 +58,11 @@ const AdminUsersTable = () => {
                   <td className="py-3 px-6 whitespace-nowrap text-center">
                     <p
                       className={`${
-                        item?.membership?.subscription.name === "Standard"
+                        item?.membership?.subscription.name.toLocaleLowerCase() === "standard"
                           ? "text-darkgray"
-                          : item?.membership?.subscription.name === "Premium"
-                          ? "text-skyblue"
-                          : "text-violet"
+                          : item?.membership?.subscription.name.toLocaleLowerCase() === "premium"
+                          ? "text-skyblue font-semibold"
+                          : "text-violet font-semibold"
                       }`}
                     >
                       {item?.membership?.subscription.name}

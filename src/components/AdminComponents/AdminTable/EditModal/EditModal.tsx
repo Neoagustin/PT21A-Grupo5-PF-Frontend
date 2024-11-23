@@ -1,11 +1,26 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IFormValues, IEditModalProps } from "./types";
+import { IEditModalProps } from "./types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
+import { IEditUserFormValues, IUpdateUser } from "@/interfaces/IUser";
+import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
 
 const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
-  const handleOnSubmit = (values: IFormValues) => {
-    console.log("Datos enviados:", values);
+  const { updateUserById, usersSubscriptions } = useUserAdminContext();
+
+  const handleOnSubmit = (values: IEditUserFormValues) => {
+    const { name, email, idNumber, role, state } = values;
+    const isActive = state === "active";
+    console.log("Initial subscriptionName value:", values.subscriptionName);
+    const subscriptionName = values.subscriptionName || "standard";
+    const userData: IUpdateUser = { name, email, idNumber, role, isActive };
+    try {
+      updateUserById(data.id, userData);
+      usersSubscriptions(data.id, subscriptionName);
+      onClose();
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+    }
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -13,6 +28,8 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
       onClose();
     }
   };
+
+  const userState = data.isActive ? "active" : "inactive";
 
   return (
     <div
@@ -24,9 +41,9 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
           name: data.name || "",
           email: data.email || "",
           idNumber: data.idNumber || "",
-          rol: data.role || "user",
-          plan: data.membership.subscription.name.toLowerCase() || "",
-          state: data.isActive ? "active" : "inactive",
+          role: data.role || "user",
+          subscriptionName: data.membership?.subscription?.name.toLocaleLowerCase() || "standard",
+          state: userState || "",
         }}
         onSubmit={handleOnSubmit}
       >
@@ -87,34 +104,7 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
               <ErrorMessage name="idNumber" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div>
-              <label
-                htmlFor="rol"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Rol:
-              </label>
-              <Field
-                id="rol"
-                name="rol"
-                as="select"
-                value={values.rol}
-                className={`inputUpdateUser ${
-                  values.rol === "teacher"
-                    ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
-                    : values.rol === "admin"
-                    ? "text-blackPage font-semibold border-blackPage hover:border-blackPageHover hover:text-blackPageHover focus:border-blackPageHover focus:text-blackPageHover"
-                    : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
-                }`}
-              >
-                <option value="user" label="Usuario" className="text-darkgray" />
-                <option value="teacher" label="Profesor" className="text-skyblue font-semibold" />
-                <option value="admin" label="Admin" className="text-blackPage font-semibold" />
-              </Field>
-              <ErrorMessage name="rol" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            {values.plan && (
+            {data.membership && (
               <div>
                 <label
                   htmlFor="plan"
@@ -124,13 +114,12 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
                 </label>
                 <Field
                   id="plan"
-                  name="plan"
+                  name="subscriptionName"
                   as="select"
-                  value={values.plan}
                   className={`inputUpdateUser ${
-                    values.plan === "premium"
+                    values.subscriptionName.toLowerCase() === "premium"
                       ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
-                      : values.plan === "pro"
+                      : values.subscriptionName.toLowerCase() === "pro"
                       ? "text-violet font-semibold border-violet hover:border-violetHover hover:text-violetHover focus:border-violetHover focus:text-violetHover"
                       : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
                   }`}
