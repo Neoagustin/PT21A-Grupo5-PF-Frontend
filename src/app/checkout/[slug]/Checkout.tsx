@@ -1,4 +1,4 @@
-import CheckoutView from "@/components/CheckoutComponents/checkoutView/CheckoutView";
+import CheckoutView from "@/components/CheckoutComponents/CheckoutView/CheckoutView";
 import React from "react";
 
 interface ICheckoutProps {
