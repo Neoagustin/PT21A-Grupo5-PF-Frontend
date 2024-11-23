@@ -4,6 +4,8 @@ import { useUser } from "@/context/UserContext/UserContext";
 import { fetchCourseRating } from "@/services/courses/courses.service";
 import React, { useState } from "react";
 import { IStarRatingProps } from "./types";
+import { useRouter } from "next/navigation";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
   const [hover, setHover] = useState<number>(0);
@@ -14,6 +16,8 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
     course.totalRatings || 0
   );
   const { user } = useUser();
+  const { token } = useToken();
+  const router = useRouter();
 
   const handleCourseRating = async (
     courseId: string,
@@ -30,8 +34,6 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
     setAverageRating(parseFloat(newAverageRating));
     setTotalRatings(newTotalRatings);
   };
-
-  if (!user) return;
 
   return (
     <>
@@ -50,7 +52,11 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
               key={star}
               onMouseEnter={() => setHover(star)}
               onMouseLeave={() => setHover(0)}
-              onClick={() => handleCourseRating(course.id, user.id, i + 1)}
+              onClick={() =>
+                token && user
+                  ? handleCourseRating(course.id, user.id, i + 1)
+                  : router.push("/login")
+              }
             >
               ★
             </span>
