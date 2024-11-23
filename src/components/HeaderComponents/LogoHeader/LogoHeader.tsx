@@ -4,11 +4,14 @@ import Link from "next/link";
 import React from "react";
 import ILogoHeaderProps from "./types";
 
-const LogoHeader: React.FC<ILogoHeaderProps> = ({ label, animation = true }) => {
+const LogoHeader: React.FC<ILogoHeaderProps> = ({
+  label,
+  animation = true,
+}) => {
   return (
     <Link
       href="/"
-      className={`flex items-center gap-1 cursor-pointer select-none transition-all group duration-200`}
+      className={` flex items-center self-start gap-1 cursor-pointer select-none transition-all group duration-200`}
     >
       <FontAwesomeIcon
         icon={faGlobe}
@@ -17,7 +20,11 @@ const LogoHeader: React.FC<ILogoHeaderProps> = ({ label, animation = true }) => 
     md:w-[50px] md:text-[50px]
     "
       />
-      <p className={`text-2xl font-inknutAntiqua text-blackPage transition-all ${animation ? 'group-hover:scale-[.90]' : null} sm:text-[28px] md:text-[32px]`}>
+      <p
+        className={`text-2xl font-inknutAntiqua text-blackPage transition-all ${
+          animation ? "group-hover:scale-[.90]" : null
+        } sm:text-[28px] md:text-[32px]`}
+      >
         RB
       </p>
       <p className=" text-2xl font-inknutAntiqua text-blackPage sm:text-[28px] md:text-[32px]">

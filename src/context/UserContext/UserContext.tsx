@@ -25,7 +25,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleOpenModal = () => setModal(true);
 
   const handleCloseModal = () => setModal(false);
-
+console.log(user)
   return (
     <UserContext.Provider value={{ user, setUser, isAdmin, isTeacher, modal, handleOpenModal, handleCloseModal }}>
       {children}
