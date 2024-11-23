@@ -1,6 +1,26 @@
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
 
+export interface IUpdateUser {
+  name?: string;
+  email?: string;
+  idNumber?: string;
+  password?: string;
+  role?: string;
+  photo?: string;
+  newsletter?: boolean;
+  isActive?: boolean;
+}
+
+export interface IEditUserFormValues {
+  name?: string;
+  email?: string;
+  idNumber?: string;
+  subscriptionName?: string;
+  role?: string;
+  state?: string;
+}
+
 export interface IUser {
   id: string;
   name: string;
@@ -9,6 +29,10 @@ export interface IUser {
   password: string;
   photo: string;
   role: string;
-  membership: IMembership;
+  isActive: boolean;
+  newsletter: boolean;
+  authId: string | null;
+  createdAt: string;
   courses: ICourse[];
+  membership: IMembership;
 }

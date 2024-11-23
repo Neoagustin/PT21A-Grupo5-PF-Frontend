@@ -1,16 +1,16 @@
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/Modals/useModal";
 import React from "react";
-import AdminTableHeader from "../AdminTableHeader/AdminTableHeader";
+import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../UserIdModal/UserIdModal";
+import UserIdModal from "../../IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import Swal from "sweetalert2";
+import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
 
-const AdminLanguagesTable = () => {
-  const { loading, error, languages, deleteLanguageById } = useLanguageAdminContext();
+const AdminCoursesTable = () => {
+  const { loading, error, courses, deleteCourseById } = useCoursesAdminContext();
   const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
 
   if (loading) return <Loading />;
@@ -28,8 +28,8 @@ const AdminLanguagesTable = () => {
       <table className="min-w-full bg-white border border-lightgrayTransparent text-[14px] sm:text-[16px]">
         <AdminTableHeader />
         <tbody>
-          {languages.length > 0 ? (
-            languages.map((item) => (
+          {courses.length > 0 ? (
+            courses.map((item) => (
               <tr key={item.id} className="border-b border-lightgrayTransparent text-darkgray">
                 <td className="pt-4 pb-0 pl-3 pr-0 flex items-center justify-center xl:pr-6 xl:pl-6">
                   <label className="inline-flex items-center cursor-pointer">
@@ -48,10 +48,10 @@ const AdminLanguagesTable = () => {
                     Ver ID
                   </button>
                 </td>
-                <td className="py-3 px-6 whitespace-nowrap">{item.name}</td>
+                <td className="py-3 px-6 whitespace-nowrap">{item.title}</td>
                 <td className="py-3 px-6 whitespace-nowrap">
                   <Link
-                    href={`/admin/languages/${item.name}/courses`}
+                    href={`/admin/languages/${item.title}/courses`}
                     className="text-skyblue hover:text-skyblueHover hover:underline"
                   >
                     Ver Cursos
@@ -62,7 +62,7 @@ const AdminLanguagesTable = () => {
                     onClick={() =>
                       Swal.fire({
                         title: "¿Estás seguro?",
-                        text: `Eliminarás el idioma ${item.name} de los registros.`,
+                        text: `Eliminarás este curso de los registros.`,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonText: "Cancelar",
@@ -70,10 +70,10 @@ const AdminLanguagesTable = () => {
                         reverseButtons: false,
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          deleteLanguageById(item.id);
+                          deleteCourseById(item.id);
                           Swal.fire(
                             "Eliminado",
-                            `Has eliminado el idioma ${item.name} de los registros.`,
+                            `Has eliminado el curso de los registros.`,
                             "success"
                           );
                         }
@@ -104,4 +104,4 @@ const AdminLanguagesTable = () => {
   );
 };
 
-export default AdminLanguagesTable;
+export default AdminCoursesTable;
