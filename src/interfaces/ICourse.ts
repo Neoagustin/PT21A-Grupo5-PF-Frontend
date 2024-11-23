@@ -15,6 +15,8 @@ export interface ICourse {
   language: ILanguage;
   lessons: ILesson[];
   users: IUser[];
+  averageRating: number;
+  totalRatings: number;
 }
 
 export default ICourse;
