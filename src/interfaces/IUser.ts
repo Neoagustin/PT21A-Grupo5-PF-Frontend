@@ -1,3 +1,4 @@
+
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
 
@@ -36,3 +37,4 @@ export interface IUser {
   courses: ICourse[];
   membership: IMembership;
 }
+

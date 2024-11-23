@@ -25,6 +25,7 @@ export const ListClassesView: React.FC<IListClassesView> = async ({
   if (!findCourse || !findLesson) redirect("/not-found");
 
   return (
+
     <div className="flex flex-col gap-5 xl:flex-row-reverse xl:justify-between">
       <VideoClass
         lesson={findLesson}
@@ -59,7 +60,7 @@ export const ListClassesView: React.FC<IListClassesView> = async ({
           ))}
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 

@@ -10,8 +10,10 @@ export const SubscriptionInfo: React.FC = () => {
   if (!user) return;
 
   const subscriptionName =
+
     user.membership.subscription?.name.charAt(0).toUpperCase() +
     user.membership.subscription?.name.slice(1).toLowerCase();
+
 
   const isValidSubscriptionName = (name: string): name is SubscriptionName => {
     return ["Standard", "Premium", "Pro"].includes(name);
@@ -26,6 +28,7 @@ export const SubscriptionInfo: React.FC = () => {
             button={false}
             isCurrent={true}
           />
+
           <Link
             className="text-whitePage border border-violet text-[14px] tracking-[1px] bg-violet font-bold py-[7px] px-[22px] rounded-[4px] transition-all duration-300 ease-in-out 
           hover:bg-[#fff0] hover:text-violet
@@ -34,6 +37,7 @@ export const SubscriptionInfo: React.FC = () => {
           >
             VER MÁS PLANES
           </Link>
+
         </>
       )}
     </div>

@@ -46,7 +46,9 @@ const LanguageView: React.FC<{ slug: string }> = ({
   };
 
   return (
+
     <div className="min-h-[calc(100vh-80px)] flex items-center">
+
       {loading ? (
         <Loading />
       ) : (
