@@ -2,7 +2,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import ICourseAdminContextProps from "./types";
 import ICourse from "@/interfaces/ICourse";
-import { deleteCourse, fetchCourses, fetchCoursesPage } from "@/services/courses/courses.service";
+import { deleteCourse, fetchCoursesPage } from "@/services/courses/courses.service";
+import { fetchCourses } from "@/services/fetchCourses";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
 

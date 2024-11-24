@@ -1,17 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { handleSelectPaymentMethod } from "./types";
+import { handleSelectPaymentMethod, ICheckoutViewProps } from "./types";
 import Image from "next/image";
 import SubscriptionPlanCard from "@/components/GeneralComponents/SubscriptionPlanCard/SubscriptionPlanCard";
 import { SubscriptionName } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 
-const CheckoutView: React.FC<{ slug: string }> = ({
+const CheckoutView: React.FC<ICheckoutViewProps> = ({
   slug,
-}: {
-  slug: string;
-}): React.ReactElement => {
+}: ICheckoutViewProps): React.ReactElement => {
   const router = useRouter();
 
   //const [selectedCard, setSelectedCard] = useState<string | null>(null);
