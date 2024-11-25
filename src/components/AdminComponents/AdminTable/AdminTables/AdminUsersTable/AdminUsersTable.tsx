@@ -5,10 +5,10 @@ import Swal from "sweetalert2";
 import React from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../IdModal/UserIdModal";
+import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
 import { faUserSlash } from "@fortawesome/free-solid-svg-icons";
-import EditModal from "../../EditModal/EditModal";
+import EditModal from "../../AdminModals/EditModal/EditModal";
 import useEditUserModal from "@/hooks/Modals/useEditModal";
 
 const AdminUsersTable = () => {

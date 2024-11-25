@@ -1,5 +1,11 @@
 import React from "react";
-import { headersStudentsTable, headersLanguageTable, headersTeachersTable } from "./utils";
+import {
+  headersStudentsTable,
+  headersLanguageTable,
+  headersTeachersTable,
+  headersCoursesTable,
+  headersLessonsTable,
+} from "./utils";
 import useSegment from "@/hooks/useSegment";
 
 const AdminTableHeader = () => {
@@ -9,7 +15,11 @@ const AdminTableHeader = () => {
       ? headersLanguageTable
       : segment === "students"
       ? headersStudentsTable
-      : headersTeachersTable;
+      : segment === "teachers"
+      ? headersTeachersTable
+      : segment === "courses"
+      ? headersCoursesTable
+      : headersLessonsTable;
 
   return (
     <thead>

@@ -3,11 +3,12 @@ import React from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../IdModal/UserIdModal";
+import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faStar, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
 import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const AdminCoursesTable = () => {
   const { loading, error, courses, deleteCourseById } = useCoursesAdminContext();
@@ -42,40 +43,57 @@ const AdminCoursesTable = () => {
                 </td>
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
+                    className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                     onClick={() => handleOpenModal(item.id)}
                   >
                     Ver ID
                   </button>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap">{item.title}</td>
+                <td className="py-3 px-6 whitespace-nowrap text-center">{item.specialization}</td>
+                <td className="py-3 px-6 whitespace-nowrap">{item.level}</td>
+                <td className="py-3 px-6 whitespace-nowrap text-center">
+                  <div className="flex justify-center items-center gap-1">
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className="text-yellow-500 w-[14px] sm:w-[16px]"
+                    />
+                    <span>{item.averageRating.toFixed(1)}</span>
+                  </div>
+                </td>
                 <td className="py-3 px-6 whitespace-nowrap">
                   <Link
-                    href={`/admin/languages/${item.title}/courses`}
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
+                    href={{
+                      pathname: `/admin/languages/${item.language.path}/courses/lessons`,
+                      query: { id: item.id },
+                    }}
+                    className="bg-skyblue text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                   >
-                    Ver Cursos
+                    Ver Clases
                   </Link>
                 </td>
-                <td className="py-3 px-6 whitespace-nowrap text-red hover:text-redHover hover:underline cursor-pointer">
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <button className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover">
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                    Editar
+                  </button>
+                </td>
+                <td className="py-3 px-6 whitespace-nowrap">
                   <button
+                    className="flex gap-1 items-center text-whitePage bg-red py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-redHover"
                     onClick={() =>
                       Swal.fire({
                         title: "¿Estás seguro?",
-                        text: `Eliminarás este curso de los registros.`,
+                        text: `Eliminarás este curso.`,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonText: "Cancelar",
-                        confirmButtonText: "Sí, eliminar",
+                        confirmButtonText: "Sí, Eliminar",
                         reverseButtons: false,
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deleteCourseById(item.id);
-                          Swal.fire(
-                            "Eliminado",
-                            `Has eliminado el curso de los registros.`,
-                            "success"
-                          );
+                          Swal.fire("Desactivado", `Has Eliminado el curso`, "success");
                         }
                       })
                     }
@@ -87,7 +105,7 @@ const AdminCoursesTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={7} className="py-3 px-6 text-center text-gray-500">
+              <td colSpan={9} className="py-3 px-6 text-center text-gray-500">
                 No hay datos disponibles.
               </td>
             </tr>
