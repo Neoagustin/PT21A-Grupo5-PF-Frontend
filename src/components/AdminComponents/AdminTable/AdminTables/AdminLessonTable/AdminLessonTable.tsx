@@ -1,16 +1,16 @@
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/Modals/useModal";
 import React from "react";
-import AdminTableHeader from "../AdminTableHeader/AdminTableHeader";
-import Link from "next/link";
+import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../UserIdModal/UserIdModal";
+import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 import Swal from "sweetalert2";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-const AdminLanguagesTable = () => {
-  const { loading, error, languages, deleteLanguageById } = useLanguageAdminContext();
+const AdminLessonsTable = () => {
+  const { loading, error, lessons, deleteLessonById } = useLessonsAdminContext();
   const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
 
   if (loading) return <Loading />;
@@ -28,8 +28,8 @@ const AdminLanguagesTable = () => {
       <table className="min-w-full bg-white border border-lightgrayTransparent text-[14px] sm:text-[16px]">
         <AdminTableHeader />
         <tbody>
-          {languages.length > 0 ? (
-            languages.map((item) => (
+          {lessons.length > 0 ? (
+            lessons.map((item) => (
               <tr key={item.id} className="border-b border-lightgrayTransparent text-darkgray">
                 <td className="pt-4 pb-0 pl-3 pr-0 flex items-center justify-center xl:pr-6 xl:pl-6">
                   <label className="inline-flex items-center cursor-pointer">
@@ -42,40 +42,40 @@ const AdminLanguagesTable = () => {
                 </td>
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
+                    className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                     onClick={() => handleOpenModal(item.id)}
                   >
                     Ver ID
                   </button>
                 </td>
-                <td className="py-3 px-6 whitespace-nowrap">{item.name}</td>
-                <td className="py-3 px-6 whitespace-nowrap">
-                  <Link
-                    href={`/admin/languages/${item.name}/courses`}
-                    className="text-skyblue hover:text-skyblueHover hover:underline"
-                  >
-                    Ver Cursos
-                  </Link>
+                <td className="py-3 px-6 whitespace-nowrap">{item.title}</td>
+                <td className="py-3 px-6 whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
+                  {item.content}
                 </td>
-                <td className="py-3 px-6 whitespace-nowrap text-red hover:text-redHover hover:underline cursor-pointer">
+
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <button className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover">
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                    Editar
+                  </button>
+                </td>
+
+                <td className="py-3 px-6 whitespace-nowrap">
                   <button
+                    className="flex gap-1 items-center text-whitePage bg-red py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-redHover"
                     onClick={() =>
                       Swal.fire({
                         title: "¿Estás seguro?",
-                        text: `Eliminarás el idioma ${item.name} de los registros.`,
+                        text: `Eliminarás esta clase.`,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonText: "Cancelar",
-                        confirmButtonText: "Sí, eliminar",
+                        confirmButtonText: "Sí, Eliminar",
                         reverseButtons: false,
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          deleteLanguageById(item.id);
-                          Swal.fire(
-                            "Eliminado",
-                            `Has eliminado el idioma ${item.name} de los registros.`,
-                            "success"
-                          );
+                          deleteLessonById(item.id);
+                          Swal.fire("Eliminada", `Has eliminado la clase`, "success");
                         }
                       })
                     }
@@ -87,7 +87,7 @@ const AdminLanguagesTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={7} className="py-3 px-6 text-center text-gray-500">
+              <td colSpan={8} className="py-3 px-6 text-center text-gray-500">
                 No hay datos disponibles.
               </td>
             </tr>
@@ -104,4 +104,4 @@ const AdminLanguagesTable = () => {
   );
 };
 
-export default AdminLanguagesTable;
+export default AdminLessonsTable;

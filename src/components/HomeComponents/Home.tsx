@@ -4,10 +4,10 @@ import HomeSectionsList from "./HomeSectionsList/HomeSectionsList";
 
 const Home: React.FC = () => {
   return (
-    <main className="mx-auto md:max-w-[860px] xl:max-w-[1200px] text-blackPage">
+    <div className="-mt-10 mx-auto md:max-w-[860px] xl:max-w-[1200px] text-blackPage">
       <Banner />
       <HomeSectionsList />
-    </main>
+    </div>
   );
 };
 

@@ -15,10 +15,13 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
   className,
   button = true,
 }) => {
-  const { subscriptionPlan, loading, error, isFree } = useSubscriptionPlan(subName);
+  const { subscriptionPlan, loading, error, isFree } =
+    useSubscriptionPlan(subName);
 
   if (loading || error || !subscriptionPlan) {
-    return <div>{loading ? <Loading /> : error || "No se encontrÃ³ el plan"}</div>;
+    return (
+      <div>{loading ? <Loading /> : error || "No se encontró el plan"}</div>
+    );
   }
 
   const { name, price, description } = subscriptionPlan;
@@ -42,7 +45,11 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
       <div>
         <div
           className={`${
-            name === "Standard" ? "bg-lightgray" : name === "Premium" ? "bg-skyblue" : "bg-violet"
+            name === "Standard"
+              ? "bg-lightgray"
+              : name === "Premium"
+              ? "bg-skyblue"
+              : "bg-violet"
           } 
         h-[11px] rounded-t-[7px]`}
         ></div>
@@ -68,7 +75,9 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
               md:px-[14px] md:h-8
               "
             >
-              <p className="text-violet font-bold text-[12px] md:text-[14px]">Recomendado</p>
+              <p className="text-violet font-bold text-[12px] md:text-[14px]">
+                Recomendado
+              </p>
             </div>
           ) : null}
           {isCurrent ? (
@@ -78,7 +87,9 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
               md:px-[14px] md:h-8
               "
             >
-              <p className="text-green font-bold text-[12px] md:text-[14px]">PLAN ACTUAL</p>
+              <p className="text-green font-bold text-[12px] md:text-[14px]">
+                PLAN ACTUAL
+              </p>
             </div>
           ) : null}
         </div>
@@ -101,7 +112,6 @@ const SubscriptionPlanCard: React.FC<ISubscriptionPlanCardProps> = ({
         <div className="mt-auto text-center pb-4">
           <Link
             href={href}
-
             className="
           text-whitePage border border-violet text-[14px] tracking-[1px] bg-violet font-bold py-[7px] px-[22px] rounded-[4px] transition-all duration-300 ease-in-out 
           hover:bg-[#fff0] hover:text-violet

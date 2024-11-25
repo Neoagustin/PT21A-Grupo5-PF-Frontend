@@ -2,20 +2,15 @@ import CheckoutView from "@/components/CheckoutComponents/CheckoutView/CheckoutV
 import React from "react";
 
 interface ICheckoutProps {
-    params: {
-        slug: string;
-    };
+  params: {
+    slug: string;
+  };
 }
 
-const Checkout: React.FC<ICheckoutProps> = ({ params }: ICheckoutProps) => {
+export const Checkout: React.FC<ICheckoutProps> = ({ params }: ICheckoutProps) => {
+  const { slug } = params;
 
-    const { slug } = params;
-
-    return (
-
-        <CheckoutView slug={slug} />
-
-    );
+  return <CheckoutView slug={slug} />;
 };
 
 export default Checkout;

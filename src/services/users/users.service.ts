@@ -1,4 +1,4 @@
-import { IUser } from "@/interfaces/IUser";
+import { IUpdateUser, IUser } from "@/interfaces/IUser";
 import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -57,9 +57,12 @@ export const createUser = async (userData: IUser) => {
   }
 };
 
-export const updateUser = async (id: string, userData: IUser) => {
+export const fetchUpdateUserAdmin = async (id: string, userData: IUpdateUser) => {
   try {
     const response = await axios.patch(`${API_URL}/users/${id}`, userData);
+
+    console.log(response);
+
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -83,12 +86,29 @@ export const replaceUser = async (id: string, userData: IUser) => {
   }
 };
 
-export const deleteUser = async (id: string) => {
+export const fetchDeactivateUser = async (id: string) => {
   try {
     const response = await axios.delete(`${API_URL}/users/${id}`);
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
+  }
+};
+
+export const fetchUsersSubscriptions = async (userId: string, subscriptionId: string) => {
+  try {
+    const response = await axios.put(`${API_URL}/users/user-subscription/${userId}`, {
+      subscriptionId,
+    });
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err);
+
       throw new Error(err.message);
     } else {
       throw new Error("Unknown error occurred");

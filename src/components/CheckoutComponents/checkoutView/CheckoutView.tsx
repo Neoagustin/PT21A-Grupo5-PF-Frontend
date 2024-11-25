@@ -71,7 +71,9 @@ export default CheckoutView
 
 //const [selectedCard, setSelectedCard] = useState<string | null>(null);
 //const [saveCard, setSaveCard] = useState<boolean>(false)
+
 //${selectedCard === "Credit Card" ? 'bg-blue-500 border-blue-500' : ''}
 //${selectedCard === "Debit Card" ? 'bg-blue-500 border-blue-500' : ''}
 //${saveCard === true ? 'bg-violet' : ''}
 //${selectedPaymentMethod === "Card" ? 'bg-blue-500 border-blue-500' : ''}
+

@@ -1,10 +1,25 @@
 import React from "react";
-import { headersTable, headersLanguageTable } from "./utils";
+import {
+  headersStudentsTable,
+  headersLanguageTable,
+  headersTeachersTable,
+  headersCoursesTable,
+  headersLessonsTable,
+} from "./utils";
 import useSegment from "@/hooks/useSegment";
 
 const AdminTableHeader = () => {
   const { segment } = useSegment();
-  const header = segment === "languages" ? headersLanguageTable : headersTable;
+  const header =
+    segment === "languages"
+      ? headersLanguageTable
+      : segment === "students"
+      ? headersStudentsTable
+      : segment === "teachers"
+      ? headersTeachersTable
+      : segment === "courses"
+      ? headersCoursesTable
+      : headersLessonsTable;
 
   return (
     <thead>
