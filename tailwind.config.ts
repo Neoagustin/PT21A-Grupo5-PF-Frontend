@@ -6,7 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -14,7 +14,6 @@ const config: Config = {
         blackPageHover: "#333",
         whitePage: "#FAFAFA",
         violet: "#0033A0",
-        violetHover: "#1E57D1",
         skyblue: "#1E90FF",
         skyblueHover: "#146B9B",
         darkgray: "#6C757D",

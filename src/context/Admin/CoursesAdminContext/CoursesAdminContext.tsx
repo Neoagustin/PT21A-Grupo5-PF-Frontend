@@ -1,8 +1,9 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import ICourseAdminContextProps from "./types";
+import ICourseAdminContextProps, { ICoursesTables } from "./types";
 import ICourse from "@/interfaces/ICourse";
-import { deleteCourse, fetchCourses, fetchCoursesPage } from "@/services/courses/courses.service";
+import { deleteCourse, fetchCoursesByLanguage } from "@/services/courses/courses.service";
+import useSegment from "@/hooks/useSegment";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
 
@@ -12,7 +13,9 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [page, setPage] = useState<number>(1);
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [maxPages, setMaxPages] = useState<number>(0);
-  const recordsPerPage = 5;
+  const { getLastTwoSegments } = useSegment();
+  const languageName = getLastTwoSegments()[0];
+  const dataLimit = 5;
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
@@ -27,24 +30,13 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   useEffect(() => {
-    const fetchLanguagesList = async () => {
-      try {
-        const coursesList: ICourse[] = await fetchCourses();
-        setMaxPages(Math.ceil(coursesList.length / recordsPerPage));
-      } catch (err) {
-        setError(err instanceof Error ? `Courses: ${err.message}` : "Error al obtener cursos");
-      }
-    };
-
-    fetchLanguagesList();
-  }, []);
-
-  useEffect(() => {
     const fetchCoursesPageData = async () => {
       setLoading(true);
       try {
-        const coursesPage: ICourse[] = await fetchCoursesPage(page, recordsPerPage);
-        setCourses(coursesPage);
+        const response: ICoursesTables = await fetchCoursesByLanguage(languageName, dataLimit);
+        const { data, total } = response;
+        setCourses(data);
+        setMaxPages(Math.ceil(total / dataLimit));
       } catch (err) {
         setError(err instanceof Error ? `Page: ${err.message}` : "Ha ocurrido un error");
       } finally {
@@ -52,7 +44,7 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
       }
     };
     fetchCoursesPageData();
-  }, [page]);
+  }, [page, languageName]);
 
   return (
     <CoursesAdminContext.Provider

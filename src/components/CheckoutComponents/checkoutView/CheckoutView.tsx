@@ -1,43 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { handleSelectPaymentMethod } from "./types";
+import { handleSelectPaymentMethod, ICheckoutViewProps } from "./types";
 import Image from "next/image";
 import SubscriptionPlanCard from "@/components/GeneralComponents/SubscriptionPlanCard/SubscriptionPlanCard";
 import { SubscriptionName } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 
-const CheckoutView: React.FC<{ slug: string }> = ({
+const CheckoutView: React.FC<ICheckoutViewProps> = ({
   slug,
-}: {
-  slug: string;
-}): React.ReactElement => {
+}: ICheckoutViewProps): React.ReactElement => {
   const router = useRouter();
 
   //const [selectedCard, setSelectedCard] = useState<string | null>(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    string | null
-  >("Bank Transfer");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(
+    "Bank Transfer"
+  );
   //const [saveCard, setSaveCard] = useState<boolean>(false)
   const [suscription, setSuscription] = useState<string | null>(null);
 
   useEffect(() => {
     setSuscription(slug);
 
-    if (suscription && !["premium", "pro"].includes(suscription))
-      router.push("/not-found");
-
+    if (suscription && !["premium", "pro"].includes(suscription)) router.push("/not-found");
   }, [slug, router, suscription]);
 
   const handlePayment = (suscription: string | null) => {
     if (suscription === "premium") {
       const paymentUrl =
         "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c938084930f529801932bca1e2b09a5";
-      const paymentWindow = window.open(
-        paymentUrl,
-        "_blank",
-        "width=800,height=600"
-      );
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=800,height=600");
       const interval = setInterval(() => {
         if (paymentWindow?.closed) {
           clearInterval(interval);
@@ -47,11 +39,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({
     } else {
       const paymentUrl =
         "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380849323ec5801932bcd00c00374";
-      const paymentWindow = window.open(
-        paymentUrl,
-        "_blank",
-        "width=800,height=600"
-      );
+      const paymentWindow = window.open(paymentUrl, "_blank", "width=800,height=600");
       const interval = setInterval(() => {
         if (paymentWindow?.closed) {
           clearInterval(interval);
@@ -62,13 +50,8 @@ const CheckoutView: React.FC<{ slug: string }> = ({
   };
 
   return (
-
     <div>
-      <h1 className="font-bold text-[18px] ml-[20px] sm:text-[21px] md:text-[23px] lg:text-[25px] xl:text-[28px] sm:mt-[25px] sm:ml-[25px] md:mt-[35px] md:ml-[35px] lg:mt-[40px] lg:ml-[45px] xl:mt-[40px] xl:ml-[40px]">
-
-    <>
       <h1 className="font-bold text-[18px] mt-[20px] ml-[20px] sm:text-[21px] md:text-[23px] lg:text-[25px] xl:text-[28px] sm:mt-[25px] sm:ml-[25px] md:mt-[35px] md:ml-[35px] lg:mt-[40px] lg:ml-[45px] xl:mt-[40px] xl:ml-[40px]">
-
         Confirmar Suscripción
       </h1>
 
@@ -92,23 +75,17 @@ const CheckoutView: React.FC<{ slug: string }> = ({
                 />
                 <span
                   className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out ${
-                    selectedPaymentMethod === "Card"
-                      ? "bg-blue-500 border-blue-500"
-                      : ""
+                    selectedPaymentMethod === "Card" ? "bg-blue-500 border-blue-500" : ""
                   }`}
                 ></span>
                 <Image
                   className="sm:w-[38px] sm:h-[38px] md:w-[42px] md:h-[42px]"
-                  src={
-                    "https://i.pinimg.com/236x/f1/61/5c/f1615c9e1df0c6f693086954aeb61d22.jpg"
-                  }
+                  src={"https://i.pinimg.com/236x/f1/61/5c/f1615c9e1df0c6f693086954aeb61d22.jpg"}
                   alt="CARD"
                   width={32}
                   height={32}
                 />
-                <span className="text-[15px] sm:text-[17px] md:text-[20px]">
-                  Tarjeta
-                </span>
+                <span className="text-[15px] sm:text-[17px] md:text-[20px]">Tarjeta</span>
               </label>
             </div>
             <div className="flex">
@@ -173,9 +150,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({
                 <span
                   className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out`}
                 ></span>
-                <span className="text-[13px] sm:text-[15px] md:text-[18px]">
-                  Tarjeta de Débito
-                </span>
+                <span className="text-[13px] sm:text-[15px] md:text-[18px]">Tarjeta de Débito</span>
               </label>
             </div>
           </div>
@@ -318,18 +293,13 @@ const CheckoutView: React.FC<{ slug: string }> = ({
                   name="paymentMethod"
                   checked={selectedPaymentMethod === "Bank Transfer"}
                   onClick={() =>
-                    handleSelectPaymentMethod(
-                      setSelectedPaymentMethod,
-                      "Bank Transfer"
-                    )
+                    handleSelectPaymentMethod(setSelectedPaymentMethod, "Bank Transfer")
                   }
                   className="hidden"
                 />
                 <span
                   className={`w-[18px] h-[18px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out ${
-                    selectedPaymentMethod === "Bank Transfer"
-                      ? "bg-blue-500 border-blue-500"
-                      : ""
+                    selectedPaymentMethod === "Bank Transfer" ? "bg-blue-500 border-blue-500" : ""
                   }`}
                 ></span>
                 <Image
@@ -373,20 +343,13 @@ const CheckoutView: React.FC<{ slug: string }> = ({
           {/* APERTURA DIV ESPACIO 2 */}
           <div className="flex items-center justify-center lg:mr-[15px]">
             <div className="w-fit h-fit">
-              <SubscriptionPlanCard
-                button={false}
-                subName={slug as SubscriptionName}
-              />
+              <SubscriptionPlanCard button={false} subName={slug as SubscriptionName} />
             </div>
           </div>
         </div>{" "}
         {/* CIERRE DIV ESPACIO 2 */}
       </div>
-
     </div>
-
-    </>
-
   );
 };
 

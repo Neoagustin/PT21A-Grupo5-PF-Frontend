@@ -18,13 +18,13 @@ const SubscriptionsList: React.FC = () => {
       />
       <SubscriptionPlanCard
         subName="Premium"
-        button={user?.role !== 'admin'}
+        button={user?.role !== "admin"}
         isRecommended={true}
         isCurrent={!!(token && user && user.subscription?.name === "Premium")}
       />
       <SubscriptionPlanCard
         subName="Pro"
-        button={user?.role !== 'admin'}
+        button={user?.role !== "admin"}
         className="sm:col-span-2 sm:w-[50%] xl:w-[100%]"
         isCurrent={!!(token && user && user.subscription?.name === "Pro")}
       />
