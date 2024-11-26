@@ -1,3 +1,5 @@
+
+import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
 import { ISuscription } from "./ISubscription";
@@ -36,5 +38,5 @@ export interface IUser {
   createdAt: string;
   courses: ICourse[];
   membership: IMembership;
-  subscription: ISuscription;
+  subscription: ISubscription;
 }

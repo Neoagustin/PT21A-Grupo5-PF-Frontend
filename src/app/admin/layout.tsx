@@ -5,6 +5,8 @@ import { UserAdminProvider } from "@/context/Admin/UserAdminContext/UserAdminCon
 import { Metadata } from "next";
 import { LanguageAdminProvider } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import { CoursesAdminProvider } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
+import { CreateModalProvider } from "@/context/Modals/CreateModalContext";
+import { LessonsAdminProvider } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 
 export const metadata: Metadata = {
   title: "Admin - Rompiendo Barreras",
@@ -17,7 +19,11 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
       <AdminProvider>
         <UserAdminProvider>
           <LanguageAdminProvider>
-            <CoursesAdminProvider>{children}</CoursesAdminProvider>
+            <CoursesAdminProvider>
+              <CreateModalProvider>
+                <LessonsAdminProvider>{children}</LessonsAdminProvider>
+              </CreateModalProvider>
+            </CoursesAdminProvider>
           </LanguageAdminProvider>
         </UserAdminProvider>
       </AdminProvider>

@@ -11,4 +11,9 @@ interface ICourseAdminContextProps {
   deleteCourseById: (id: string) => void;
 }
 
+export interface ICoursesTables {
+  data: ICourse[];
+  total: number;
+}
+
 export default ICourseAdminContextProps;

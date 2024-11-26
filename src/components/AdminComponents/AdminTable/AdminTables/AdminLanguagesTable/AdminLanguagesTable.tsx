@@ -3,7 +3,7 @@ import React from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../IdModal/UserIdModal";
+import UserIdModal from "../../../AdminModals/IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
@@ -51,7 +51,7 @@ const AdminLanguagesTable = () => {
                 <td className="py-3 px-6 whitespace-nowrap">{item.name}</td>
                 <td className="py-3 px-6 whitespace-nowrap">
                   <Link
-                    href={`/admin/languages/${item.name}/courses`}
+                    href={`/admin/languages/${item.path}/courses`}
                     className="bg-skyblue text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
                   >
                     Ver Cursos
@@ -72,11 +72,14 @@ const AdminLanguagesTable = () => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deleteLanguageById(item.id);
-                          Swal.fire(
-                            "Eliminado",
-                            `Has eliminado el idioma ${item.name} de los registros.`,
-                            "success"
-                          );
+                          Swal.fire({
+                            title: "Eliminado",
+                            text: `Has eliminado el idioma ${item.name} de los registros.`,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1300,
+                            timerProgressBar: true,
+                          });
                         }
                       })
                     }

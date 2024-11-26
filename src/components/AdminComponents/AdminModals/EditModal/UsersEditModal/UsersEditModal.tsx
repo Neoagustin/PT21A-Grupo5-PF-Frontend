@@ -1,25 +1,67 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IEditModalProps } from "./types";
+import { IUsersEditModalProps } from "./types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import { IEditUserFormValues, IUpdateUser } from "@/interfaces/IUser";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
+import Swal from "sweetalert2";
+import { useAdminContext } from "@/context/AdminContext/AdminContext";
 
-const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
+const UserEditModal: React.FC<IUsersEditModalProps> = ({ data, onClose }) => {
   const { updateUserById, usersSubscriptions } = useUserAdminContext();
+  const { title } = useAdminContext();
 
   const handleOnSubmit = (values: IEditUserFormValues) => {
     const { name, email, idNumber, role, state } = values;
     const isActive = state === "active";
-    console.log("Initial subscriptionName value:", values.subscriptionName);
     const subscriptionName = values.subscriptionName || "standard";
     const userData: IUpdateUser = { name, email, idNumber, role, isActive };
+    console.log(`VALORES DEL FORMULARIO: ${JSON.stringify(values, null, 2)}`);
+
     try {
       updateUserById(data.id, userData);
       usersSubscriptions(data.id, subscriptionName);
+
+      Swal.fire({
+        title: "¡Éxito!",
+        text: "Los cambios se han guardado correctamente.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1300,
+        timerProgressBar: true,
+        position: "bottom-end",
+        toast: true,
+        background: "#28a745",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+
       onClose();
     } catch (error) {
       console.error("Error al actualizar el usuario:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al guardar los cambios. Intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FF5252",
+        position: "bottom-end",
+        toast: true,
+        background: "#FF5252",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
     }
   };
 
@@ -52,7 +94,7 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
             className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content]
             sm:text-[16px] sm:max-w-[460px]"
           >
-            <Subtitle label="Editar Usuario" />
+            <Subtitle label={`Editar ${title}`} />
             <div>
               <label
                 htmlFor="name"
@@ -179,4 +221,4 @@ const EditModal: React.FC<IEditModalProps> = ({ data, onClose }) => {
   );
 };
 
-export default EditModal;
+export default UserEditModal;

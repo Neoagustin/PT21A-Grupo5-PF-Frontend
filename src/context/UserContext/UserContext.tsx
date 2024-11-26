@@ -46,8 +46,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === null)
-    throw new Error(
-      "El contexto debe ser utilizado dentro de un UserProvider."
-    );
+    throw new Error("El contexto debe ser utilizado dentro de un UserProvider.");
   return context;
 };
