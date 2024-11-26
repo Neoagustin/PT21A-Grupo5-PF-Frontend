@@ -3,16 +3,19 @@ import React from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
+import UserIdModal from "../../../AdminModals/IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
 import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
+import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
 
 const AdminCoursesTable = () => {
   const { loading, error, courses, deleteCourseById } = useCoursesAdminContext();
   const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
+  const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
 
   if (loading) return <Loading />;
 
@@ -73,7 +76,10 @@ const AdminCoursesTable = () => {
                   </Link>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap">
-                  <button className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover">
+                  <button
+                    onClick={() => openEditModal({ data: item })}
+                    className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
+                  >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     Editar
                   </button>
@@ -93,7 +99,14 @@ const AdminCoursesTable = () => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deleteCourseById(item.id);
-                          Swal.fire("Desactivado", `Has Eliminado el curso`, "success");
+                          Swal.fire({
+                            title: "Eliminado",
+                            text: "Has Eliminado el curso",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1300,
+                            timerProgressBar: true,
+                          });
                         }
                       })
                     }
@@ -112,6 +125,15 @@ const AdminCoursesTable = () => {
           )}
         </tbody>
       </table>
+
+      {isEditModalOpen && editData && (
+        <EditModal
+          key={editData.data.id}
+          data={editData.data}
+          type="course"
+          onClose={closeEditModal}
+        />
+      )}
 
       <UserIdModal
         isModalOpen={isModalOpen}

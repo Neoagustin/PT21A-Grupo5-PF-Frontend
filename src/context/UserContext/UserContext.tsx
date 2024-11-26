@@ -25,7 +25,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleOpenModal = () => setModal(true);
 
   const handleCloseModal = () => setModal(false);
-  console.log(user);
   return (
     <UserContext.Provider
       value={{
@@ -46,8 +45,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === null)
-    throw new Error(
-      "El contexto debe ser utilizado dentro de un UserProvider."
-    );
+    throw new Error("El contexto debe ser utilizado dentro de un UserProvider.");
   return context;
 };

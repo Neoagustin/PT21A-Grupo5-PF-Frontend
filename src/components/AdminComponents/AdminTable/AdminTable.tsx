@@ -3,8 +3,8 @@ import AdminUsersTable from "./AdminTables/AdminUsersTable/AdminUsersTable";
 import AdminLanguagesTable from "./AdminTables/AdminLanguagesTable/AdminLanguagesTable";
 import AdminCoursesTable from "./AdminTables/AdminCoursesTable/AdminCoursesTable";
 import useSegment from "@/hooks/useSegment";
-import CreateModalButton from "./AdminModals/CreateModal/CreateModalButton/CreateModalButton";
-import CreateModal from "./AdminModals/CreateModal/CreateModal";
+import CreateModalButton from "../AdminModals/CreateModal/CreateModalButton/CreateModalButton";
+import CreateModal from "../AdminModals/CreateModal/CreateModal";
 import { useCreateModalContext } from "@/context/Modals/CreateModalContext";
 import AdminLessonsTable from "./AdminTables/AdminLessonTable/AdminLessonTable";
 
