@@ -18,7 +18,7 @@ export const CourseIntro: React.FC<ICourseIntroProps> = async ({
     (course: ICourse) => course.title.toLowerCase() === courseName
   );
 
-  if (!findCourse) redirect("/not-found");
+  if (!findCourse) return redirect("/not-found");
 
   return (
     <div className="flex flex-col gap-5">
@@ -31,7 +31,7 @@ export const CourseIntro: React.FC<ICourseIntroProps> = async ({
       <div className="flex items-center justify-between">
         <StarRating course={findCourse} />
         <h3 className="text-gray text-xs font-medium sm:text-[14px]">
-          {findCourse.users.length} estudiantes
+          {findCourse.students.length} estudiantes
         </h3>
       </div>
       <div className="w-full h-[2px] bg-lightgray"></div>

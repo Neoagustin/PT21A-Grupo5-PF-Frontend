@@ -25,6 +25,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleOpenModal = () => setModal(true);
 
   const handleCloseModal = () => setModal(false);
+
   return (
     <UserContext.Provider
       value={{

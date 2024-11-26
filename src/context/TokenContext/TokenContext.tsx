@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ITokenContextProps } from "./types";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useUser } from "../UserContext/UserContext";
 
 const TokenContext = createContext<ITokenContextProps | null>(null);
 
@@ -11,6 +12,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const {setUser} = useUser();
 
   useEffect(() => {
     const savedToken = localStorage.getItem("userToken");
@@ -26,6 +28,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     Cookies.remove("userToken");
     Cookies.remove("userData");
     setToken(null);
+    setUser(null)
     router.push('/');
   };
 

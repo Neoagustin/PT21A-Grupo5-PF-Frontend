@@ -30,6 +30,10 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
   
 
 
+    if (suscription && !["premium", "pro"].includes(suscription)) return router.push("/not-found");
+  }, [slug, router, suscription]);
+
+
 
   return (
 
@@ -66,8 +70,6 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): R
 </>
 )}
 export default CheckoutView
-
-//Agregado para seleccionar metodo de pago una vez que funciones el formulario.-
 
 //const [selectedCard, setSelectedCard] = useState<string | null>(null);
 //const [saveCard, setSaveCard] = useState<boolean>(false)

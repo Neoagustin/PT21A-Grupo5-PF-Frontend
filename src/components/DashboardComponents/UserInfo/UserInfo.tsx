@@ -17,16 +17,22 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
   const { user } = useUser();
   const router = useRouter();
 
-console.log(user)
-  if (!user) return;
+  if (!user) return null;
 
-  if (!['profile', 'subscription', 'security'].includes(slug)) router.push('/not-found');
+  if (slug === "security" && user.authId) {
+    router.push("/not-found");
+    return null;
+  }
+
+  if (!["profile", "subscription", "security"].includes(slug)) {
+    router.push("/not-found");
+    return null;
+  }
 
   return (
     <div className="flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
-
       <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 xl:w-[220px]">
           <div className="flex flex-col items-center gap-5 xl:self-center">
             <Image
               className="rounded-full bg-gray"
@@ -52,12 +58,14 @@ console.log(user)
                 path="subscription"
               />
             )}
-            <ButtonData
-              logo={faLock}
-              name="SEGURIDAD DE LA CUENTA"
-              isActive={slug === "security"}
-              path="security"
-            />
+            {!user.authId && (
+              <ButtonData
+                logo={faLock}
+                name="SEGURIDAD DE LA CUENTA"
+                isActive={slug === "security"}
+                path="security"
+              />
+            )}
           </div>
         </div>
         <div className="w-full h-[1px] bg-gray xl:w-[1px] xl:h-[500px]"></div>
@@ -67,7 +75,7 @@ console.log(user)
           <UserData user={user} />
         ) : slug === "security" ? (
           <ChangePassword />
-        ) : slug === "subscription" && user.role !== 'admin' ? (
+        ) : slug === "subscription" && user.role !== "admin" ? (
           <SubscriptionInfo />
         ) : null}
       </div>

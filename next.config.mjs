@@ -22,6 +22,7 @@ const nextConfig = {
       "i.pinimg.com",
       "cdn.britannica.com",
       "imagizer.imageshack.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };

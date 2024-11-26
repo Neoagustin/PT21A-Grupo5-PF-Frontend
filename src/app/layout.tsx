@@ -17,8 +17,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="es">
       <body className="antialiased">
-        <TokenProvider>
-          <UserProvider>
+        <UserProvider>
+          <TokenProvider>
             <UserMenuProvider>
               <MenuProvider>
                 <Header />
@@ -26,8 +26,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Footer />
               </MenuProvider>
             </UserMenuProvider>
-          </UserProvider>
-        </TokenProvider>
+          </TokenProvider>
+        </UserProvider>
       </body>
     </html>
   );
