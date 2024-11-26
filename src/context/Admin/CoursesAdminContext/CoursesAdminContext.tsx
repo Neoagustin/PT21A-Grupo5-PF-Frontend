@@ -29,6 +29,13 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   };
 
+  // const updateUserById = async (id: string) => {
+  //   try {
+  //   } catch (err) {
+  //     setError(err instanceof Error ? err.message : "Error al Actualizar curso");
+  //   }
+  // };
+
   useEffect(() => {
     const fetchCoursesPageData = async () => {
       setLoading(true);

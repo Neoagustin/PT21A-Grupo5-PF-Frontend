@@ -2,7 +2,7 @@ import useModal from "@/hooks/Modals/useModal";
 import React from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
+import UserIdModal from "../../../AdminModals/IdModal/UserIdModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
@@ -75,7 +75,14 @@ const AdminLessonsTable = () => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deleteLessonById(item.id);
-                          Swal.fire("Eliminada", `Has eliminado la clase`, "success");
+                          Swal.fire({
+                            title: "Eliminada",
+                            text: `Has eliminado la clase.`,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1300,
+                            timerProgressBar: true,
+                          });
                         }
                       })
                     }
