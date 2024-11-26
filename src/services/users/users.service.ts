@@ -16,7 +16,11 @@ export const fetchUsers = async (): Promise<IUser[]> => {
   }
 };
 
-export const fetchUsersPage = async (page: number, limit: number, role: string) => {
+export const fetchUsersPage = async (
+  page: number,
+  limit: number,
+  role: string
+) => {
   try {
     const response = await axios.get(`${API_URL}/users/page`, {
       params: { page, limit, role },
@@ -57,7 +61,10 @@ export const createUser = async (userData: IUser) => {
   }
 };
 
-export const fetchUpdateUserAdmin = async (id: string, userData: IUpdateUser) => {
+export const fetchUpdateUserAdmin = async (
+  id: string,
+  userData: IUpdateUser
+) => {
   try {
     const response = await axios.patch(`${API_URL}/users/${id}`, userData);
 
@@ -99,10 +106,36 @@ export const fetchDeactivateUser = async (id: string) => {
   }
 };
 
-export const fetchUsersSubscriptions = async (userId: string, subscriptionId: string) => {
+export const fetchUsersSubscriptions = async (
+  userId: string,
+  subscriptionId: string
+) => {
   try {
-    const response = await axios.put(`${API_URL}/users/user-subscription/${userId}`, {
-      subscriptionId,
+    const response = await axios.put(
+      `${API_URL}/users/user-subscription/${userId}`,
+      {
+        subscriptionId,
+      }
+    );
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err);
+
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
+  }
+};
+
+export const fetchUserInscriptionCourse = async (
+  userId: string,
+  courseId: string
+) => {
+  try {
+    const response = await axios.put(`${API_URL}/users/enroll/${userId}`, {
+      courseId,
     });
     return response.data;
   } catch (err: unknown) {

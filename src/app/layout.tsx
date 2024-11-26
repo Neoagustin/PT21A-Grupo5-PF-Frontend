@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="antialiased">
-        <TokenProvider>
-          <UserProvider>
+        <UserProvider>
+          <TokenProvider>
             <UserMenuProvider>
               <MenuProvider>
                 <Header />
@@ -30,8 +30,8 @@ export default function RootLayout({
                 <Footer />
               </MenuProvider>
             </UserMenuProvider>
-          </UserProvider>
-        </TokenProvider>
+          </TokenProvider>
+        </UserProvider>
       </body>
     </html>
   );

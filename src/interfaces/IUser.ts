@@ -1,6 +1,6 @@
-
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
+import { ISuscription } from "./ISubscription";
 
 export interface IUpdateUser {
   name?: string;
@@ -36,5 +36,5 @@ export interface IUser {
   createdAt: string;
   courses: ICourse[];
   membership: IMembership;
+  subscription: ISuscription;
 }
-
