@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import ICourse from "@/interfaces/ICourse";
+import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
 import { ICoursesTables } from "@/context/Admin/CoursesAdminContext/types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,6 +46,24 @@ export const fetchGetCourseById = async (id: string): Promise<ICourse> => {
       throw new Error(err.message);
     } else {
       throw new Error("Ocurrio un error desconocido");
+    }
+  }
+};
+
+export const fetchUpdateCourseById = async (id: string, courseData: IUpdateCourse) => {
+  try {
+    const { title, specialization, level } = courseData;
+    const response = await axios.patch(`${API_URL}/courses/${id}`, {
+      title,
+      specialization,
+      level,
+    });
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
     }
   }
 };

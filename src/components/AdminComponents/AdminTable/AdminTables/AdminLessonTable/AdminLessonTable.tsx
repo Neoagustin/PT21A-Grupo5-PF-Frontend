@@ -8,10 +8,13 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 import Swal from "sweetalert2";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
+import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
 
 const AdminLessonsTable = () => {
   const { loading, error, lessons, deleteLessonById } = useLessonsAdminContext();
   const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
+  const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
 
   if (loading) return <Loading />;
 
@@ -54,7 +57,10 @@ const AdminLessonsTable = () => {
                 </td>
 
                 <td className="py-3 px-6 whitespace-nowrap">
-                  <button className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover">
+                  <button
+                    onClick={() => openEditModal({ data: item })}
+                    className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
+                  >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     Editar
                   </button>
@@ -101,6 +107,15 @@ const AdminLessonsTable = () => {
           )}
         </tbody>
       </table>
+
+      {isEditModalOpen && editData && (
+        <EditModal
+          key={editData.data.id}
+          data={editData.data}
+          type="lesson"
+          onClose={closeEditModal}
+        />
+      )}
 
       <UserIdModal
         isModalOpen={isModalOpen}

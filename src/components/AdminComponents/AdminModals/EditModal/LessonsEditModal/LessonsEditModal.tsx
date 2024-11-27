@@ -1,24 +1,22 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ICoursesEditModalProps } from "./types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
-import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
-import { IEditCourseFormValues, ILevel } from "@/interfaces/ICourse";
+import { ILessonsEditModalProps } from "./types";
+import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
+import { IEditLessonFormValues } from "@/interfaces/ILesson";
 
-const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) => {
-  const { updateCourseById } = useCoursesAdminContext();
+const LessonsEditModal: React.FC<ILessonsEditModalProps> = ({ data, onClose }) => {
+  const { updateLessonById } = useLessonsAdminContext();
   const { title } = useAdminContext();
 
-  const handleOnSubmit = (values: IEditCourseFormValues) => {
-    const { title, specialization, level } = values;
-    const courseData = { title, specialization, level };
-
-    console.log(courseData);
+  const handleOnSubmit = (values: IEditLessonFormValues) => {
+    const { title, content } = values;
+    const lessonData = { title, content };
 
     try {
-      updateCourseById(data.id, courseData);
+      updateLessonById(data.id, lessonData);
       Swal.fire({
         title: "¡Éxito!",
         text: "Los cambios se han guardado correctamente.",
@@ -30,7 +28,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
 
       onClose();
     } catch (error) {
-      console.error("Error al actualizar el Curso:", error);
+      console.error("Error al actualizar la clase:", error);
 
       Swal.fire({
         title: "Error",
@@ -56,8 +54,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
       <Formik
         initialValues={{
           title: data.title || "",
-          specialization: data.specialization || "",
-          level: data.level || "",
+          content: data.content || "",
         }}
         onSubmit={handleOnSubmit}
       >
@@ -86,42 +83,20 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
 
             <div>
               <label
-                htmlFor="specialization"
+                htmlFor="content"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Especialización:
+                Descripción:
               </label>
               <Field
-                id="specialization"
-                name="specialization"
-                as="select"
-                className="inputUpdateUser"
-              >
-                <option value="viajes" label="Viajes" />
-                <option value="conversación" label="Conversación" />
-                <option value="trabajo" label="Trabajo" />
-                <option value="legal" label="Legal" />
-                <option value="it" label="IT" />
-              </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            <div>
-              <label
-                htmlFor="level"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Nivel:
-              </label>
-              <Field id="level" name="level" as="select" className="inputUpdateUser">
-                <option value={ILevel.ELEMENTARY} label={ILevel.ELEMENTARY} />
-                <option value={ILevel.PRE_INTERMEDIATE} label={ILevel.PRE_INTERMEDIATE} />
-                <option value={ILevel.INTERMEDIATE} label={ILevel.INTERMEDIATE} />
-                <option value={ILevel.UPPER_INTERMEDIATE} label={ILevel.UPPER_INTERMEDIATE} />
-                <option value={ILevel.ADVANCED} label={ILevel.ADVANCED} />
-                <option value={ILevel.PROFICIENCY} label={ILevel.PROFICIENCY} />
-              </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
+                as="textarea"
+                id="content"
+                name="content"
+                placeholder="Descripción del curso"
+                rows={6}
+                className="inputUpdateUser resize-x-none p-2 min-h-[200px] sm:min-h-[300px]"
+              />
+              <ErrorMessage name="content" component="div" className="text-red-500 text-sm" />
             </div>
 
             <div className="flex flex-col justify-between sm:flex-row">
@@ -147,4 +122,4 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
   );
 };
 
-export default CoursesEditModal;
+export default LessonsEditModal;

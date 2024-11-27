@@ -1,8 +1,12 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import ICourseAdminContextProps, { ICoursesTables } from "./types";
-import ICourse from "@/interfaces/ICourse";
-import { deleteCourse, fetchCoursesByLanguage } from "@/services/courses/courses.service";
+import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
+import {
+  deleteCourse,
+  fetchCoursesByLanguage,
+  fetchUpdateCourseById,
+} from "@/services/courses/courses.service";
 import useSegment from "@/hooks/useSegment";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
@@ -29,12 +33,17 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   };
 
-  // const updateUserById = async (id: string) => {
-  //   try {
-  //   } catch (err) {
-  //     setError(err instanceof Error ? err.message : "Error al Actualizar curso");
-  //   }
-  // };
+  const updateCourseById = async (id: string, courseData: IUpdateCourse) => {
+    try {
+      const updatedCourse = await fetchUpdateCourseById(id, courseData);
+
+      setCourses((prevCourses) =>
+        prevCourses.map((course) => (course.id === id ? { ...course, ...updatedCourse } : course))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el curso");
+    }
+  };
 
   useEffect(() => {
     const fetchCoursesPageData = async () => {
@@ -64,6 +73,7 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
         previousPage,
         nextPage,
         deleteCourseById,
+        updateCourseById,
       }}
     >
       {children}

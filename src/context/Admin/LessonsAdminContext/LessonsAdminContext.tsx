@@ -1,7 +1,11 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ILesson } from "@/interfaces/ILesson";
-import { fetchDeleteLessons, fetchLessonsByCourse } from "@/services/lessons/lessons.service";
+import { ILesson, IUpdateLesson } from "@/interfaces/ILesson";
+import {
+  fetchDeleteLessons,
+  fetchLessonsByCourse,
+  fetchUpdateLessonById,
+} from "@/services/lessons/lessons.service";
 import { useSearchParams } from "next/navigation"; // Importar el hook para manejar query params
 import ILessonAdminContextProps, { ILessonTables } from "./types";
 import useSegment from "@/hooks/useSegment";
@@ -28,7 +32,18 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
       await fetchDeleteLessons(id);
       setLessons((prev) => prev.filter((lesson) => lesson.id !== id));
     } catch (err) {
-      console.error("Error al eliminar clase:", err);
+      setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
+    }
+  };
+
+  const updateLessonById = async (id: string, lessonData: IUpdateLesson) => {
+    try {
+      const updatedLesson = await fetchUpdateLessonById(id, lessonData);
+
+      setLessons((prevLessons) =>
+        prevLessons.map((lesson) => (lesson.id === id ? { ...lesson, ...updatedLesson } : lesson))
+      );
+    } catch (err) {
       setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
     }
   };
@@ -74,6 +89,7 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
         previousPage,
         nextPage,
         deleteLessonById,
+        updateLessonById,
       }}
     >
       {children}

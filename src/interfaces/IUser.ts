@@ -1,8 +1,6 @@
-
 import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
-import { ISuscription } from "./ISubscription";
 
 export interface IUpdateUser {
   name?: string;
@@ -16,6 +14,7 @@ export interface IUpdateUser {
 }
 
 export interface IEditUserFormValues {
+  id?: string;
   name?: string;
   email?: string;
   idNumber?: string;
