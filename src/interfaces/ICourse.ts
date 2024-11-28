@@ -20,6 +20,15 @@ export enum ISpecialization {
   IT = "IT",
 }
 
+export interface ICreateCourse {
+  title: string;
+  language: string;
+  specialization: string;
+  level: string;
+  general_description: string;
+  brief_description: string;
+}
+
 export interface IUpdateCourse {
   title?: string;
   specialization?: string;
@@ -29,20 +38,20 @@ export interface IUpdateCourse {
 }
 
 export interface ICourse {
-  id: string;
-  title: string;
-  img_url: string;
-  video_url: string | null;
-  specialization: string;
-  general_description: string;
-  brief_description: string;
-  level: string;
-  createdAt: string;
-  language: ILanguage;
-  lessons: ILesson[];
-  users: IUser[];
-  averageRating: number;
-  totalRatings: number;
+  id?: string;
+  title?: string;
+  img_url?: string;
+  video_url?: string | null;
+  specialization?: string;
+  general_description?: string;
+  brief_description?: string;
+  level?: string;
+  createdAt?: string;
+  language?: ILanguage;
+  lessons?: ILesson[];
+  users?: IUser[];
+  averageRating?: number;
+  totalRatings?: number;
 }
 
 export default ICourse;

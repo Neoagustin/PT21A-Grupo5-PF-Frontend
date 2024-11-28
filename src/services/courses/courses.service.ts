@@ -4,6 +4,30 @@ import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
 import { ICoursesTables } from "@/context/Admin/CoursesAdminContext/types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export const fetchCreateCourse = async (dataCourse: ICourse): Promise<ICoursesTables> => {
+  try {
+    const { title, language, specialization, level, general_description, brief_description } =
+      dataCourse;
+    const response = await axios.post(`${API_URL}/courses`, {
+      title,
+      language,
+      specialization,
+      level,
+      general_description,
+      brief_description,
+    });
+    return response.data;
+  } catch (err: unknown) {
+    console.log(err);
+
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Ocurrio un error desconocido");
+    }
+  }
+};
+
 export const fetchCoursesByLanguage = async (
   language: string,
   limit: number

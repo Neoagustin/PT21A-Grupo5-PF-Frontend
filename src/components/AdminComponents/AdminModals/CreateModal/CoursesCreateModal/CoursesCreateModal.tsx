@@ -1,16 +1,63 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IEditUserFormValues } from "@/interfaces/IUser";
 import { ICreateModalProps } from "../types";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
+import { ILevel, IUpdateCourse } from "@/interfaces/ICourse";
+import Swal from "sweetalert2";
+import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
+import { validateCreateModal } from "../valuesCreateModal";
+import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
 
 const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { title } = useAdminContext();
+  const { allLanguages } = useLanguageAdminContext();
+  const { createCourse } = useCoursesAdminContext();
 
-  const handleOnSubmit = (values: IEditUserFormValues) => {
-    console.log(values);
-    closeCreateModal();
+  const handleOnSubmit = async (values: IUpdateCourse) => {
+    try {
+      createCourse(values);
+      Swal.fire({
+        title: "¡Curso Creado!",
+        text: "El curso se ha creado exitosamente.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1300,
+        timerProgressBar: true,
+        position: "bottom-end",
+        toast: true,
+        background: "#28a745",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+
+      closeCreateModal();
+    } catch (error) {
+      console.error("Error al crear el curso:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al crear el curso. Intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FF5252",
+        position: "bottom-end",
+        toast: true,
+        background: "#FF5252",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+    }
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -26,120 +73,176 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
     >
       <Formik
         initialValues={{
-          name: "",
-          email: "",
-          idNumber: "",
-          role: "",
-          subscriptionName: "",
-          state: "active",
+          title: "",
+          language: "",
+          specialization: "",
+          level: "",
+          general_description: "",
+          brief_description: "",
         }}
+        validate={validateCreateModal}
         onSubmit={handleOnSubmit}
       >
-        {({ isSubmitting, values }) => (
-          <Form
-            className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content]
-        sm:text-[16px] sm:max-w-[460px]"
-          >
+        {({ isSubmitting }) => (
+          <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
             <Subtitle label={`Crear ${title}`} />
+
             <div>
               <label
-                htmlFor="name"
+                htmlFor="title"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Nombre Completo:
+                Titulo:
               </label>
-              <Field
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Nombre completo"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <Field
+                  id="title"
+                  name="title"
+                  type="text"
+                  placeholder="Titulo del Curso"
+                  className="inputUpdateUser"
+                />
+                <ErrorMessage
+                  name="title"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div>
               <label
-                htmlFor="email"
+                htmlFor="language"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Correo:
+                Lenguaje:
               </label>
-              <Field
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Correo electrónico"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <Field id="language" name="language" as="select" className="inputUpdateUser">
+                    <option value="" disabled>
+                      Seleccione un lenguaje
+                    </option>
+                    {allLanguages.map((language) => (
+                      <option key={language.id} value={language.name}>
+                        {language.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="language"
+                    component="p"
+                    className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                  />
+                </div>
+              </div>
             </div>
 
             <div>
               <label
-                htmlFor="idNumber"
+                htmlFor="specialization"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Número de identificación:
+                Especialización:
               </label>
-              <Field
-                id="idNumber"
-                name="idNumber"
-                type="text"
-                placeholder="Número de identificación"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="idNumber" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <Field
+                  id="specialization"
+                  name="specialization"
+                  as="select"
+                  className="inputUpdateUser"
+                >
+                  <option value="" disabled>
+                    Seleccione una especialización
+                  </option>
+                  <option value="viajes" label="Viajes" />
+                  <option value="conversación" label="Conversación" />
+                  <option value="trabajo" label="Trabajo" />
+                  <option value="legal" label="Legal" />
+                  <option value="it" label="IT" />
+                </Field>
+                <ErrorMessage
+                  name="specialization"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div>
               <label
-                htmlFor="plan"
+                htmlFor="level"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Plan:
+                Nivel:
               </label>
-              <Field
-                id="plan"
-                name="subscriptionName"
-                as="select"
-                className={`inputUpdateUser ${
-                  values.subscriptionName.toLowerCase() === "premium"
-                    ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
-                    : values.subscriptionName.toLowerCase() === "pro"
-                    ? "text-violet font-semibold border-violet hover:border-violetHover hover:text-violetHover focus:border-violetHover focus:text-violetHover"
-                    : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
-                }`}
-              >
-                <option value="standard" label="Standard" className="text-darkgray" />
-                <option value="premium" label="Premium" className="text-skyblue font-semibold" />
-                <option value="pro" label="Pro" className="text-violet font-semibold" />
-              </Field>
-              <ErrorMessage name="plan" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <Field id="level" name="level" as="select" className="inputUpdateUser">
+                  <option value="" disabled>
+                    Seleccione un nivel
+                  </option>
+                  <option value={ILevel.ELEMENTARY} label={ILevel.ELEMENTARY} />
+                  <option value={ILevel.PRE_INTERMEDIATE} label={ILevel.PRE_INTERMEDIATE} />
+                  <option value={ILevel.INTERMEDIATE} label={ILevel.INTERMEDIATE} />
+                  <option value={ILevel.UPPER_INTERMEDIATE} label={ILevel.UPPER_INTERMEDIATE} />
+                  <option value={ILevel.ADVANCED} label={ILevel.ADVANCED} />
+                  <option value={ILevel.PROFICIENCY} label={ILevel.PROFICIENCY} />
+                </Field>
+
+                <ErrorMessage
+                  name="level"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div>
               <label
-                htmlFor="estado"
+                htmlFor="general_description"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Estado:
+                Descripción General:
               </label>
-              <Field
-                id="state"
-                name="state"
-                as="select"
-                value={values.state}
-                className={`inputUpdateUser ${
-                  values.state === "active"
-                    ? "text-green border-green hover:border-greenHover hover:text-greenHover focus:border-greenHover focus:text-greenHover"
-                    : "text-red border-red hover:border-redHover hover:text-redHover focus:border-redHover focus:text-redHover"
-                }`}
+              <div className="flex flex-col gap-2">
+                <Field
+                  as="textarea"
+                  id="general_description"
+                  name="general_description"
+                  placeholder="Descripción General del Curso"
+                  rows={6}
+                  className="inputUpdateUser resize-x-none p-2 min-h-[200px] sm:min-h-[300px]"
+                />
+                <ErrorMessage
+                  name="general_description"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="brief_description"
+                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                <option value="active" label="Activo" className="text-green" />
-                <option value="inactive" label="Inactivo" className="text-red" />
-              </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
+                Descripción Breve:
+              </label>
+              <div className="flex flex-col gap-2">
+                <Field
+                  as="textarea"
+                  id="brief_descriptionn"
+                  name="brief_description"
+                  placeholder="Descripción Breve del Curso"
+                  rows={6}
+                  className="inputUpdateUser resize-x-none p-2 min-h-[160px] sm:min-h-[200px]"
+                />
+                <ErrorMessage
+                  name="brief_description"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col justify-between sm:flex-row">

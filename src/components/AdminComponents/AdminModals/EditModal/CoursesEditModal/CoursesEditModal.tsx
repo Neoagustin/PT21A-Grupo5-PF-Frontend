@@ -114,13 +114,20 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 as="select"
                 className="inputUpdateUser"
               >
+                <option value="" disabled>
+                  Seleccione una especialización
+                </option>
                 <option value="viajes" label="Viajes" />
                 <option value="conversación" label="Conversación" />
                 <option value="trabajo" label="Trabajo" />
                 <option value="legal" label="Legal" />
                 <option value="it" label="IT" />
               </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
+              <ErrorMessage
+                name="specialization"
+                component="div"
+                className="text-red-500 text-sm"
+              />
             </div>
 
             <div>
@@ -131,6 +138,9 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 Nivel:
               </label>
               <Field id="level" name="level" as="select" className="inputUpdateUser">
+                <option value="" disabled>
+                  Seleccione un nivel
+                </option>
                 <option value={ILevel.ELEMENTARY} label={ILevel.ELEMENTARY} />
                 <option value={ILevel.PRE_INTERMEDIATE} label={ILevel.PRE_INTERMEDIATE} />
                 <option value={ILevel.INTERMEDIATE} label={ILevel.INTERMEDIATE} />
@@ -138,7 +148,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 <option value={ILevel.ADVANCED} label={ILevel.ADVANCED} />
                 <option value={ILevel.PROFICIENCY} label={ILevel.PROFICIENCY} />
               </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
+              <ErrorMessage name="level" component="div" className="text-red-500 text-sm" />
             </div>
 
             <div>

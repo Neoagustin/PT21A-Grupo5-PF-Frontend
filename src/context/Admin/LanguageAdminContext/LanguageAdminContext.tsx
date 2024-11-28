@@ -18,6 +18,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [languages, setLanguages] = useState<ILanguage[]>([]);
+  const [allLanguages, setAllLanguages] = useState<ILanguage[]>([]);
   const [page, setPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState<number>(0);
   const recordsPerPage = 5;
@@ -52,6 +53,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchLanguagesList = async () => {
       try {
         const languagesList: ILanguage[] = await fetchLanguages();
+        setAllLanguages(languagesList);
         setMaxPages(Math.ceil(languagesList.length / recordsPerPage));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al obtener lenguajes");
@@ -84,6 +86,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
     <LanguageAdminContext.Provider
       value={{
         languages,
+        allLanguages,
         page,
         maxPages,
         previousPage,
