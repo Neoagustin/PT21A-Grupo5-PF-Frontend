@@ -1,10 +1,12 @@
 import ICourse from "@/interfaces/ICourse";
+import ILanguage from "@/interfaces/ILanguage";
+import { ILesson } from "@/interfaces/ILesson";
 import { IUser } from "@/interfaces/IUser";
 
-export type TDataType = "user" | "course" | "class";
+export type TDataType = "user" | "languages" | "course" | "lesson";
 
 export interface IEditModalProps {
-  data: IUser | ICourse;
+  data: IUser | ILanguage | ICourse | ILesson;
   type: TDataType;
   onClose: () => void;
 }

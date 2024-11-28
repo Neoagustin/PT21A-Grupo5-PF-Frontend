@@ -1,19 +1,19 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ICoursesEditModalProps } from "./types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
-import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
-import { ILevel, IUpdateCourse } from "@/interfaces/ICourse";
+import { ILanguagesEditModalProps } from "./types";
+import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
+import { IUpdateLanguage } from "@/interfaces/ILanguage";
 
-const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) => {
-  const { updateCourseById } = useCoursesAdminContext();
+const LanguagesEditModal: React.FC<ILanguagesEditModalProps> = ({ data, onClose }) => {
+  const { updateLanguageById } = useLanguageAdminContext();
   const { title } = useAdminContext();
 
-  const handleOnSubmit = (values: IUpdateCourse) => {
+  const handleOnSubmit = (values: IUpdateLanguage) => {
     try {
-      updateCourseById(data.id, values);
+      updateLanguageById(data.id, values);
       Swal.fire({
         title: "¡Éxito!",
         text: "Los cambios se han guardado correctamente.",
@@ -35,7 +35,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
 
       onClose();
     } catch (error) {
-      console.error("Error al actualizar el Curso:", error);
+      console.error("Error al actualizar el Lenguaje:", error);
 
       Swal.fire({
         title: "Error",
@@ -70,9 +70,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
     >
       <Formik
         initialValues={{
-          title: data.title || "",
-          specialization: data.specialization || "",
-          level: data.level || "",
+          name: data.name || "",
           general_description: data.general_description || "",
           brief_description: data.brief_description || "",
         }}
@@ -89,66 +87,16 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 htmlFor="name"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Titulo:
+                Nombre:
               </label>
               <Field
-                id="title"
-                name="title"
+                id="name"
+                name="name"
                 type="text"
-                placeholder="Titulo del Curso"
+                placeholder="Nombre del Lenguaje"
                 className="inputUpdateUser"
               />
               <ErrorMessage name="title" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            <div>
-              <label
-                htmlFor="specialization"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Especialización:
-              </label>
-              <Field
-                id="specialization"
-                name="specialization"
-                as="select"
-                className="inputUpdateUser"
-              >
-                <option value="" disabled>
-                  Seleccione una especialización
-                </option>
-                <option value="viajes" label="Viajes" />
-                <option value="conversación" label="Conversación" />
-                <option value="trabajo" label="Trabajo" />
-                <option value="legal" label="Legal" />
-                <option value="it" label="IT" />
-              </Field>
-              <ErrorMessage
-                name="specialization"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="level"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Nivel:
-              </label>
-              <Field id="level" name="level" as="select" className="inputUpdateUser">
-                <option value="" disabled>
-                  Seleccione un nivel
-                </option>
-                <option value={ILevel.ELEMENTARY} label={ILevel.ELEMENTARY} />
-                <option value={ILevel.PRE_INTERMEDIATE} label={ILevel.PRE_INTERMEDIATE} />
-                <option value={ILevel.INTERMEDIATE} label={ILevel.INTERMEDIATE} />
-                <option value={ILevel.UPPER_INTERMEDIATE} label={ILevel.UPPER_INTERMEDIATE} />
-                <option value={ILevel.ADVANCED} label={ILevel.ADVANCED} />
-                <option value={ILevel.PROFICIENCY} label={ILevel.PROFICIENCY} />
-              </Field>
-              <ErrorMessage name="level" component="div" className="text-red-500 text-sm" />
             </div>
 
             <div>
@@ -162,7 +110,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 as="textarea"
                 id="general_description"
                 name="general_description"
-                placeholder="Descripción General del Curso"
+                placeholder="Descripción General del Lenguaje"
                 rows={6}
                 className="inputUpdateUser resize-x-none p-2 min-h-[200px] sm:min-h-[300px]"
               />
@@ -184,7 +132,7 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
                 as="textarea"
                 id="brief_descriptionn"
                 name="brief_description"
-                placeholder="Descripción Breve del Curso"
+                placeholder="Descripción Breve del Lenguaje"
                 rows={6}
                 className="inputUpdateUser resize-x-none p-2 min-h-[200px] sm:min-h-[300px]"
               />
@@ -218,4 +166,4 @@ const CoursesEditModal: React.FC<ICoursesEditModalProps> = ({ data, onClose }) =
   );
 };
 
-export default CoursesEditModal;
+export default LanguagesEditModal;

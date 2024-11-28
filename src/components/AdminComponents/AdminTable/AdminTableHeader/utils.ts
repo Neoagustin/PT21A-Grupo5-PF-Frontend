@@ -21,7 +21,16 @@ export const headersTeachersTable = [
   "Eliminar",
 ];
 
-export const headersLanguageTable = ["", "ID", "Nombre", "Cursos", "Eliminar"];
+export const headersLanguageTable = [
+  "",
+  "ID",
+  "Nombre",
+  "Descripcion General",
+  "Descripción Breve",
+  "Cursos",
+  "Editar",
+  "Eliminar",
+];
 
 export const headersCoursesTable = [
   "",
@@ -29,6 +38,8 @@ export const headersCoursesTable = [
   "Nombre",
   "especialización",
   "Nivel",
+  "Descripcion General",
+  "Descripción Breve",
   "Calificaciones",
   "Clases",
   "Editar",

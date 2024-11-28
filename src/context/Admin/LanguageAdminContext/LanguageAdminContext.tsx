@@ -1,11 +1,12 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import ILanguage from "@/interfaces/ILanguage";
+import ILanguage, { IUpdateLanguage } from "@/interfaces/ILanguage";
 import {
   deleteLanguage,
   fetchLanguages,
   fetchLanguagesPage,
+  fetchUpdateLanguageById,
 } from "@/services/languages/language.service";
 import ILaguageAdminContextProps from "./types";
 import { usePathname } from "next/navigation";
@@ -17,6 +18,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [languages, setLanguages] = useState<ILanguage[]>([]);
+  const [allLanguages, setAllLanguages] = useState<ILanguage[]>([]);
   const [page, setPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState<number>(0);
   const recordsPerPage = 5;
@@ -33,10 +35,25 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const updateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
+    try {
+      const updatedLanguage = await fetchUpdateLanguageById(id, languageData);
+
+      setLanguages((prevLanguages) =>
+        prevLanguages.map((language) =>
+          language.id === id ? { ...language, ...updatedLanguage } : language
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el lenguaje");
+    }
+  };
+
   useEffect(() => {
     const fetchLanguagesList = async () => {
       try {
         const languagesList: ILanguage[] = await fetchLanguages();
+        setAllLanguages(languagesList);
         setMaxPages(Math.ceil(languagesList.length / recordsPerPage));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al obtener lenguajes");
@@ -69,11 +86,13 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
     <LanguageAdminContext.Provider
       value={{
         languages,
+        allLanguages,
         page,
         maxPages,
         previousPage,
         nextPage,
         deleteLanguageById,
+        updateLanguageById,
         loading,
         error,
       }}

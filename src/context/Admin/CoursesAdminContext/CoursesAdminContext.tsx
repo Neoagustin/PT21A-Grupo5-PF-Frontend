@@ -1,8 +1,13 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import ICourseAdminContextProps, { ICoursesTables } from "./types";
-import ICourse from "@/interfaces/ICourse";
-import { deleteCourse, fetchCoursesByLanguage } from "@/services/courses/courses.service";
+import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
+import {
+  deleteCourse,
+  fetchCoursesByLanguage,
+  fetchCreateCourse,
+  fetchUpdateCourseById,
+} from "@/services/courses/courses.service";
 import useSegment from "@/hooks/useSegment";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
@@ -20,21 +25,14 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
-  const deleteCourseById = async (id: string) => {
+  const createCourse = async (dataCourse: ICourse) => {
     try {
-      await deleteCourse(id);
-      setCourses((prev) => prev.filter((course) => course.id !== id));
+      await fetchCreateCourse(dataCourse);
+      setCourses((prevCourses) => [...prevCourses, dataCourse]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al eliminar curso");
+      setError(err instanceof Error ? err.message : "Error al actualizar el curso");
     }
   };
-
-  // const updateUserById = async (id: string) => {
-  //   try {
-  //   } catch (err) {
-  //     setError(err instanceof Error ? err.message : "Error al Actualizar curso");
-  //   }
-  // };
 
   useEffect(() => {
     const fetchCoursesPageData = async () => {
@@ -53,6 +51,27 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
     fetchCoursesPageData();
   }, [page, languageName]);
 
+  const deleteCourseById = async (id: string) => {
+    try {
+      await deleteCourse(id);
+      setCourses((prev) => prev.filter((course) => course.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al eliminar curso");
+    }
+  };
+
+  const updateCourseById = async (id: string, courseData: IUpdateCourse) => {
+    try {
+      const updatedCourse = await fetchUpdateCourseById(id, courseData);
+
+      setCourses((prevCourses) =>
+        prevCourses.map((course) => (course.id === id ? { ...course, ...updatedCourse } : course))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el curso");
+    }
+  };
+
   return (
     <CoursesAdminContext.Provider
       value={{
@@ -64,6 +83,8 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
         previousPage,
         nextPage,
         deleteCourseById,
+        updateCourseById,
+        createCourse,
       }}
     >
       {children}
