@@ -1,11 +1,12 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import ILanguage from "@/interfaces/ILanguage";
+import ILanguage, { IUpdateLanguage } from "@/interfaces/ILanguage";
 import {
   deleteLanguage,
   fetchLanguages,
   fetchLanguagesPage,
+  fetchUpdateLanguageById,
 } from "@/services/languages/language.service";
 import ILaguageAdminContextProps from "./types";
 import { usePathname } from "next/navigation";
@@ -30,6 +31,20 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
       setLanguages((prev) => prev.filter((language) => language.id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al eliminar lenguaje");
+    }
+  };
+
+  const updateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
+    try {
+      const updatedLanguage = await fetchUpdateLanguageById(id, languageData);
+
+      setLanguages((prevLanguages) =>
+        prevLanguages.map((language) =>
+          language.id === id ? { ...language, ...updatedLanguage } : language
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el lenguaje");
     }
   };
 
@@ -74,6 +89,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
         previousPage,
         nextPage,
         deleteLanguageById,
+        updateLanguageById,
         loading,
         error,
       }}

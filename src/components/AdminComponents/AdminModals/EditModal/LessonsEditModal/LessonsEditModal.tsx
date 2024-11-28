@@ -5,18 +5,15 @@ import Swal from "sweetalert2";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import { ILessonsEditModalProps } from "./types";
 import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
-import { IEditLessonFormValues } from "@/interfaces/ILesson";
+import { IUpdateLesson } from "@/interfaces/ILesson";
 
 const LessonsEditModal: React.FC<ILessonsEditModalProps> = ({ data, onClose }) => {
   const { updateLessonById } = useLessonsAdminContext();
   const { title } = useAdminContext();
 
-  const handleOnSubmit = (values: IEditLessonFormValues) => {
-    const { title, content } = values;
-    const lessonData = { title, content };
-
+  const handleOnSubmit = (values: IUpdateLesson) => {
     try {
-      updateLessonById(data.id, lessonData);
+      updateLessonById(data.id, values);
       Swal.fire({
         title: "¡Éxito!",
         text: "Los cambios se han guardado correctamente.",
@@ -24,6 +21,16 @@ const LessonsEditModal: React.FC<ILessonsEditModalProps> = ({ data, onClose }) =
         showConfirmButton: false,
         timer: 1300,
         timerProgressBar: true,
+        position: "bottom-end",
+        toast: true,
+        background: "#28a745",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
       });
 
       onClose();
@@ -36,6 +43,16 @@ const LessonsEditModal: React.FC<ILessonsEditModalProps> = ({ data, onClose }) =
         icon: "error",
         confirmButtonText: "OK",
         confirmButtonColor: "#FF5252",
+        position: "bottom-end",
+        toast: true,
+        background: "#FF5252",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
       });
     }
   };

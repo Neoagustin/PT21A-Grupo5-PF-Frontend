@@ -52,11 +52,13 @@ export const fetchGetCourseById = async (id: string): Promise<ICourse> => {
 
 export const fetchUpdateCourseById = async (id: string, courseData: IUpdateCourse) => {
   try {
-    const { title, specialization, level } = courseData;
+    const { title, specialization, level, general_description, brief_description } = courseData;
     const response = await axios.patch(`${API_URL}/courses/${id}`, {
       title,
       specialization,
       level,
+      general_description,
+      brief_description,
     });
     return response.data;
   } catch (err: unknown) {
