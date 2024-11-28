@@ -5,6 +5,7 @@ import ICourse from "@/interfaces/ICourse";
 import { fetchUserInscriptionCourse } from "@/services/users/users.service";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { useCourses } from "@/context/CourseContext/CourseContext";
 
 export const ButtonAction: React.FC<IButtonActionProps> = ({
   course,
@@ -13,6 +14,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
   setUser,
 }: IButtonActionProps) => {
   const [nameButton, setNameButton] = useState<string>("");
+  const { refreshCourses } = useCourses();
 
   useEffect(() => {
     const changeNameButton = !token
@@ -28,10 +30,11 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
 
     setNameButton(changeNameButton);
   }, [course, token, user]);
-  if (!user) return null;
+
   const link = token ? `/course/${course.id}` : "/#subscriptions";
 
   const handleInscriptionUser = async (userId: string, courseId: string) => {
+    if (!user) return null;
     if (
       user.membership.subscription.name === "Standard" &&
       user.courses.length >= 2
@@ -59,10 +62,11 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
       timerProgressBar: true,
       showConfirmButton: false,
     });
+    refreshCourses();
   };
   return (
     <>
-      {nameButton === "VER CURSO" ? (
+      {nameButton === "VER CURSO" || nameButton === 'ELEGIR PLAN' ? (
         <Link
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
           href={link}
@@ -71,7 +75,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         </Link>
       ) : (
         <button
-          onClick={() => handleInscriptionUser(user?.id, course.id)}
+          onClick={() => user?.id && handleInscriptionUser(user?.id, course.id)}
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
         >
           {nameButton}

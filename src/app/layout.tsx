@@ -6,6 +6,7 @@ import Header from "@/components/HeaderComponents/Header/Header";
 import Footer from "@/components/FooterComponents/Footer/Footer";
 import type { Metadata } from "next";
 import "./globals.css";
+import { CourseProvider } from "@/context/CourseContext/CourseContext";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",
@@ -13,19 +14,25 @@ export const metadata: Metadata = {
   description: "Plataforma de cursos de idiomas.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
       <body className="antialiased">
         <UserProvider>
           <TokenProvider>
-            <UserMenuProvider>
-              <MenuProvider>
-                <Header />
-                {children}
-                <Footer />
-              </MenuProvider>
-            </UserMenuProvider>
+            <CourseProvider>
+              <UserMenuProvider>
+                <MenuProvider>
+                  <Header />
+                  <main className="py-10 min-h-[calc(100vh-110px)] sm:min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-130px)]">
+                    {children}
+                  </main>
+                  <Footer />
+                </MenuProvider>
+              </UserMenuProvider>
+            </CourseProvider>
           </TokenProvider>
         </UserProvider>
       </body>

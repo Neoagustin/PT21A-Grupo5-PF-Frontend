@@ -17,6 +17,7 @@ export interface ICourse {
   users: IUser[];
   averageRating: number;
   totalRatings: number;
+  students: IUser[]
 }
 
 export default ICourse;
