@@ -4,6 +4,7 @@ interface ILaguageAdminContextProps {
   loading: boolean;
   error: string | null;
   languages: ILanguage[];
+  allLanguages: ILanguage[];
   page: number;
   maxPages: number;
   previousPage: () => void;

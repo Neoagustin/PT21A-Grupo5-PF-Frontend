@@ -10,6 +10,7 @@ interface ICourseAdminContextProps {
   nextPage: () => void;
   deleteCourseById: (id: string) => void;
   updateCourseById: (id: string, courseData: IUpdateCourse) => void;
+  createCourse: (dataCourse: ICourse) => void;
 }
 
 export interface ICoursesTables {
