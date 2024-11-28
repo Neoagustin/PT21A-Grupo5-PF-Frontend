@@ -1,21 +1,21 @@
-import useModal from "@/hooks/Modals/useModal";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
-import React from "react";
+import React, { useState } from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../../AdminModals/IdModal/UserIdModal";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
 import { faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
 import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
+import useMessageModal from "@/hooks/Modals/useMessageModal/useMessageModal";
+import MessageModal from "../../../AdminModals/MessageModal/MessageModal";
 
 const AdminUsersTable = () => {
   const { loading, error, users, deactivateUserById } = useUserAdminContext();
-
-  const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
+  const { isMessageModalOpen, content, handleCloseModal, handleOpenModal } = useMessageModal();
   const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
+  const [title, setTitle] = useState<string>("");
 
   if (loading) return <Loading />;
 
@@ -45,7 +45,10 @@ const AdminUsersTable = () => {
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
                     className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
-                    onClick={() => handleOpenModal(item.id)}
+                    onClick={() => {
+                      handleOpenModal(item.id);
+                      setTitle("Usuario ID:");
+                    }}
                   >
                     Ver ID
                   </button>
@@ -151,10 +154,11 @@ const AdminUsersTable = () => {
         />
       )}
 
-      <UserIdModal
-        isModalOpen={isModalOpen}
-        selectedId={selectedId}
+      <MessageModal
+        isMessageModalOpen={isMessageModalOpen}
+        content={content}
         closeModal={handleCloseModal}
+        title={title}
       />
     </>
   );

@@ -1,20 +1,21 @@
-import useModal from "@/hooks/Modals/useModal";
-import React from "react";
+import React, { useState } from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../../AdminModals/IdModal/UserIdModal";
+import MessageModal from "../../../AdminModals/MessageModal/MessageModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 import Swal from "sweetalert2";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faEye, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
 import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
+import useMessageModal from "@/hooks/Modals/useMessageModal/useMessageModal";
 
 const AdminLessonsTable = () => {
   const { loading, error, lessons, deleteLessonById } = useLessonsAdminContext();
-  const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
+  const { isMessageModalOpen, content, handleCloseModal, handleOpenModal } = useMessageModal();
   const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
+  const [title, setTitle] = useState<string>("");
 
   if (loading) return <Loading />;
 
@@ -46,20 +47,32 @@ const AdminLessonsTable = () => {
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
                     className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
-                    onClick={() => handleOpenModal(item.id)}
+                    onClick={() => {
+                      handleOpenModal(item.id);
+                      setTitle("Clase ID:");
+                    }}
                   >
                     Ver ID
                   </button>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap">{item.title}</td>
-                <td className="py-3 px-6 whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
-                  {item.content}
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <button
+                    className="bg-emerald-500 text-white border rounded-[4px] py-[2px] px-2 flex items-center gap-2 hover:bg-emerald-600 transition-all duration-200"
+                    onClick={() => {
+                      handleOpenModal(item.content);
+                      setTitle("Descripción de la clase: ");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                    Leer Descripción
+                  </button>
                 </td>
 
                 <td className="py-3 px-6 whitespace-nowrap">
                   <button
                     onClick={() => openEditModal({ data: item })}
-                    className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
+                    className="flex gap-1 items-center text-whitePage bg-skyblue py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
                   >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     Editar
@@ -117,10 +130,11 @@ const AdminLessonsTable = () => {
         />
       )}
 
-      <UserIdModal
-        isModalOpen={isModalOpen}
-        selectedId={selectedId}
+      <MessageModal
+        isMessageModalOpen={isMessageModalOpen}
+        content={content}
         closeModal={handleCloseModal}
+        title={title}
       />
     </>
   );

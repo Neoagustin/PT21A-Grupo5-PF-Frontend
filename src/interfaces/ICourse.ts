@@ -24,12 +24,8 @@ export interface IUpdateCourse {
   title?: string;
   specialization?: string;
   level?: string;
-}
-
-export interface IEditCourseFormValues {
-  title?: string;
-  specialization?: string;
-  level?: string;
+  general_description?: string;
+  brief_description?: string;
 }
 
 export interface ICourse {
