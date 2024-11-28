@@ -1,9 +1,9 @@
 import React from "react";
 import { IVideoIntroProps } from "./types";
-import { fetchCourses } from "@/services/fetchCourses";
 import ICourse from "@/interfaces/ICourse";
 import ListClasses from "../ListClasses/ListClasses";
 import { redirect } from "next/navigation";
+import { fetchCourses } from "@/services/courses/courses.service";
 
 export const VideoIntro: React.FC<IVideoIntroProps> = async ({ courseId }) => {
   const courses = await fetchCourses();

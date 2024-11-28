@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { fetchCourses } from "@/services/fetchCourses";
+import { fetchCourses } from "@/services/courses/courses.service";
 
 export const ListClassesView: React.FC<IListClassesView> = async ({
   courseId,

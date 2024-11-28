@@ -22,11 +22,17 @@ export enum ISpecialization {
 
 export interface ICreateCourse {
   title: string;
-  language: string;
   specialization: string;
-  level: string;
   general_description: string;
   brief_description: string;
+  level: string;
+  createdAt: string;
+  language: ILanguage;
+  lessons: ILesson[];
+  users: IUser[];
+  averageRating: number;
+  totalRatings: number;
+  students: IUser[]
 }
 
 export interface IUpdateCourse {
