@@ -4,10 +4,12 @@ import AdminTableBody from "@/components/AdminComponents/AdminTable/AdminTable";
 import MenuAdmin from "@/components/AdminComponents/MenuAdmin/MenuAdmin";
 import SearchPaginationAdmin from "@/components/AdminComponents/SearchPaginationAdmin/SearchPaginationAdmin";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
+import useSegment from "@/hooks/useSegment";
 import React from "react";
 
 const Admin: React.FC = () => {
   const { title } = useAdminContext();
+  const { segment } = useSegment();
 
   return (
     <main
@@ -20,9 +22,13 @@ const Admin: React.FC = () => {
 
       <h1 className="text-center text-[24px] mb-4 sm:text-[32px]">{title}</h1>
 
-      <SearchPaginationAdmin />
+      {segment !== "panel" && (
+        <>
+          <SearchPaginationAdmin />
 
-      <AdminTableBody />
+          <AdminTableBody />
+        </>
+      )}
     </main>
   );
 };

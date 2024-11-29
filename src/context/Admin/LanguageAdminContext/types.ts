@@ -1,4 +1,4 @@
-import ILanguage, { IUpdateLanguage } from "@/interfaces/ILanguage";
+import ILanguage, { ICreateLanguage, IUpdateLanguage } from "@/interfaces/ILanguage";
 
 interface ILaguageAdminContextProps {
   loading: boolean;
@@ -11,6 +11,7 @@ interface ILaguageAdminContextProps {
   nextPage: () => void;
   deleteLanguageById: (id: string) => void;
   updateLanguageById: (id: string, languageData: IUpdateLanguage) => void;
+  createLanguage: (dataLanguage: ICreateLanguage) => void;
 }
 
 export default ILaguageAdminContextProps;

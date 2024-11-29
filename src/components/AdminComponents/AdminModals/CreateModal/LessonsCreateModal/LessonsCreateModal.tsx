@@ -1,16 +1,63 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IEditUserFormValues } from "@/interfaces/IUser";
 import { ICreateModalProps } from "../types";
-import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
+import Swal from "sweetalert2";
+import { validateLessonsCreateModal } from "../LanguagesCreateModal/valuesLanguagesCreateModal";
+import { ICreateLesson } from "@/interfaces/ILesson";
+import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
+import { useAdminContext } from "@/context/AdminContext/AdminContext";
 
 const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseId = urlParams.get("id");
   const { title } = useAdminContext();
+  const { createLesson } = useLessonsAdminContext();
 
-  const handleOnSubmit = (values: IEditUserFormValues) => {
-    console.log(values);
-    closeCreateModal();
+  const handleOnSubmit = async (values: ICreateLesson) => {
+    try {
+      createLesson(values);
+      Swal.fire({
+        title: "¡Lección Creada!",
+        text: "La lección se ha creado exitosamente.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1300,
+        timerProgressBar: true,
+        position: "bottom-end",
+        toast: true,
+        background: "#28a745",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+
+      closeCreateModal();
+    } catch (error) {
+      console.error("Error al crear la lección:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al crear la lección. Intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FF5252",
+        position: "bottom-end",
+        toast: true,
+        background: "#FF5252",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+    }
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -19,6 +66,8 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
     }
   };
 
+  if (!courseId) throw new Error("El curso no existe");
+
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -26,120 +75,62 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
     >
       <Formik
         initialValues={{
-          name: "",
-          email: "",
-          idNumber: "",
-          role: "",
-          subscriptionName: "",
-          state: "active",
+          title: "",
+          content: "",
+          course: courseId,
         }}
+        validate={validateLessonsCreateModal}
         onSubmit={handleOnSubmit}
       >
-        {({ isSubmitting, values }) => (
-          <Form
-            className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content]
-        sm:text-[16px] sm:max-w-[460px]"
-          >
+        {({ isSubmitting }) => (
+          <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
             <Subtitle label={`Crear ${title}`} />
+
             <div>
               <label
-                htmlFor="name"
+                htmlFor="title"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Nombre Completo:
+                Titulo:
               </label>
-              <Field
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Nombre completo"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <Field
+                  id="title"
+                  name="title"
+                  type="text"
+                  placeholder="Titulo del Curso"
+                  className="inputUpdateUser"
+                />
+                <ErrorMessage
+                  name="title"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div>
               <label
-                htmlFor="email"
+                htmlFor="content"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Correo:
+                Descripción:
               </label>
-              <Field
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Correo electrónico"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            <div>
-              <label
-                htmlFor="idNumber"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Número de identificación:
-              </label>
-              <Field
-                id="idNumber"
-                name="idNumber"
-                type="text"
-                placeholder="Número de identificación"
-                className="inputUpdateUser"
-              />
-              <ErrorMessage name="idNumber" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            <div>
-              <label
-                htmlFor="plan"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Plan:
-              </label>
-              <Field
-                id="plan"
-                name="subscriptionName"
-                as="select"
-                className={`inputUpdateUser ${
-                  values.subscriptionName.toLowerCase() === "premium"
-                    ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
-                    : values.subscriptionName.toLowerCase() === "pro"
-                    ? "text-violet font-semibold border-violet hover:border-violetHover hover:text-violetHover focus:border-violetHover focus:text-violetHover"
-                    : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
-                }`}
-              >
-                <option value="standard" label="Standard" className="text-darkgray" />
-                <option value="premium" label="Premium" className="text-skyblue font-semibold" />
-                <option value="pro" label="Pro" className="text-violet font-semibold" />
-              </Field>
-              <ErrorMessage name="plan" component="div" className="text-red-500 text-sm" />
-            </div>
-
-            <div>
-              <label
-                htmlFor="estado"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Estado:
-              </label>
-              <Field
-                id="state"
-                name="state"
-                as="select"
-                value={values.state}
-                className={`inputUpdateUser ${
-                  values.state === "active"
-                    ? "text-green border-green hover:border-greenHover hover:text-greenHover focus:border-greenHover focus:text-greenHover"
-                    : "text-red border-red hover:border-redHover hover:text-redHover focus:border-redHover focus:text-redHover"
-                }`}
-              >
-                <option value="active" label="Activo" className="text-green" />
-                <option value="inactive" label="Inactivo" className="text-red" />
-              </Field>
-              <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
+              <div className="flex flex-col gap-2">
+                <Field
+                  as="textarea"
+                  id="content"
+                  name="content"
+                  placeholder="Descripción de la clase"
+                  rows={6}
+                  className="inputUpdateUser resize-x-none p-2 min-h-[200px] sm:min-h-[300px]"
+                />
+                <ErrorMessage
+                  name="content"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col justify-between sm:flex-row">

@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ILesson, IUpdateLesson } from "@/interfaces/ILesson";
+import { ICreateLesson, ILesson, IUpdateLesson } from "@/interfaces/ILesson";
 import {
+  fetchCreateLessons,
   fetchDeleteLessons,
   fetchLessonsByCourse,
   fetchUpdateLessonById,
@@ -26,6 +27,14 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
+
+  const createLesson = async (dataLesson: ICreateLesson) => {
+    try {
+      await fetchCreateLessons(dataLesson);
+    } catch (err) {
+      setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
+    }
+  };
 
   const deleteLessonById = async (id: string) => {
     try {
@@ -90,6 +99,7 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
         nextPage,
         deleteLessonById,
         updateLessonById,
+        createLesson,
       }}
     >
       {children}

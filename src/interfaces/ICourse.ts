@@ -26,13 +26,7 @@ export interface ICreateCourse {
   general_description: string;
   brief_description: string;
   level: string;
-  createdAt: string;
-  language: ILanguage;
-  lessons: ILesson[];
-  users: IUser[];
-  averageRating: number;
-  totalRatings: number;
-  students: IUser[]
+  language: string;
 }
 
 export interface IUpdateCourse {
@@ -44,20 +38,20 @@ export interface IUpdateCourse {
 }
 
 export interface ICourse {
-  id?: string;
-  title?: string;
-  img_url?: string;
-  video_url?: string | null;
-  specialization?: string;
-  general_description?: string;
-  brief_description?: string;
-  level?: string;
-  createdAt?: string;
-  language?: ILanguage;
-  lessons?: ILesson[];
-  users?: IUser[];
-  averageRating?: number;
-  totalRatings?: number;
+  id: string;
+  title: string;
+  img_url: string;
+  video_url: string | null;
+  specialization: string;
+  general_description: string;
+  brief_description: string;
+  level: string;
+  createdAt: string;
+  language: ILanguage;
+  lessons: ILesson[];
+  users: IUser[];
+  averageRating: number;
+  totalRatings: number;
 }
 
 export default ICourse;

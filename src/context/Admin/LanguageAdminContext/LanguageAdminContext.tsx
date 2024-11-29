@@ -1,9 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import ILanguage, { IUpdateLanguage } from "@/interfaces/ILanguage";
+import ILanguage, { ICreateLanguage, IUpdateLanguage } from "@/interfaces/ILanguage";
 import {
-  deleteLanguage,
+  fetchCreateLanguages,
+  fetchDeleteLanguage,
   fetchLanguages,
   fetchLanguagesPage,
   fetchUpdateLanguageById,
@@ -26,26 +27,12 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
-  const deleteLanguageById = async (id: string) => {
+  const createLanguage = async (dataLanguage: ICreateLanguage) => {
     try {
-      await deleteLanguage(id);
-      setLanguages((prev) => prev.filter((language) => language.id !== id));
+      await fetchCreateLanguages(dataLanguage);
+      window.location.reload();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al eliminar lenguaje");
-    }
-  };
-
-  const updateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
-    try {
-      const updatedLanguage = await fetchUpdateLanguageById(id, languageData);
-
-      setLanguages((prevLanguages) =>
-        prevLanguages.map((language) =>
-          language.id === id ? { ...language, ...updatedLanguage } : language
-        )
-      );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al actualizar el lenguaje");
+      setError(err instanceof Error ? err.message : "Error al Crear lenguajes");
     }
   };
 
@@ -82,6 +69,29 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchLanguagesPageData();
   }, [page]);
 
+  const deleteLanguageById = async (id: string) => {
+    try {
+      await fetchDeleteLanguage(id);
+      setLanguages((prev) => prev.filter((language) => language.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al eliminar lenguaje");
+    }
+  };
+
+  const updateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
+    try {
+      const updatedLanguage = await fetchUpdateLanguageById(id, languageData);
+
+      setLanguages((prevLanguages) =>
+        prevLanguages.map((language) =>
+          language.id === id ? { ...language, ...updatedLanguage } : language
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el lenguaje");
+    }
+  };
+
   return (
     <LanguageAdminContext.Provider
       value={{
@@ -93,6 +103,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
         nextPage,
         deleteLanguageById,
         updateLanguageById,
+        createLanguage,
         loading,
         error,
       }}

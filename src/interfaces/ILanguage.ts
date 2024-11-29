@@ -6,6 +6,13 @@ export interface IUpdateLanguage {
   brief_description?: string;
 }
 
+export interface ICreateLanguage {
+  path: string;
+  name: string;
+  general_description: string;
+  brief_description: string;
+}
+
 export interface ILanguage {
   id: string;
   path: string;

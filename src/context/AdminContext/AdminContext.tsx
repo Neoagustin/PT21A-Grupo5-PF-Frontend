@@ -24,23 +24,21 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const resolveTitle = async () => {
       try {
         if (segment === "students") {
-          if (!isCancelled) setTitle("Alumnos");
+          setTitle("Alumnos");
           return;
         }
         if (segment === "teachers") {
-          if (!isCancelled) setTitle("Profesores");
+          setTitle("Profesores");
           return;
         }
         if (segment === "languages") {
-          if (!isCancelled) setTitle("Lenguajes");
+          setTitle("Lenguajes");
           return;
         }
         if (segment === "lessons") {
-          if (!isCancelled) {
-            if (courseId) {
-              const course = await fetchGetCourseById(courseId);
-              setTitle(`Clases de ${course.title}`);
-            }
+          if (courseId) {
+            const course = await fetchGetCourseById(courseId);
+            setTitle(`Clases de ${course.title}`);
           }
           return;
         }
