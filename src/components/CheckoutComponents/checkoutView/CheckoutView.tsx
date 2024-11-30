@@ -8,6 +8,7 @@ import useSubscriptionPlan from "@/hooks/useSubscriptionPlan ";
 import { useRouter } from "next/navigation";
 import { IUserLocalStorage } from "./types";
 
+
 const CheckoutView: React.FC<{ slug: string }> = ({
   slug,
 }: {

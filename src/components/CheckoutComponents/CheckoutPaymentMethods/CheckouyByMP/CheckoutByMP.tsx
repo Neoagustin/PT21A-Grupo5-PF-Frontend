@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { checkout, ICheckoutByMPProps } from "./types";
 import Image from "next/image";
-import { handleSelectPaymentMethod } from "../../checkoutView/types";
+import { handleSelectPaymentMethod } from "../../CheckoutView/types";
 
 const CheckoutByMP: React.FC<ICheckoutByMPProps> = ({
   selectedPaymentMethod,
