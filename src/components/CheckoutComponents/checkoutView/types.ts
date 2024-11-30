@@ -40,7 +40,7 @@ export interface IUserLocalStorage {
   email: string,
   photo: string,
   role: string,
-  memebership: IMemebership
+  membership: IMemebership
   
 } 
 

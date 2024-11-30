@@ -194,6 +194,16 @@ const CheckoutByCards: React.FC= (): React.ReactElement  => {
                                                 />
                                             </div>
 
+                                            <div className="flex flex-col gap-[5px]">
+                                              <label htmlFor="cardNumber" className="flex text-[11px] sm:text-[13px] md:text-[16px]">Agregar codigo de descuento.</label>
+                                              <Field
+                                                id="cardNumber"
+                                                name="cardNumber"
+                                                type="number"
+                                                className="shadow-sm shadow-gray"
+                                                />
+                                            </div>
+
                                             
                                             <button type="submit" className="w-[250px] h-[40px] bg-rose-700 text-whitePage font-bold transition-all hover:bg-rose-900 justify-center" onClick={handleButton}>Confirmar Suscripción</button>
                                   </Form>

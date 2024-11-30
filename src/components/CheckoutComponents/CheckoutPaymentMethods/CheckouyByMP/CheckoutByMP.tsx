@@ -71,6 +71,16 @@ const CheckoutByMP: React.FC<ICheckoutByMPProps> = ({
         </div>
       </label>
 
+                                            <div className="flex flex-col gap-[5px]">
+                                              <label htmlFor="discountNumber" className="flex text-[11px] sm:text-[13px] md:text-[16px]">Agregar codigo de descuento.</label>
+                                              <input
+                                                id="discountNumber"
+                                                name="discountNumber"
+                                                type="string"
+                                                className="shadow-sm shadow-gray"
+                                                />
+                                            </div>
+
       
       <button
         type="submit"
