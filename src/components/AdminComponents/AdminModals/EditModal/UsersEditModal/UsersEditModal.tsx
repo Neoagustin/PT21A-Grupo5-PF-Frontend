@@ -1,23 +1,77 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ICreateModalProps } from "./types";
+import { IUsersEditModalProps } from "./types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
-import { IEditUserFormValues } from "@/interfaces/IUser";
+import { IEditUserFormValues, IUpdateUser } from "@/interfaces/IUser";
+import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
+import Swal from "sweetalert2";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 
-const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
+const UserEditModal: React.FC<IUsersEditModalProps> = ({ data, onClose }) => {
+  const { updateUserById, usersSubscriptions } = useUserAdminContext();
   const { title } = useAdminContext();
 
   const handleOnSubmit = (values: IEditUserFormValues) => {
-    console.log(values);
-    closeCreateModal();
+    const { name, email, idNumber, role, state } = values;
+    const isActive = state === "active";
+    const subscriptionName = values.subscriptionName || "standard";
+    const userData: IUpdateUser = { name, email, idNumber, role, isActive };
+    console.log(`VALORES DEL FORMULARIO: ${JSON.stringify(values, null, 2)}`);
+
+    try {
+      updateUserById(data.id, userData);
+      usersSubscriptions(data.id, subscriptionName);
+
+      Swal.fire({
+        title: "¡Éxito!",
+        text: "Los cambios se han guardado correctamente.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1300,
+        timerProgressBar: true,
+        position: "bottom-end",
+        toast: true,
+        background: "#28a745",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al guardar los cambios. Intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FF5252",
+        position: "bottom-end",
+        toast: true,
+        background: "#FF5252",
+        color: "#fff",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown",
+        },
+      });
+    }
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      closeCreateModal();
+      onClose();
     }
   };
+
+  const userState = data.isActive ? "active" : "inactive";
 
   return (
     <div
@@ -26,12 +80,12 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
     >
       <Formik
         initialValues={{
-          name: "",
-          email: "",
-          idNumber: "",
-          role: "",
-          subscriptionName: "",
-          state: "active",
+          name: data.name || "",
+          email: data.email || "",
+          idNumber: data.idNumber || "",
+          role: data.role || "user",
+          subscriptionName: data.membership?.subscription?.name.toLocaleLowerCase() || "standard",
+          state: userState || "",
         }}
         onSubmit={handleOnSubmit}
       >
@@ -40,7 +94,7 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
             className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content]
             sm:text-[16px] sm:max-w-[460px]"
           >
-            <Subtitle label={`Crear ${title}`} />
+            <Subtitle label={`Editar ${title}`} />
             <div>
               <label
                 htmlFor="name"
@@ -92,31 +146,33 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
               <ErrorMessage name="idNumber" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div>
-              <label
-                htmlFor="plan"
-                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
-              >
-                Plan:
-              </label>
-              <Field
-                id="plan"
-                name="subscriptionName"
-                as="select"
-                className={`inputUpdateUser ${
-                  values.subscriptionName.toLowerCase() === "premium"
-                    ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
-                    : values.subscriptionName.toLowerCase() === "pro"
-                    ? "text-violet font-semibold border-violet hover:border-violetHover hover:text-violetHover focus:border-violetHover focus:text-violetHover"
-                    : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
-                }`}
-              >
-                <option value="standard" label="Standard" className="text-darkgray" />
-                <option value="premium" label="Premium" className="text-skyblue font-semibold" />
-                <option value="pro" label="Pro" className="text-violet font-semibold" />
-              </Field>
-              <ErrorMessage name="plan" component="div" className="text-red-500 text-sm" />
-            </div>
+            {data.membership && (
+              <div>
+                <label
+                  htmlFor="plan"
+                  className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
+                >
+                  Plan:
+                </label>
+                <Field
+                  id="plan"
+                  name="subscriptionName"
+                  as="select"
+                  className={`inputUpdateUser ${
+                    values.subscriptionName.toLowerCase() === "premium"
+                      ? "text-skyblue font-semibold border-skyblue hover:border-skyblueHover hover:text-skyblueHover focus:border-skyblueHover focus:text-skyblueHover"
+                      : values.subscriptionName.toLowerCase() === "pro"
+                      ? "text-violet font-semibold border-violet hover:border-violetHover hover:text-violetHover focus:border-violetHover focus:text-violetHover"
+                      : "text-darkgray border-darkgray hover:border-gray hover:text-gray focus:border-gray focus:text-gray"
+                  }`}
+                >
+                  <option value="standard" label="Standard" className="text-darkgray" />
+                  <option value="premium" label="Premium" className="text-skyblue font-semibold" />
+                  <option value="pro" label="Pro" className="text-violet font-semibold" />
+                </Field>
+                <ErrorMessage name="plan" component="div" className="text-red-500 text-sm" />
+              </div>
+            )}
 
             <div>
               <label
@@ -148,10 +204,10 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
                 disabled={isSubmitting}
                 className="bg-violet text-white px-4 py-2 hover:bg-violetHover text-[14px] mt-8 sm:text-[16px] transition 200"
               >
-                {isSubmitting ? "Creando Nuevo..." : "Crear Nuevo"}
+                {isSubmitting ? "Guardando..." : "Guardar Cambios"}
               </button>
               <button
-                onClick={closeCreateModal}
+                onClick={onClose}
                 className="bg-darkgray text-white px-4 py-2 hover:opacity-90 text-[14px] mt-3 sm:text-[16px] sm:mt-8 transition-all duration-200"
                 aria-label="Cerrar formulario"
               >
@@ -165,4 +221,4 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   );
 };
 
-export default CreateModal;
+export default UserEditModal;

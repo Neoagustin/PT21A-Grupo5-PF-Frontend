@@ -1,6 +1,6 @@
 import { IUser } from "@/interfaces/IUser";
 
-export interface IEditModalProps {
+export interface IUsersEditModalProps {
   data: IUser;
   onClose: () => void;
 }

@@ -1,4 +1,4 @@
-import { ILesson } from "@/interfaces/ILesson";
+import { ILesson, IUpdateLesson } from "@/interfaces/ILesson";
 
 interface ILessonAdminContextProps {
   lessons: ILesson[];
@@ -9,6 +9,7 @@ interface ILessonAdminContextProps {
   previousPage: () => void;
   nextPage: () => void;
   deleteLessonById: (id: string) => void;
+  updateLessonById: (id: string, lessonData: IUpdateLesson) => void;
 }
 
 export interface ILessonTables {

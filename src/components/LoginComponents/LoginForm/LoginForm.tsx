@@ -26,8 +26,8 @@ export const LoginForm: React.FC = (): React.ReactElement => {
         if (data) {
           localStorage.setItem("userToken", JSON.stringify(data.token));
           localStorage.setItem("userData", JSON.stringify(data.user));
-          Cookies.set("userToken", data.token);
           Cookies.set("userData", JSON.stringify(data.user));
+          Cookies.set("userToken", data.token);
           setToken(data.token);
           setUser(data.user);
 

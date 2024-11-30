@@ -14,6 +14,7 @@ export interface IUpdateUser {
 }
 
 export interface IEditUserFormValues {
+  id?: string;
   name?: string;
   email?: string;
   idNumber?: string;

@@ -1,4 +1,4 @@
-import ILanguage from "@/interfaces/ILanguage";
+import ILanguage, { IUpdateLanguage } from "@/interfaces/ILanguage";
 import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -35,6 +35,26 @@ export const deleteLanguage = async (id: string) => {
     const response = await axios.delete(`${API_URL}/language/${id}`);
     return response.data;
   } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
+  }
+};
+
+export const fetchUpdateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
+  try {
+    const { name, general_description, brief_description } = languageData;
+    const response = await axios.put(`${API_URL}/language/update/${id}`, {
+      name,
+      general_description,
+      brief_description,
+    });
+    return response.data;
+  } catch (err: unknown) {
+    console.log(err);
+
     if (err instanceof Error) {
       throw new Error(err.message);
     } else {

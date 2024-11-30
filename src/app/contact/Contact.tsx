@@ -1,4 +1,4 @@
-import FormCompleteData from "@/components/CallbackComponents/FormCompleteData/FormCompleteData";
+import FormCompleteData from "@/components/CallbackComponents/CallbackPage/CallbackPage";
 import React from "react";
 
 export const Contact: React.FC = () => {

@@ -1,37 +1,43 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client"
-import React, { useEffect, useState } from 'react';
-import CheckoutByCards from '../CheckoutPaymentMethods/CheckoutByCards/CheckoutByCards';
-import CheckoutByMP from '../CheckoutPaymentMethods/CheckouyByMP/CheckoutByMP';
-import CheckoutPlan from '../CheckoutPlan/CheckoutPlan';
-import { IUserLocalStorage } from './types';
-import useSubscriptionPlan from '@/hooks/useSubscriptionPlan ';
+"use client";
+import React, { useEffect, useState } from "react";
+import CheckoutByCards from "../CheckoutPaymentMethods/CheckoutByCards/CheckoutByCards";
+import CheckoutByMP from "../CheckoutPaymentMethods/CheckouyByMP/CheckoutByMP";
+import CheckoutPlan from "../CheckoutPlan/CheckoutPlan";
+import useSubscriptionPlan from "@/hooks/useSubscriptionPlan ";
+import { useRouter } from "next/navigation";
+import { IUserLocalStorage } from "./types";
 
-const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }): React.ReactElement => {
-  
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>("Bank Transfer");
-  const [suscription, setSuscription] = useState<string | null>(null)
-  const [userData, setUserData] = useState<IUserLocalStorage | null>(null)
-  
-  useEffect(()=>{
+const CheckoutView: React.FC<{ slug: string }> = ({
+  slug,
+}: {
+  slug: string;
+}) => {
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    string | null
+  >("Bank Transfer");
+  const [suscription, setSuscription] = useState<string | null>(null);
+  const [userData, setUserData] = useState<IUserLocalStorage | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-    const userData = JSON.parse(localStorage.getItem("userData")!)
-    setUserData(userData)
+      const userData = JSON.parse(localStorage.getItem("userData")!);
+      setUserData(userData);
     }
-    setSuscription(slug)
-  }, [slug])
+    setSuscription(slug);
+  }, [slug]);
 
-  const {subscriptionPlan} = useSubscriptionPlan(slug)
+  const { subscriptionPlan } = useSubscriptionPlan(slug);
   const idSubscription: string | undefined = subscriptionPlan?.id;
-  
-  
-  const idMembership: string | undefined = userData?.membership.id
 
-  
+  const idMembership: string | undefined = userData?.membership?.id;
 
-
+  if (suscription && !["premium", "pro"].includes(suscription))
+    router.push("/not-found");
 
   return (
+
 
     
     <div className='flex flex-col'>
@@ -70,6 +76,7 @@ export default CheckoutView
 
 //Agregado para seleccionar metodo de pago una vez que funciones el formulario.-
 
+
 //const [selectedCard, setSelectedCard] = useState<string | null>(null);
 //const [saveCard, setSaveCard] = useState<boolean>(false)
 
@@ -77,4 +84,3 @@ export default CheckoutView
 //${selectedCard === "Debit Card" ? 'bg-blue-500 border-blue-500' : ''}
 //${saveCard === true ? 'bg-violet' : ''}
 //${selectedPaymentMethod === "Card" ? 'bg-blue-500 border-blue-500' : ''}
-

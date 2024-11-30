@@ -10,8 +10,8 @@ export const SubscriptionInfo: React.FC = () => {
   if (!user) return;
 
   const subscriptionName =
-    user.subscription?.name.charAt(0).toUpperCase() +
-    user.subscription?.name.slice(1).toLowerCase();
+    user.membership.subscription?.name.charAt(0).toUpperCase() +
+    user.membership.subscription?.name.slice(1).toLowerCase();
 
   const isValidSubscriptionName = (name: string): name is SubscriptionName => {
     return ["Standard", "Premium", "Pro"].includes(name);

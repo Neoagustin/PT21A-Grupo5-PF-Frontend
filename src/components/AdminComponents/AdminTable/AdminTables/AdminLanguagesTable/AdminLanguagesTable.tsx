@@ -1,17 +1,22 @@
-import useModal from "@/hooks/Modals/useModal";
-import React from "react";
+import React, { useState } from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Link from "next/link";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../AdminModals/IdModal/UserIdModal";
+import MessageModal from "../../../AdminModals/MessageModal/MessageModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faEye, faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import Swal from "sweetalert2";
+import useMessageModal from "@/hooks/Modals/useMessageModal/useMessageModal";
+import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
+import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 const AdminLanguagesTable = () => {
   const { loading, error, languages, deleteLanguageById } = useLanguageAdminContext();
-  const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
+  const { isMessageModalOpen, content, handleCloseModal, handleOpenModal } = useMessageModal();
+  const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
+  const [title, setTitle] = useState<string>("");
 
   if (loading) return <Loading />;
 
@@ -43,19 +48,58 @@ const AdminLanguagesTable = () => {
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
                     className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
-                    onClick={() => handleOpenModal(item.id)}
+                    onClick={() => {
+                      handleOpenModal(item.id);
+                      setTitle("Lenguaje ID:");
+                    }}
                   >
                     Ver ID
                   </button>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap">{item.name}</td>
                 <td className="py-3 px-6 whitespace-nowrap">
+                  <button
+                    className="bg-emerald-500 text-white border rounded-[4px] py-[2px] px-2 flex items-center gap-2 hover:bg-emerald-600 transition-all duration-200"
+                    onClick={() => {
+                      handleOpenModal(item.general_description);
+                      setTitle("Descripción General del Lenguaje: ");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                    Leer Descripción
+                  </button>
+                </td>
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <button
+                    className="bg-emerald-500 text-white border rounded-[4px] py-[2px] px-2 flex items-center gap-2 hover:bg-emerald-600 transition-all duration-200"
+                    onClick={() => {
+                      handleOpenModal(item.brief_description);
+                      setTitle("Descripción Breve del Lenguaje: ");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                    Leer Descripción
+                  </button>
+                </td>
+
+                <td className="py-3 px-6 whitespace-nowrap">
                   <Link
                     href={`/admin/languages/${item.path}/courses`}
-                    className="bg-skyblue text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
+                    className="bg-orange-400 text-white border rounded-[4px] py-[2px] px-2 flex items-center gap-2 hover:bg-orange-500 transition-all duration-200"
                   >
+                    <FontAwesomeIcon icon={faBook} />
                     Ver Cursos
                   </Link>
+                </td>
+
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <button
+                    onClick={() => openEditModal({ data: item })}
+                    className="flex gap-1 items-center text-whitePage bg-skyblue py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                    Editar
+                  </button>
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap text-red hover:text-redHover hover:underline cursor-pointer">
                   <button
@@ -72,11 +116,14 @@ const AdminLanguagesTable = () => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deleteLanguageById(item.id);
-                          Swal.fire(
-                            "Eliminado",
-                            `Has eliminado el idioma ${item.name} de los registros.`,
-                            "success"
-                          );
+                          Swal.fire({
+                            title: "Eliminado",
+                            text: `Has eliminado el idioma ${item.name} de los registros.`,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1300,
+                            timerProgressBar: true,
+                          });
                         }
                       })
                     }
@@ -96,10 +143,20 @@ const AdminLanguagesTable = () => {
         </tbody>
       </table>
 
-      <UserIdModal
-        isModalOpen={isModalOpen}
-        selectedId={selectedId}
+      {isEditModalOpen && editData && (
+        <EditModal
+          key={editData.data.id}
+          data={editData.data}
+          type="languages"
+          onClose={closeEditModal}
+        />
+      )}
+
+      <MessageModal
+        isMessageModalOpen={isMessageModalOpen}
+        content={content}
         closeModal={handleCloseModal}
+        title={title}
       />
     </>
   );
