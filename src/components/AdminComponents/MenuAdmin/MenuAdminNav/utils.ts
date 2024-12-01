@@ -1,6 +1,7 @@
 import {
   faArrowRightFromBracket,
   faBookAtlas,
+  faSliders,
   faUserGraduate,
   faUserTie,
   IconDefinition,
@@ -14,6 +15,11 @@ export type MenuItem = {
 };
 
 const menuItems: MenuItem[] = [
+  {
+    text: "Panel",
+    href: "/admin/panel",
+    icon: faSliders,
+  },
   {
     text: "Alumnos",
     href: "/admin/students",

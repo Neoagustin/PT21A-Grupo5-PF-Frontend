@@ -20,7 +20,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
     const changeNameButton = !token
       ? "ELEGIR PLAN"
       : (token && user?.role === "admin") ||
-        (user &&
+        (user && user.courses &&
           course.id ===
             user.courses.find(
               (findCourse: ICourse) => findCourse.id === course.id
@@ -75,7 +75,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         </Link>
       ) : (
         <button
-          onClick={() => user?.id && handleInscriptionUser(user?.id, course.id)}
+          onClick={() => user?.id && course.id && handleInscriptionUser(user?.id, course.id)}
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
         >
           {nameButton}
