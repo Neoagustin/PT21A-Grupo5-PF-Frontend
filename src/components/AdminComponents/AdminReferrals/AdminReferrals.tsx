@@ -10,8 +10,14 @@ const CoursesCreateModal: React.FC = () => {
   const { user } = useUser();
 
   const handleOnSubmit = async (values: IReferral) => {
+    const convertedValues = {
+      ...values,
+      discount: Number(values.discount),
+      expiration: Number(values.expiration),
+    };
+
     try {
-      await fetchCreateReferral(values);
+      await fetchCreateReferral(convertedValues);
       Swal.fire({
         title: "¡Cupón de Referido Creado!",
         text: "El cupón de referido se ha creado exitosamente.",
