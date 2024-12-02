@@ -1,21 +1,21 @@
-import useModal from "@/hooks/Modals/useModal";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
-import React from "react";
+import React, { useState } from "react";
 import AdminTableHeader from "../../AdminTableHeader/AdminTableHeader";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
-import UserIdModal from "../../IdModal/UserIdModal";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
 import { faUserSlash } from "@fortawesome/free-solid-svg-icons";
-import EditModal from "../../EditModal/EditModal";
-import useEditUserModal from "@/hooks/Modals/useEditModal";
+import useEditModal from "@/hooks/Modals/useEditModal/useEditModal";
+import EditModal from "@/components/AdminComponents/AdminModals/EditModal/EditModal";
+import useMessageModal from "@/hooks/Modals/useMessageModal/useMessageModal";
+import MessageModal from "../../../AdminModals/MessageModal/MessageModal";
 
 const AdminUsersTable = () => {
   const { loading, error, users, deactivateUserById } = useUserAdminContext();
-
-  const { isModalOpen, selectedId, handleCloseModal, handleOpenModal } = useModal();
-  const { isEditModalOpen, editUser, openEditUserModal, closeEditUserModal } = useEditUserModal();
+  const { isMessageModalOpen, content, handleCloseModal, handleOpenModal } = useMessageModal();
+  const { isEditModalOpen, editData, openEditModal, closeEditModal } = useEditModal();
+  const [title, setTitle] = useState<string>("");
 
   if (loading) return <Loading />;
 
@@ -45,7 +45,10 @@ const AdminUsersTable = () => {
                 <td className="py-3 pl-6 pr-5 whitespace-nowrap xl:pr-6">
                   <button
                     className="bg-blue-400 text-whitePage border rounded-[4px] py-[2px] px-2 hover:bg-skyblueHover transition-all 200"
-                    onClick={() => handleOpenModal(item.id)}
+                    onClick={() => {
+                      handleOpenModal(item.id);
+                      setTitle("Usuario ID:");
+                    }}
                   >
                     Ver ID
                   </button>
@@ -83,7 +86,7 @@ const AdminUsersTable = () => {
                 </td>
                 <td className="py-3 px-6 whitespace-nowrap">
                   <button
-                    onClick={() => openEditUserModal(item)}
+                    onClick={() => openEditModal({ data: item })}
                     className="flex gap-1 items-center text-whitePage bg-skyblue  py-[2px] px-2 rounded-[4px] cursor-pointer hover:bg-skyblueHover"
                   >
                     <FontAwesomeIcon icon={faPenToSquare} />
@@ -105,7 +108,24 @@ const AdminUsersTable = () => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           deactivateUserById(item.id);
-                          Swal.fire("Desactivado", `Has desactivado a ${item.name}.`, "success");
+                          Swal.fire({
+                            title: "Desactivado",
+                            text: `Has desactivado a ${item.name}.`,
+                            icon: "success",
+                            position: "bottom-end",
+                            toast: true,
+                            background: "#28a745",
+                            color: "#fff",
+                            showConfirmButton: false,
+                            timer: 1300,
+                            timerProgressBar: true,
+                            showClass: {
+                              popup: "animate__animated animate__fadeInUp",
+                            },
+                            hideClass: {
+                              popup: "animate__animated animate__fadeOutDown",
+                            },
+                          });
                         }
                       })
                     }
@@ -125,12 +145,20 @@ const AdminUsersTable = () => {
         </tbody>
       </table>
 
-      {isEditModalOpen && editUser && <EditModal data={editUser} onClose={closeEditUserModal} />}
+      {isEditModalOpen && editData && (
+        <EditModal
+          key={editData.data.id}
+          data={editData.data}
+          type="user"
+          onClose={closeEditModal}
+        />
+      )}
 
-      <UserIdModal
-        isModalOpen={isModalOpen}
-        selectedId={selectedId}
+      <MessageModal
+        isMessageModalOpen={isMessageModalOpen}
+        content={content}
         closeModal={handleCloseModal}
+        title={title}
       />
     </>
   );

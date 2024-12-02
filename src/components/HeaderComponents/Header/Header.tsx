@@ -9,9 +9,11 @@ import useSegment from "@/hooks/useSegment";
 
 const Header: React.FC = () => {
   const { token } = useToken();
-  const { isAdmin } = useSegment();
+  const { isAdmin, segment } = useSegment();
 
   if (isAdmin) return null;
+
+  if (segment === "codeverification") return null;
 
   return (
     <header className="p-3 shadow-sm bg-whitePage shadow-lightgray sticky top-0 z-50 sm:px-5">

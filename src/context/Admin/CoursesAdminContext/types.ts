@@ -1,4 +1,4 @@
-import ICourse from "@/interfaces/ICourse";
+import ICourse, { ICreateCourse, IUpdateCourse } from "@/interfaces/ICourse";
 
 interface ICourseAdminContextProps {
   courses: ICourse[];
@@ -9,6 +9,13 @@ interface ICourseAdminContextProps {
   previousPage: () => void;
   nextPage: () => void;
   deleteCourseById: (id: string) => void;
+  updateCourseById: (id: string, courseData: IUpdateCourse) => void;
+  createCourse: (dataCourse: ICreateCourse) => void;
+}
+
+export interface ICoursesTables {
+  data: ICourse[];
+  total: number;
 }
 
 export default ICourseAdminContextProps;

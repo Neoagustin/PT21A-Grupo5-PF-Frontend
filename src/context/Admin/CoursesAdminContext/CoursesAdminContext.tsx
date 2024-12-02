@@ -1,9 +1,14 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import ICourseAdminContextProps from "./types";
-import ICourse from "@/interfaces/ICourse";
-import { deleteCourse, fetchCoursesPage } from "@/services/courses/courses.service";
-import { fetchCourses } from "@/services/fetchCourses";
+import ICourseAdminContextProps, { ICoursesTables } from "./types";
+import ICourse, { ICreateCourse, IUpdateCourse } from "@/interfaces/ICourse";
+import {
+  deleteCourse,
+  fetchCoursesByLanguage,
+  fetchCreateCourse,
+  fetchUpdateCourseById,
+} from "@/services/courses/courses.service";
+import useSegment from "@/hooks/useSegment";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
 
@@ -13,10 +18,38 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [page, setPage] = useState<number>(1);
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [maxPages, setMaxPages] = useState<number>(0);
-  const recordsPerPage = 5;
+  const { getLastTwoSegments } = useSegment();
+  const languageName = getLastTwoSegments()[0];
+  const dataLimit = 5;
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
+
+  const createCourse = async (dataCourse: ICreateCourse) => {
+    try {
+      await fetchCreateCourse(dataCourse);
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el curso");
+    }
+  };
+
+  useEffect(() => {
+    const fetchCoursesPageData = async () => {
+      setLoading(true);
+      try {
+        const response: ICoursesTables = await fetchCoursesByLanguage(languageName, dataLimit);
+        const { data, total } = response;
+        setCourses(data);
+        setMaxPages(Math.ceil(total / dataLimit));
+      } catch (err) {
+        setError(err instanceof Error ? `Page: ${err.message}` : "Ha ocurrido un error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCoursesPageData();
+  }, [page, languageName]);
 
   const deleteCourseById = async (id: string) => {
     try {
@@ -27,33 +60,17 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   };
 
-  useEffect(() => {
-    const fetchLanguagesList = async () => {
-      try {
-        const coursesList: ICourse[] = await fetchCourses();
-        setMaxPages(Math.ceil(coursesList.length / recordsPerPage));
-      } catch (err) {
-        setError(err instanceof Error ? `Courses: ${err.message}` : "Error al obtener cursos");
-      }
-    };
+  const updateCourseById = async (id: string, courseData: IUpdateCourse) => {
+    try {
+      const updatedCourse = await fetchUpdateCourseById(id, courseData);
 
-    fetchLanguagesList();
-  }, []);
-
-  useEffect(() => {
-    const fetchCoursesPageData = async () => {
-      setLoading(true);
-      try {
-        const coursesPage: ICourse[] = await fetchCoursesPage(page, recordsPerPage);
-        setCourses(coursesPage);
-      } catch (err) {
-        setError(err instanceof Error ? `Page: ${err.message}` : "Ha ocurrido un error");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCoursesPageData();
-  }, [page]);
+      setCourses((prevCourses) =>
+        prevCourses.map((course) => (course.id === id ? { ...course, ...updatedCourse } : course))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al actualizar el curso");
+    }
+  };
 
   return (
     <CoursesAdminContext.Provider
@@ -66,6 +83,8 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
         previousPage,
         nextPage,
         deleteCourseById,
+        updateCourseById,
+        createCourse,
       }}
     >
       {children}

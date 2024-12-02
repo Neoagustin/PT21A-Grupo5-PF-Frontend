@@ -12,13 +12,21 @@ const useSegment = () => {
 
   const getLastTwoSegments = useCallback(() => {
     const segments = pathname.split("/").filter(Boolean);
-    return segments.slice(-2);
+    const lastTwo = segments.slice(-2);
+
+    return lastTwo.map((segment) => decodeURIComponent(segment));
   }, [pathname]);
 
   const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
-    setSegment(getSegment());
+    let segmentValue = getSegment();
+    if (segmentValue) {
+      segmentValue = decodeURIComponent(segmentValue)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      setSegment(segmentValue.toLowerCase());
+    }
   }, [pathname, getSegment]);
 
   return { segment, isAdmin, getLastTwoSegments };

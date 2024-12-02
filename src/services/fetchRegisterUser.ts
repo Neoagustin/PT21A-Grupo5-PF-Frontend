@@ -22,6 +22,7 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
 
     return response.data;
   } catch (err: unknown) {
+    console.log(err)
     if (axios.isAxiosError(err) && err.response) {
       Swal.fire({
         title: "¡Error al registrarse!",
@@ -41,5 +42,17 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
         showConfirmButton: false,
       });
     }
+  }
+};
+
+export const fetchCodeVerifyEmail = async (email: string, code: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/verify-email`, { email, code });
+    return response.data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data.message || "Error en la solicitud.");
+    }
+    throw new Error("Ha ocurrido un error desconocido.");
   }
 };

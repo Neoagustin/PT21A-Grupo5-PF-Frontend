@@ -5,4 +5,5 @@ export interface IButtonActionProps {
   course: ICourse;
   token: string | null;
   user: IUser | null;
+  setUser: (user: IUser) => void;
 }

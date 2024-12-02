@@ -5,19 +5,29 @@ import { UserAdminProvider } from "@/context/Admin/UserAdminContext/UserAdminCon
 import { Metadata } from "next";
 import { LanguageAdminProvider } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import { CoursesAdminProvider } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
+import { CreateModalProvider } from "@/context/Modals/CreateModalContext";
+import { LessonsAdminProvider } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 
 export const metadata: Metadata = {
   title: "Admin - Rompiendo Barreras",
   description: "Área administrativa de la plataforma.",
 };
 
-export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <AdminMenuProvider>
       <AdminProvider>
         <UserAdminProvider>
           <LanguageAdminProvider>
-            <CoursesAdminProvider>{children}</CoursesAdminProvider>
+            <CoursesAdminProvider>
+              <CreateModalProvider>
+                <LessonsAdminProvider>
+                  <main className="my-[-40px]">{children}</main>
+                </LessonsAdminProvider>
+              </CreateModalProvider>
+            </CoursesAdminProvider>
           </LanguageAdminProvider>
         </UserAdminProvider>
       </AdminProvider>

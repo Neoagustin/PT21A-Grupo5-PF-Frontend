@@ -64,3 +64,19 @@ body {
 .links {
   @apply bg-lightgrayTransparent p-2 rounded-[4px] transition-all hover:bg-violet hover:text-whitePage lg:border-b-[2px] lg:border-transparent lg:bg-transparent lg:text-blackPage lg:rounded-none lg:hover:text-violet lg:hover:border-violet lg:hover:bg-transparent lg:p-1;
 }
+
+.scrollY {
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: #0033a0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #fafafa;
+  }
+}
+
+.scrollYNone {
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+}

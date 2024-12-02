@@ -6,6 +6,8 @@ import Header from "@/components/HeaderComponents/Header/Header";
 import Footer from "@/components/FooterComponents/Footer/Footer";
 import type { Metadata } from "next";
 import "./globals.css";
+import { CourseProvider } from "@/context/CourseContext/CourseContext";
+import ChatBot from "@/components/ChatBotComponents/ChatBot/ChatBot";
 
 export const metadata: Metadata = {
   icons: "/assets/icons/logo.png",
@@ -19,19 +21,22 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="antialiased">
-        <TokenProvider>
-          <UserProvider>
-            <UserMenuProvider>
-              <MenuProvider>
-                <Header />
-                <main className="min-h-[calc(100dvh-110px)] flex justify-center items-center py-10 sm:min-h-[calc(100dvh-120px)] md:min-h-[calc(100dvh-130px)]">
-                  {children}
-                </main>
-                <Footer />
-              </MenuProvider>
-            </UserMenuProvider>
-          </UserProvider>
-        </TokenProvider>
+        <UserProvider>
+          <TokenProvider>
+            <CourseProvider>
+              <UserMenuProvider>
+                <MenuProvider>
+                  <Header />
+                  <main className="py-10 min-h-[calc(100vh-110px)] sm:min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-130px)]">
+                    {children}
+                    <ChatBot />
+                  </main>
+                  <Footer />
+                </MenuProvider>
+              </UserMenuProvider>
+            </CourseProvider>
+          </TokenProvider>
+        </UserProvider>
       </body>
     </html>
   );

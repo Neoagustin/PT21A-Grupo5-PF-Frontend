@@ -35,7 +35,7 @@ const UserMenu = () => {
             <LinkUserMenu
               text={"Configuración"}
               icon={faCog}
-              href={"/admin/students"}
+              href={"/admin/panel"}
               onClick={closeMenu}
             />
           ) : isTeacher ? (

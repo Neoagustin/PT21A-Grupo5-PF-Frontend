@@ -1,9 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { IUpdateUser, IUser } from "@/interfaces/IUser";
+import { ICreateUser, IUpdateUser, IUser } from "@/interfaces/IUser";
 import { fetchUsers } from "@/services/fetchUsers";
 import {
+  fetchCreateUser,
   fetchDeactivateUser,
   fetchUpdateUserAdmin,
   fetchUsersPage,
@@ -28,6 +29,15 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
+
+  const createUser = async (dataUser: ICreateUser) => {
+    try {
+      await fetchCreateUser(dataUser);
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error desactivando usuario");
+    }
+  };
 
   const usersSubscriptions = async (userId: string, subscriptionName: string) => {
     try {
@@ -142,6 +152,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         deactivateUserById,
         updateUserById,
         usersSubscriptions,
+        createUser,
         page,
         maxPages,
         previousPage,

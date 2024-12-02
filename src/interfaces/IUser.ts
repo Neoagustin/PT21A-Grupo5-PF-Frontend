@@ -1,4 +1,4 @@
-
+import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
 import ICourse from "./ICourse";
 import { IMembership } from "./IMembership";
 
@@ -13,13 +13,10 @@ export interface IUpdateUser {
   isActive?: boolean;
 }
 
-export interface IEditUserFormValues {
-  name?: string;
-  email?: string;
-  idNumber?: string;
-  subscriptionName?: string;
-  role?: string;
-  state?: string;
+export interface ICreateUser {
+  name: string;
+  email: string;
+  idNumber: string;
 }
 
 export interface IUser {
@@ -36,5 +33,5 @@ export interface IUser {
   createdAt: string;
   courses: ICourse[];
   membership: IMembership;
+  subscription: ISubscription;
 }
-

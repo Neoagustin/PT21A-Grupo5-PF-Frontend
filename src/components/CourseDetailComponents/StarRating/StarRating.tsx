@@ -65,7 +65,7 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
       </div>
       <h3 className="text-skyblue text-xs font-medium sm:text-[14px]">
         {`${totalRatings} ${
-          totalRatings > 1 ? "calificaciones" : "calificación"
+          totalRatings !== 1 ? "calificaciones" : "calificación"
         }`}
       </h3>
     </>
