@@ -5,26 +5,36 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import PinField from "react-pin-field";
+import Swal from "sweetalert2";
 
 const CodeVerification = () => {
   const router = useRouter();
   const [code, setCode] = useState("");
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
-  console.log(`EMAIL: ${email}`);
-  console.log(`CODE: ${code}`);
 
   const handleSubmit = async () => {
     try {
-      if (!email) throw new Error("Email Invalido.");
+      if (!email) throw new Error("Email inválido.");
+
       await fetchCodeVerifyEmail(email, code);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Verificación exitosa!",
+        text: "Tu dirección de correo electrónico ha sido verificada correctamente.",
+        confirmButtonText: "Aceptar",
+      });
+
       router.push("/login");
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        throw new Error(err.message);
-      } else {
-        throw new Error("Unknown error occurred");
-      }
+      Swal.fire({
+        icon: "error",
+        title: "Código de verificación incorrecto",
+        confirmButtonText: "Intentar de nuevo",
+      });
+
+      throw new Error(err instanceof Error ? err.message : String(err));
     }
   };
 

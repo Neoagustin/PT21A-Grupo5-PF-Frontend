@@ -48,28 +48,11 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
 export const fetchCodeVerifyEmail = async (email: string, code: string) => {
   try {
     const response = await axios.post(`${API_URL}/auth/verify-email`, { email, code });
-
-    Swal.fire({
-      icon: "success",
-      title: "¡Verificación exitosa!",
-      text: "Tu dirección de correo electrónico ha sido verificada correctamente.",
-      confirmButtonText: "Aceptar",
-    });
-
     return response.data;
   } catch (err: unknown) {
-    let errorMessage = "Ha ocurrido un error desconocido.";
-
-    if (err instanceof Error) {
-      errorMessage = err.message;
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data.message || "Error en la solicitud.");
     }
-
-    Swal.fire({
-      icon: "error",
-      title: err ? err.response.data.message : errorMessage,
-      confirmButtonText: "Intentar de nuevo",
-    });
-
-    return;
+    throw new Error("Ha ocurrido un error desconocido.");
   }
 };
