@@ -1,9 +1,10 @@
 import { FormikErrors } from "formik";
 
-export const validateUserCreateModal = (values: {
+export const validateLanguagesCreateModal = (values: {
+  path: string;
   name: string;
-  email: string;
-  idNumber: string;
+  general_description: string;
+  brief_description: string;
 }): FormikErrors<typeof values> => {
   const errors: FormikErrors<typeof values> = {};
 
@@ -11,14 +12,16 @@ export const validateUserCreateModal = (values: {
     errors.name = "El nombre es requerido.";
   }
 
-  if (!values.email.trim()) {
-    errors.email = "El correo electrónico es requerido.";
-  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-    errors.email = "El correo electrónico no es válido.";
+  if (!values.path.trim()) {
+    errors.path = "La ruta es requerida.";
   }
 
-  if (!values.idNumber.trim()) {
-    errors.idNumber = "El número de identificación es requerido.";
+  if (!values.general_description.trim()) {
+    errors.general_description = "La descripción general es requerida.";
+  }
+
+  if (!values.brief_description.trim()) {
+    errors.brief_description = "La descripción breve es requerida.";
   }
 
   return errors;
