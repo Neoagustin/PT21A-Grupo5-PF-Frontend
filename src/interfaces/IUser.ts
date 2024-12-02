@@ -19,6 +19,16 @@ export interface ICreateUser {
   idNumber: string;
 }
 
+export interface IEditUserFormValues {
+  id?: string;
+  name?: string;
+  email?: string;
+  idNumber?: string;
+  subscriptionName?: string;
+  role?: string;
+  state?: string;
+}
+
 export interface IUser {
   id: string;
   name: string;

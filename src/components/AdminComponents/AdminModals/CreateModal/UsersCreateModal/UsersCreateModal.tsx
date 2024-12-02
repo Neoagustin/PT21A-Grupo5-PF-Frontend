@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import { ICreateUser } from "@/interfaces/IUser";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
-import { validateUserCreateModal } from "./validateUserCreateModal";
+import { validateUserCreateModal } from "./valuesUsersCreateModal";
 
 const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { title } = useAdminContext();
