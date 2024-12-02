@@ -6,7 +6,7 @@ import Image from 'next/image'
 const EnrolledCoursesCards: React.FC<IEnrolledCoursesCardsProps> = ({language, title, image, description}): React.ReactElement => {
   return (
     <Link
-      href={`/language/${language}/${title.toLowerCase()}`}
+      href={`/language/${language}/${title?.toLowerCase()}`}
       className="
         mx-auto w-[80%] max-w-[280px] border border-solid border-lightgray rounded-[7px] cursor-pointer transition-all duration-300 ease-in-out 
         hover:border-[#fff0] hover:shadow-lg hover:scale-[1.02]
@@ -14,7 +14,7 @@ const EnrolledCoursesCards: React.FC<IEnrolledCoursesCardsProps> = ({language, t
     >
       <Image
         className="rounded-t-[7px] max-h-[160px] min-h-[160px]"
-        src={image}
+        src={image!}
         width={500}
         height={500}
         priority

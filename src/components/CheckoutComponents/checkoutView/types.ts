@@ -32,18 +32,3 @@ export const handlePayment = (suscription: string | null, router: AppRouterInsta
     
   };
 
-export interface IUserLocalStorage {
-
-  id: string,
-  idNumber: string,
-  name: string,
-  email: string,
-  photo: string,
-  role: string,
-  membership: IMemebership
-  
-} 
-
-export interface IMemebership {
-  id: string
-}

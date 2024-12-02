@@ -6,7 +6,7 @@ import { handleButton } from "./types";
 const CheckoutByCards: React.FC = (): React.ReactElement => {
   return (
     <>
-      {/*SELECCION DE TARJETA COMO MEDIO */}
+                                            {/*SELECCION DE TARJETA COMO MEDIO */}
 
       <div className="flex justify-between items-center ml-[10px] mr-[10px] border-[1px] border-gray p-[2px] sm:ml-[30px] sm:mr-[30px] md:ml-[60px] md:mr-[60px]">
         <div>
@@ -30,7 +30,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
               width={32}
               height={32}
             />
-            <span className="text-[15px] sm:text-[17px] md:text-[20px]">
+            <span className="font-bold text-[14px] sm:text-[18px] md:text-[21px] lg:text-[23px]">
               Tarjeta
             </span>
           </label>
@@ -68,7 +68,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
         </div>
       </div>
 
-      {/*SELECCION DE TARJETA DE CREDITO O DEBITO */}
+                                      {/*SELECCION DE TARJETA DE CREDITO O DEBITO */}
 
       <div className="flex justify-between items-center ml-[30px] mr-[30px] sm:ml-[65px] sm:mr-[65px] md:ml-[95px] md:mr-[95px]">
         <div>
@@ -83,7 +83,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
             <span
               className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out`}
             ></span>
-            <span className="text-[13px] sm:text-[15px] md:text-[18px]">
+            <span className="text-[13px] sm:text-[17px] md:text-[18px] lg:text-[20px]">
               Tarjeta de Crédito
             </span>
           </label>
@@ -101,14 +101,14 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
             <span
               className={`w-[15px] h-[15px] rounded-full border-[2px] border-black transition-colors duration-300 ease-in-out`}
             ></span>
-            <span className="text-[13px] sm:text-[15px] md:text-[18px]">
+            <span className="text-[13px] sm:text-[17px] md:text-[18px] lg:text-[20px]">
               Tarjeta de Débito
             </span>
           </label>
         </div>
       </div>
 
-      {/*FORMULARIO DE LA TARJETA*/}
+                                                 {/*FORMULARIO DE LA TARJETA*/}
 
       <Formik
         initialValues={{
@@ -121,12 +121,12 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
           console.log("Form data:", values);
         }}
       >
-        <Form className="flex flex-col gap-[20px] sm:gap-[35px] md:gap-[50px] justify-center items-center">
-          <div className="flex gap-[5px] sm:gap-[60px] md:gap-[80px]">
+        <Form className="flex flex-col gap-[20px] sm:gap-[25px] md:gap-[30px] justify-center items-center">
+          <div className="flex gap-[5px] sm:gap-[40px] md:gap-[60px]">
             <div className="flex flex-col gap-[5px]">
               <label
                 htmlFor="cardName"
-                className="flex text-[11px] sm:text-[13px] md:text-[16px]"
+                className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]"
               >
                 Nombre titular de tarjeta
               </label>
@@ -134,14 +134,14 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
                 id="cardName"
                 name="cardName"
                 type="text"
-                className="shadow-sm shadow-gray"
+                className="shadow-md shadow-gray h-[25px] sm:w-[250px] sm:h-[30px] lg:w-[280px] lg:h-[35px]"
               />
             </div>
 
             <div className="flex flex-col gap-[5px]">
               <label
                 htmlFor="expiryDate"
-                className="flex text-[11px] sm:text-[13px] md:text-[16px]"
+                className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]"
               >
                 Fecha de expiración
               </label>
@@ -149,7 +149,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
                 id="expiryDate"
                 name="expiryDate"
                 type="date"
-                className="w-[120px] text-[gray] text-xs sm:text-sm md:text-base shadow-sm shadow-gray"
+                className="w-[120px] h-[25px] sm:w-[160px] sm:h-[30px] lg:w-[190px] lg:h-[35px] text-[gray] text-xs sm:text-sm md:text-base shadow-md shadow-gray"
               />
             </div>
           </div>
@@ -157,7 +157,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
           <div className="flex flex-col gap-[5px]">
             <label
               htmlFor="cardNumber"
-              className="flex text-[11px] sm:text-[13px] md:text-[16px]"
+              className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]"
             >
               Número de la tarjeta
             </label>
@@ -165,14 +165,14 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
               id="cardNumber"
               name="cardNumber"
               type="number"
-              className="shadow-sm shadow-gray"
+              className="shadow-md shadow-gray h-[25px] sm:w-[250px] sm:h-[30px] lg:w-[280px] lg:h-[35px]"
             />
           </div>
 
           <div className="flex flex-col gap-[5px]">
             <label
               htmlFor="cardNumber"
-              className="flex text-[11px] sm:text-[13px] md:text-[16px]"
+              className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]"
             >
               DNI titular de la tarjeta
             </label>
@@ -180,14 +180,14 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
               id="cardNumber"
               name="cardNumber"
               type="number"
-              className="shadow-sm shadow-gray"
+              className="shadow-md shadow-gray h-[25px] sm:w-[250px] sm:h-[30px] lg:w-[280px] lg:h-[35px]"
             />
           </div>
 
           <div className="flex flex-col gap-[5px] items-center">
             <label
               htmlFor="cvc"
-              className="flex text-[11px] sm:text-[13px] md:text-[16px] justify-center"
+              className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px] justify-center"
             >
               CVC/CVV
             </label>
@@ -195,14 +195,14 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
               id="cvc"
               name="cvc"
               type="number"
-              className="w-[60px] shadow-sm shadow-gray"
+              className="shadow-md shadow-gray h-[25px] sm:w-[70px] sm:h-[30px] lg:w-[95px] lg:h-[35px]"
             />
           </div>
 
           <div className="flex flex-col gap-[5px]">
             <label
               htmlFor="cardNumber"
-              className="flex text-[11px] sm:text-[13px] md:text-[16px]"
+              className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]"
             >
               Correo electronico.
             </label>
@@ -210,7 +210,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
               id="cardNumber"
               name="cardNumber"
               type="number"
-              className="shadow-sm shadow-gray"
+              className="shadow-md shadow-gray h-[25px] sm:w-[250px] sm:h-[30px] lg:w-[280px] lg:h-[35px]"
             />
           </div>
 
@@ -219,18 +219,18 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
 
                                          
 
-                                            <div className="flex flex-col gap-[5px]">
-                                              <label htmlFor="cardNumber" className="flex text-[11px] sm:text-[13px] md:text-[16px]">Agregar codigo de descuento.</label>
-                                              <Field
-                                                id="cardNumber"
-                                                name="cardNumber"
-                                                type="number"
-                                                className="shadow-sm shadow-gray"
-                                                />
-                                            </div>
+          <div className="flex flex-col gap-[5px]">
+            <label htmlFor="cardNumber" className="flex text-[12px] sm:text-[16px] md:text-[17px] lg:text-[19px]">Agregar codigo de descuento.</label>
+            <Field
+            id="cardNumber"
+            name="cardNumber"
+            type="number"
+            className="shadow-md shadow-gray h-[25px] sm:w-[250px] sm:h-[30px] lg:w-[295px] lg:h-[35px]"
+            />
+          </div>
 
                                             
-                                            <button type="submit" className="w-[250px] h-[40px] bg-rose-700 text-whitePage font-bold transition-all hover:bg-rose-900 justify-center" onClick={handleButton}>Confirmar Suscripción</button>
+            <button type="submit" className="w-[250px] h-[40px] bg-rose-700 text-whitePage font-bold transition-all hover:bg-rose-900 justify-center" onClick={handleButton}>Confirmar Suscripción</button>
                                   </Form>
               
                       </Formik> 
@@ -250,7 +250,7 @@ const CheckoutByCards: React.FC = (): React.ReactElement => {
                             <span
                               className={`w-[15px] h-[15px] rounded-[1px] border-[2px] border-black bg-gray transition-colors duration-300 ease-in-out`}
                             ></span>
-                            <span className="text-[11px] font-bold sm:text-[13px] md:text-[16px]">Desea guardar los datos de la tarjeta para el futuro??</span>
+                            <span className="text-[12px] font-bold sm:text-[16px] md:text-[17px] lg:text-[19px]">Desea guardar los datos de la tarjeta para el futuro??</span>
                             </label>
                       </div>
 

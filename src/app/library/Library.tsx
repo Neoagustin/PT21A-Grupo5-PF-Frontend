@@ -6,5 +6,4 @@ const Library: React.FC = (): React.ReactElement => {
     <LibraryView />
   )
 }
-
 export default Library
