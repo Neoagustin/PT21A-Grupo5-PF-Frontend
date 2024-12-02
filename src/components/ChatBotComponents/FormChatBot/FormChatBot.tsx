@@ -1,8 +1,9 @@
-import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { IFormChatBotProps } from "./types";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { validateChatBot } from "@/helpers/validateForms/validateChatBot";
 
 export const FormChatBot: React.FC<IFormChatBotProps> = ({
   socket,
@@ -11,10 +12,14 @@ export const FormChatBot: React.FC<IFormChatBotProps> = ({
   return (
     <Formik
       initialValues={{ message: "" }}
+      validate={validateChatBot}
       onSubmit={(values, { resetForm }) => {
         if (socket) {
           socket.emit("message", values.message);
-          setMessages((prev) => [...prev, `Tu: ${values.message}`]);
+          setMessages((prev) => [
+            ...prev,
+            { sender: "user", content: values.message },
+          ]);
           resetForm();
         }
       }}

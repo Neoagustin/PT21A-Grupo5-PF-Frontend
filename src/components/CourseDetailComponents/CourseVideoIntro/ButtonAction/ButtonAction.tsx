@@ -19,7 +19,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
   useEffect(() => {
     const changeNameButton = !token
       ? "ELEGIR PLAN"
-      : (token && user?.role === "admin") ||
+      : (token && (user?.role === "admin" || user?.role === 'teacher')) ||
         (user && user.courses &&
           course.id ===
             user.courses.find(

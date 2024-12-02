@@ -29,6 +29,11 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
     return null;
   }
 
+  if (slug === 'subscription' && (user.role === "admin" || user.role === 'teacher')) {
+    router.push("/not-found");
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
       <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
@@ -50,7 +55,7 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
               isActive={slug === "profile"}
               path="profile"
             />
-            {user.role !== "admin" && (
+            {user.role !== "admin" && user.role !== "teacher" && (
               <ButtonData
                 logo={faGem}
                 name="SUSCRIPCIONES"
@@ -75,7 +80,9 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
           <UserData user={user} />
         ) : slug === "security" ? (
           <ChangePassword />
-        ) : slug === "subscription" && user.role !== "admin" ? (
+        ) : slug === "subscription" &&
+          user.role !== "admin" &&
+          user.role !== "teacher" ? (
           <SubscriptionInfo />
         ) : null}
       </div>

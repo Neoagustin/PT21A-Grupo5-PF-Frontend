@@ -6,7 +6,7 @@ import { IButtonChatBotProps } from "./types";
 export const ButtonChatBot: React.FC<IButtonChatBotProps> = ({
   isOpen,
   setIsOpen,
-  chatButtonRef
+  chatButtonRef,
 }) => {
   const handleToggleChat = () => setIsOpen(!isOpen);
 

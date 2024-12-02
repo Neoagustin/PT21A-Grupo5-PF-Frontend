@@ -6,17 +6,22 @@ import { useToken } from "@/context/TokenContext/TokenContext";
 import FormChatBot from "../FormChatBot/FormChatBot";
 import HeaderChatBot from "../HeaderChatBot/HeaderChatBot";
 import ButtonChatBot from "../ButtonChatBot/ButtonChatBot";
+import MessageChatBot from "../MessageChatBot/MessageChatBot";
+import { IMessage } from "@/interfaces/IMessage";
+import { useUser } from "@/context/UserContext/UserContext";
+
+const socketURL = "https://pt21a-grupo5-pf-backend.onrender.com/chat";
 
 export const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight - 250);
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const chatRef = useRef<HTMLDivElement | null>(null);
   const chatButtonRef = useRef<HTMLDivElement | null>(null);
   const { token } = useToken();
-
   const { isAdmin } = useSegment();
+  const { user } = useUser();
 
   useEffect(() => {
     const updateMaxHeight = () => setMaxHeight(window.innerHeight - 250);
@@ -36,17 +41,16 @@ export const ChatBot: React.FC = () => {
     window.addEventListener("click", handleClickOutside);
 
     if (token) {
-      const newSocket = io(process.env.WS_URL, {
+      const newSocket = io(socketURL, {
         auth: { token },
-        query: { language: "english" },
-        transports: ["websocket"],
+        transports: ["websocket", "polling"],
       });
       setSocket(newSocket);
       newSocket.on("message", (message: string) => {
-        setMessages((prev) => [...prev, message]);
+        setMessages((prev) => [...prev, { sender: "bot", content: message }]);
       });
       newSocket.on("response-message", (message: string) => {
-        setMessages((prev) => [...prev, `Bot: ${message}`]);
+        setMessages((prev) => [...prev, {sender: 'bot', content: `Bot: ${message}`}]);
       });
       newSocket.on("disconnect", () => {
         console.warn("Desconectado del servidor Socket.IO");
@@ -57,7 +61,7 @@ export const ChatBot: React.FC = () => {
     }
   }, [token]);
 
-  if (isAdmin || !token) return null;
+  if (isAdmin || !token || user?.role === 'admin' || user?.role === 'teacher') return null;
 
   return (
     <>
@@ -75,11 +79,7 @@ export const ChatBot: React.FC = () => {
         className={`w-[300px] transition-all overflow-y-auto duration-500 shadow-md shadow-gray rounded-md fixed right-3 bottom-24 bg-violet overflow-hidden scrollYNone`}
       >
         <HeaderChatBot />
-        <div className="w-full min-h-[250px] max-h-[250px] bg-whitePage p-3 overflow-auto scrollY">
-          {messages.map((msg, i) => (
-            <div key={i}>{msg}</div>
-          ))}
-        </div>
+        <MessageChatBot messages={messages} />
         <div className="w-full h-[1px] bg-lightgray"></div>
         <FormChatBot socket={socket} setMessages={setMessages} />
       </div>
