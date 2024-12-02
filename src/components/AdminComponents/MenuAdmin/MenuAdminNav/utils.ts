@@ -1,6 +1,7 @@
 import {
   faArrowRightFromBracket,
   faBookAtlas,
+  faShareAlt,
   faUserGraduate,
   faUserTie,
   IconDefinition,
@@ -28,6 +29,11 @@ const menuItems: MenuItem[] = [
     text: "Lenguajes",
     href: "/admin/languages",
     icon: faBookAtlas,
+  },
+  {
+    text: "Códigos de Referido",
+    href: "/admin/referrals",
+    icon: faShareAlt,
   },
   {
     text: "Salir del admin",

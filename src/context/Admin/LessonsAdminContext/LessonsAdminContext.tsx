@@ -31,6 +31,7 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const createLesson = async (dataLesson: ICreateLesson) => {
     try {
       await fetchCreateLessons(dataLesson);
+      window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
     }

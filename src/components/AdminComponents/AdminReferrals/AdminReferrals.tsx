@@ -1,25 +1,20 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ICreateModalProps } from "../types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
-import { validateUserCreateModal } from "../LanguagesCreateModal/valuesLanguagesCreateModal";
-import { useAdminContext } from "@/context/AdminContext/AdminContext";
-import { ICreateUser } from "@/interfaces/IUser";
-import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
+import IReferral from "@/interfaces/IReferral";
+import { validateCouponCreateModal } from "./valuesReferralsForm";
+import { fetchCreateReferral } from "@/services/referral-codes/Referral-Codes.Service";
+import { useUser } from "@/context/UserContext/UserContext";
+const CoursesCreateModal: React.FC = () => {
+  const { user } = useUser();
 
-const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
-  const { title } = useAdminContext();
-  const { createUser } = useUserAdminContext();
-
-  const handleOnSubmit = async (values: ICreateUser) => {
-    console.log(values);
-
+  const handleOnSubmit = async (values: IReferral) => {
     try {
-      createUser(values);
+      await fetchCreateReferral(values);
       Swal.fire({
-        title: "¡Lección Creada!",
-        text: "La lección se ha creado exitosamente.",
+        title: "¡Cupón de Referido Creado!",
+        text: "El cupón de referido se ha creado exitosamente.",
         icon: "success",
         showConfirmButton: false,
         timer: 1300,
@@ -35,14 +30,12 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
           popup: "animate__animated animate__fadeOutDown",
         },
       });
-
-      closeCreateModal();
     } catch (error) {
-      console.error("Error al crear la lección:", error);
+      console.error("Error al crear el cupón de referido:", error);
 
       Swal.fire({
         title: "Error",
-        text: "Hubo un problema al crear la lección. Intenta nuevamente.",
+        text: "Hubo un problema al crear el cupón de referido. Intenta nuevamente.",
         icon: "error",
         confirmButtonText: "OK",
         confirmButtonColor: "#FF5252",
@@ -60,47 +53,42 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
     }
   };
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      closeCreateModal();
-    }
-  };
+  if (!user?.id) throw new Error("ID de Entidad invalido");
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      onClick={handleOverlayClick}
-    >
+    <div className=" inset-0  bg-opacity-50 flex items-center justify-center z-0">
       <Formik
         initialValues={{
-          name: "",
-          email: "",
-          idNumber: "",
+          quantity: 1,
+          issuer: user?.id,
+          discount: 10,
+          expiration: 1,
         }}
-        validate={validateUserCreateModal}
+        validate={validateCouponCreateModal}
         onSubmit={handleOnSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
-            <Subtitle label={`Crear ${title}`} />
+          <Form className="bg-whitePage mt-[2vh] space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[70vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
+            <Subtitle label="Generar código de referido" />
 
             <div>
               <label
-                htmlFor="name"
+                htmlFor="quantity"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Nombre Completo:
+                Cantidad:
               </label>
               <div className="flex flex-col gap-2">
                 <Field
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Nombre Completo"
+                  id="quantity"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  placeholder="Cantidad de códigos de referido"
                   className="inputUpdateUser"
                 />
                 <ErrorMessage
-                  name="name"
+                  name="quantity"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />
@@ -109,21 +97,29 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
 
             <div>
               <label
-                htmlFor="email"
+                htmlFor="discount"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                E-Mail:
+                Descuento:
               </label>
               <div className="flex flex-col gap-2">
-                <Field
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  className="inputUpdateUser"
-                />
+                <Field id="discount" name="discount" as="select" className="inputUpdateUser">
+                  <option value="" disabled>
+                    Selecciona un descuento
+                  </option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                  <option value="60">60%</option>
+                  <option value="75">75%</option>
+                  <option value="80">80%</option>
+                  <option value="90">90%</option>
+                  <option value="100">100%</option>
+                </Field>
                 <ErrorMessage
-                  name="email"
+                  name="discount"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />
@@ -132,21 +128,26 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
 
             <div>
               <label
-                htmlFor="idNumber"
+                htmlFor="expiration"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Numero de Documento:
+                Expiración:
               </label>
               <div className="flex flex-col gap-2">
-                <Field
-                  id="idNumber"
-                  name="idNumber"
-                  type="text"
-                  placeholder="Ej. 42081764"
-                  className="inputUpdateUser"
-                />
+                <Field id="expiration" name="expiration" as="select" className="inputUpdateUser">
+                  <option value="" disabled>
+                    Selecciona un tiempo de expiración
+                  </option>
+                  <option value="1">1 Día</option>
+                  <option value="7">1 Semana</option>
+                  <option value="30">1 Mes</option>
+                  <option value="60">2 Meses</option>
+                  <option value="90">3 Meses</option>
+                  <option value="180">6 Meses</option>
+                  <option value="365">1 Año</option>
+                </Field>
                 <ErrorMessage
-                  name="idNumber"
+                  name="expiration"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />
@@ -161,13 +162,6 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
               >
                 {isSubmitting ? "Creando Nuevo..." : "Crear Nuevo"}
               </button>
-              <button
-                onClick={closeCreateModal}
-                className="bg-darkgray text-white px-4 py-2 hover:opacity-90 text-[14px] mt-3 sm:text-[16px] sm:mt-8 transition-all duration-200"
-                aria-label="Cerrar formulario"
-              >
-                Cerrar Menú
-              </button>
             </div>
           </Form>
         )}
@@ -176,4 +170,4 @@ const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => 
   );
 };
 
-export default UsersCreateModal;
+export default CoursesCreateModal;

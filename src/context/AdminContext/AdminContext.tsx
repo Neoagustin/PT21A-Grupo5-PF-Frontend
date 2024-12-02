@@ -23,22 +23,28 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const resolveTitle = async () => {
       try {
+        if (segment === "panel") {
+          if (!isCancelled) setTitle("Panel");
+          return;
+        }
         if (segment === "students") {
-          setTitle("Alumnos");
+          if (!isCancelled) setTitle("Alumnos");
           return;
         }
         if (segment === "teachers") {
-          setTitle("Profesores");
+          if (!isCancelled) setTitle("Profesores");
           return;
         }
         if (segment === "languages") {
-          setTitle("Lenguajes");
+          if (!isCancelled) setTitle("Lenguajes");
           return;
         }
         if (segment === "lessons") {
-          if (courseId) {
-            const course = await fetchGetCourseById(courseId);
-            setTitle(`Clases de ${course.title}`);
+          if (!isCancelled) {
+            if (courseId) {
+              const course = await fetchGetCourseById(courseId);
+              setTitle(`Clases de ${course.title}`);
+            }
           }
           return;
         }
@@ -55,6 +61,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           if (!isCancelled) {
             setTitle(languagesSpanish ? `Cursos de ${languagesSpanish}` : "Cursos");
           }
+          return;
+        }
+
+        if (segment === "referrals") {
+          if (!isCancelled) setTitle("Referidos");
           return;
         }
 

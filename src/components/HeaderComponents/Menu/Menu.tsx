@@ -21,17 +21,9 @@ export const Menu: React.FC = (): React.ReactElement => {
       ></button>
       <div
         className={`w-[25px] h-[1.6px] absolute top-[50%] -translate-y-[50%] left-[50%] -translate-x-[50%] bg-blackPage transition-all duration-300 
-                ${
-                  menu
-                    ? "origin-center -translate-x-[100px] bg-transparent"
-                    : ""
-                }`}
+                ${menu ? "origin-center -translate-x-[100px] bg-transparent" : ""}`}
       ></div>
-      <MenuLink
-        menu={menu}
-        menuRef={menuRef}
-        handleCloseMenu={handleCloseMenu}
-      />
+      <MenuLink menu={menu} menuRef={menuRef} handleCloseMenu={handleCloseMenu} />
     </div>
   );
 };
