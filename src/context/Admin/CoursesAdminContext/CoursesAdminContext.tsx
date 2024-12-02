@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import ICourseAdminContextProps, { ICoursesTables } from "./types";
-import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
+import ICourse, { ICreateCourse, IUpdateCourse } from "@/interfaces/ICourse";
 import {
   deleteCourse,
   fetchCoursesByLanguage,
@@ -25,10 +25,10 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
-  const createCourse = async (dataCourse: ICourse) => {
+  const createCourse = async (dataCourse: ICreateCourse) => {
     try {
       await fetchCreateCourse(dataCourse);
-      setCourses((prevCourses) => [...prevCourses, dataCourse]);
+      window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al actualizar el curso");
     }

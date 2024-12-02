@@ -10,9 +10,10 @@ import useSegment from "@/hooks/useSegment";
 const Footer: React.FC = (): React.ReactNode => {
   const year = new Date().getFullYear();
 
-  const { isAdmin } = useSegment();
+  const { segment, isAdmin } = useSegment();
 
   if (isAdmin) return null;
+  if (segment === "codeverification") return null;
 
   return (
     <footer className="flex flex-col gap-20 items-center px-2 pt-10">

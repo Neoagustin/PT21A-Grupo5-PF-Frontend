@@ -14,7 +14,6 @@ const useSegment = () => {
     const segments = pathname.split("/").filter(Boolean);
     const lastTwo = segments.slice(-2);
 
-    // Decodificar cada segmento antes de devolverlo
     return lastTwo.map((segment) => decodeURIComponent(segment));
   }, [pathname]);
 

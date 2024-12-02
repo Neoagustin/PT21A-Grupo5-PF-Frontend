@@ -1,8 +1,26 @@
 import { ILessonTables } from "@/context/Admin/LessonsAdminContext/types";
-import { IUpdateLesson } from "@/interfaces/ILesson";
+import { ICreateLesson, IUpdateLesson } from "@/interfaces/ILesson";
 import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export const fetchCreateLessons = async (dataLesson: ICreateLesson) => {
+  try {
+    const { title, content, course } = dataLesson;
+    const response = await axios.post(`${API_URL}/lessons`, { title, content, course });
+    console.log(response);
+
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err);
+
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
+  }
+};
 
 export const fetchLessonsByCourse = async (
   id: string,

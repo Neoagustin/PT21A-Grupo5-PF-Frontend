@@ -13,14 +13,10 @@ export interface IUpdateUser {
   isActive?: boolean;
 }
 
-export interface IEditUserFormValues {
-  id?: string;
-  name?: string;
-  email?: string;
-  idNumber?: string;
-  subscriptionName?: string;
-  role?: string;
-  state?: string;
+export interface ICreateUser {
+  name: string;
+  email: string;
+  idNumber: string;
 }
 
 export interface IUser {

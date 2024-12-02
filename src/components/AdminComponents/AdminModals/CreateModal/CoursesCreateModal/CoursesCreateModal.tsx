@@ -1,20 +1,18 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ICreateModalProps } from "../types";
-import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
-import { ILevel, IUpdateCourse } from "@/interfaces/ICourse";
+import { ICreateCourse, ILevel } from "@/interfaces/ICourse";
 import Swal from "sweetalert2";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
-import { validateCreateModal } from "../valuesCreateModal";
+import { validateCoursesCreateModal } from "./valuesCoursesCreateModal";
 import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
 
 const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
-  const { title } = useAdminContext();
   const { allLanguages } = useLanguageAdminContext();
   const { createCourse } = useCoursesAdminContext();
 
-  const handleOnSubmit = async (values: IUpdateCourse) => {
+  const handleOnSubmit = async (values: ICreateCourse) => {
     try {
       createCourse(values);
       Swal.fire({
@@ -80,12 +78,12 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
           general_description: "",
           brief_description: "",
         }}
-        validate={validateCreateModal}
+        validate={validateCoursesCreateModal}
         onSubmit={handleOnSubmit}
       >
         {({ isSubmitting }) => (
           <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
-            <Subtitle label={`Crear ${title}`} />
+            <Subtitle label={`Crear Curso`} />
 
             <div>
               <label

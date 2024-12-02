@@ -6,6 +6,7 @@ import SearchPaginationAdmin from "@/components/AdminComponents/SearchPagination
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import useSegment from "@/hooks/useSegment";
 import React from "react";
+import AdminReferrals from "./AdminReferrals/AdminReferrals";
 import AdminPanel from "./AdminPanel/AdminPanel";
 
 const Admin: React.FC = () => {
@@ -23,14 +24,15 @@ const Admin: React.FC = () => {
 
       <h1 className="text-center text-[24px] mb-4 sm:text-[32px]">{title}</h1>
 
-      {segment !== "panel" ? (
+      {segment === "panel" ? (
+        <AdminPanel />
+      ) : segment === "referrals" ? (
+        <AdminReferrals />
+      ) : (
         <>
           <SearchPaginationAdmin />
-
           <AdminTableBody />
         </>
-      ) : (
-        <AdminPanel />
       )}
     </main>
   );

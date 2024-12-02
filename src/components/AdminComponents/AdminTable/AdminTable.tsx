@@ -16,8 +16,7 @@ const AdminTableBody = () => {
       </div>
 
       {isCreateModalOpen && <CreateModal closeCreateModal={closeCreateModal} />}
-
-      <CreateModalButton />
+      {segment !== "students" && <CreateModalButton />}
     </>
   );
 };

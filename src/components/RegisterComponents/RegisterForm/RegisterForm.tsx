@@ -17,13 +17,14 @@ export const RegisterForm: React.FC = (): React.ReactElement => {
       initialValues={{ name: "", email: "", idNumber: "", password: "", repeatPassword: "" }}
       validate={validateRegister}
       onSubmit={async (userData, { resetForm }) => {
-
         const data = await fetchRegisterUser(userData);
+        console.log(data);
 
-        if (data) router.push('/login');
+        if (data) {
+          router.push(`/register/codeVerification?email=${encodeURIComponent(userData.email)}`);
+        }
 
         resetForm();
-
       }}
     >
       {({ errors, touched }: FormikProps<IUserRegister>) => (

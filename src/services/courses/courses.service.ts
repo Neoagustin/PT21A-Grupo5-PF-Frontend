@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import ICourse, { IUpdateCourse } from "@/interfaces/ICourse";
+import ICourse, { ICreateCourse, IUpdateCourse } from "@/interfaces/ICourse";
 import { ICoursesTables } from "@/context/Admin/CoursesAdminContext/types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -18,9 +18,8 @@ export const fetchCourses = async () => {
   }
 };
 
-export const fetchCreateCourse = async (
-  dataCourse: ICourse
-): Promise<ICoursesTables> => {
+
+export const fetchCreateCourse = async (dataCourse: ICreateCourse): Promise<ICoursesTables> => {
   try {
     const {
       title,
@@ -134,6 +133,8 @@ export const deleteCourse = async (id: string) => {
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
+      console.log(err);
+
       throw new Error(err.message);
     } else {
       throw new Error("Unknown error occurred");

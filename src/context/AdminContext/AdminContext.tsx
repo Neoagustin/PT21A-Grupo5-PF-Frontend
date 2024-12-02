@@ -68,6 +68,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
           return;
         }
 
+        if (segment === "referrals") {
+          if (!isCancelled) setTitle("Referidos");
+          return;
+        }
+
         if (!isCancelled) setTitle("Admin");
       } catch (error) {
         console.error("Error resolving title:", error);

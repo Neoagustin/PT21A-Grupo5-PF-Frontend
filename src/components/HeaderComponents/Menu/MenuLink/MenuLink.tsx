@@ -21,15 +21,11 @@ export const MenuLink: React.FC<IMenuLinkProps> = ({
         <Link className="links" onClick={handleCloseMenu} href="/#languages">
           Idiomas
         </Link>
-        <Link
-          className="links"
-          onClick={handleCloseMenu}
-          href="/#subscriptions"
-        >
+        <Link className="links" onClick={handleCloseMenu} href="/#subscriptions">
           Planes
         </Link>
-        <Link className="links" onClick={handleCloseMenu} href="/contact">
-          Contacto
+        <Link className="links" onClick={handleCloseMenu} href="/library">
+          Biblioteca
         </Link>
       </div>
     </nav>
