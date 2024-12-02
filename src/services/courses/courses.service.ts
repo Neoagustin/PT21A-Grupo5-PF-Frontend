@@ -18,10 +18,17 @@ export const fetchCourses = async () => {
   }
 };
 
+
 export const fetchCreateCourse = async (dataCourse: ICreateCourse): Promise<ICoursesTables> => {
   try {
-    const { title, language, specialization, level, general_description, brief_description } =
-      dataCourse;
+    const {
+      title,
+      language,
+      specialization,
+      level,
+      general_description,
+      brief_description,
+    } = dataCourse;
     const response = await axios.post(`${API_URL}/courses`, {
       title,
       language,
@@ -60,7 +67,10 @@ export const fetchCoursesByLanguage = async (
   }
 };
 
-export const fetchCoursesPage = async (page: number, limit: number): Promise<ICourse[]> => {
+export const fetchCoursesPage = async (
+  page: number,
+  limit: number
+): Promise<ICourse[]> => {
   try {
     const response = await axios.get(`${API_URL}/courses/page`, {
       params: { page, limit },
@@ -88,9 +98,18 @@ export const fetchGetCourseById = async (id: string): Promise<ICourse> => {
   }
 };
 
-export const fetchUpdateCourseById = async (id: string, courseData: IUpdateCourse) => {
+export const fetchUpdateCourseById = async (
+  id: string,
+  courseData: IUpdateCourse
+) => {
   try {
-    const { title, specialization, level, general_description, brief_description } = courseData;
+    const {
+      title,
+      specialization,
+      level,
+      general_description,
+      brief_description,
+    } = courseData;
     const response = await axios.patch(`${API_URL}/courses/${id}`, {
       title,
       specialization,
@@ -123,7 +142,11 @@ export const deleteCourse = async (id: string) => {
   }
 };
 
-export const fetchCourseRating = async (courseId: string, userId: string, stars: number) => {
+export const fetchCourseRating = async (
+  courseId: string,
+  userId: string,
+  stars: number
+) => {
   try {
     const response = await axios.post(`${API_URL}/courses/${courseId}/rate`, {
       userId,

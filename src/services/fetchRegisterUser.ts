@@ -22,6 +22,7 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
 
     return response.data;
   } catch (err: unknown) {
+    console.log(err)
     if (axios.isAxiosError(err) && err.response) {
       Swal.fire({
         title: "¡Error al registrarse!",

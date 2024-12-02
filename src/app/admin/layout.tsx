@@ -13,7 +13,9 @@ export const metadata: Metadata = {
   description: "Área administrativa de la plataforma.",
 };
 
-export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <AdminMenuProvider>
       <AdminProvider>
