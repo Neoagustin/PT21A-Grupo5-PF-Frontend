@@ -3,10 +3,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ICreateModalProps } from "../types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
-import { validateLessonsCreateModal } from "../LanguagesCreateModal/valuesLanguagesCreateModal";
 import { ICreateLesson } from "@/interfaces/ILesson";
 import { useLessonsAdminContext } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
+import { validateLessonsCreateModal } from "./validateLessonsCreateModal";
 
 const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const urlParams = new URLSearchParams(window.location.search);

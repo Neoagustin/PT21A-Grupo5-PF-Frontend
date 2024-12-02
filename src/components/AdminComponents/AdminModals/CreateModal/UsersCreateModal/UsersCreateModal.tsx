@@ -3,10 +3,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ICreateModalProps } from "../types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
-import { validateUserCreateModal } from "../LanguagesCreateModal/valuesLanguagesCreateModal";
 import { useAdminContext } from "@/context/AdminContext/AdminContext";
 import { ICreateUser } from "@/interfaces/IUser";
 import { useUserAdminContext } from "@/context/Admin/UserAdminContext/UserAdminContext";
+import { validateUserCreateModal } from "./valuesUsersCreateModal";
 
 const UsersCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { title } = useAdminContext();

@@ -7,6 +7,7 @@ import ICourse from "@/interfaces/ICourse";
 import LessonsEditModal from "./LessonsEditModal/LessonsEditModal";
 import { ILesson } from "@/interfaces/ILesson";
 import LanguagesEditModal from "./LanguagesEditModal/LanguagesEditModal";
+import ILanguage from "@/interfaces/ILanguage";
 
 const EditModal: React.FC<IEditModalProps> = ({ data, type, onClose }) => {
   const renderModalContent = () => {
@@ -15,7 +16,7 @@ const EditModal: React.FC<IEditModalProps> = ({ data, type, onClose }) => {
         return <UserEditModal data={data as IUser} onClose={onClose} />;
 
       case "languages":
-        return <LanguagesEditModal data={data as ICourse} onClose={onClose} />;
+        return <LanguagesEditModal data={data as ILanguage} onClose={onClose} />;
 
       case "course":
         return <CoursesEditModal data={data as ICourse} onClose={onClose} />;
