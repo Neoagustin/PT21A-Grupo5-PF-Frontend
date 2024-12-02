@@ -7,18 +7,16 @@ const CheckoutPlan: React.FC<ICheckoutPlanProps> = ({
   slug,
 }): React.ReactElement => {
   return (
-    <>
-      <div>
-        <div className="flex items-center justify-center lg:mr-[15px]">
-          <div className="w-fit h-fit">
+      
+          <div className="flex items-center justify-center lg:mr-[15px] lg:self-start">
             <SubscriptionPlanCard
+              className="shadow-2xl shadow-gray"
               button={false}
               subName={slug as SubscriptionName}
             />
           </div>
-        </div>
-      </div>
-    </>
+       
+   
   );
 };
 
