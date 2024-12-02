@@ -10,11 +10,13 @@ export interface ICheckoutByMPProps {
 };
 
 
-export const checkout = async (idMembership: string | undefined, idSubscription: string | undefined) => {
+export const checkout = async (idMembership: string | undefined, idSubscription: string | undefined, discountCode: string) => {
     try {
 
       console.log(idMembership)
       console.log(idSubscription)
+      console.log(discountCode);
+      
 
 
       const response = await fetch(`${API_URL}/membership/${idMembership}`, {
@@ -23,7 +25,8 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "subs_id" : idSubscription
+          "subs_id" : idSubscription,
+          "vaucher" : discountCode
         }), 
       });
 

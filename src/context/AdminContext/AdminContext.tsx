@@ -9,7 +9,9 @@ import { useSearchParams } from "next/navigation";
 
 const AdminContext = createContext<IAdminContextProps | undefined>(undefined);
 
-export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { segment, getLastTwoSegments } = useSegment();
   const [title, setTitle] = useState<string>("Admin");
   const searchParams = useSearchParams();
@@ -59,7 +61,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           )?.name;
 
           if (!isCancelled) {
-            setTitle(languagesSpanish ? `Cursos de ${languagesSpanish}` : "Cursos");
+            setTitle(
+              languagesSpanish ? `Cursos de ${languagesSpanish}` : "Cursos"
+            );
           }
           return;
         }
@@ -83,7 +87,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, [segment, getLastTwoSegments, courseId]);
 
-  return <AdminContext.Provider value={{ title }}>{children}</AdminContext.Provider>;
+  return (
+    <AdminContext.Provider value={{ title }}>{children}</AdminContext.Provider>
+  );
 };
 
 export const useAdminContext = () => {

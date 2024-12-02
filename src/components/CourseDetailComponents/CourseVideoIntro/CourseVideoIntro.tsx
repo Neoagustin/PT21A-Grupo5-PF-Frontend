@@ -26,7 +26,7 @@ export const CourseVideoIntro: React.FC<ICourseVideoIntroProps> = ({
           />
         </video>
       </div>
-      {user?.role !== "admin" ? (
+      {user?.role !== "admin" && user?.role !== 'teacher' ? (
         <div className="p-2 flex flex-col justify-between gap-3">
           <h3 className="text-sm font-bold sm:text-[14px] md:text-base lg:text-xl">
             {token && user?.membership.subscription.name === "Standard"
