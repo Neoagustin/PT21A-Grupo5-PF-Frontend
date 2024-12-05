@@ -11,7 +11,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }): React.ReactElement => {
   const [user, setUser] = useState<IUser | null>(null);
   const [modal, setModal] = useState<boolean>(false);
-console.log(user)
+
   useEffect(() => {
     const savedUser = localStorage.getItem("userData");
     if (savedUser) {

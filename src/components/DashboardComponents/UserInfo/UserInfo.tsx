@@ -35,7 +35,7 @@ export const UserInfo: React.FC<IUserInfoProps> = ({
   }
 
   return (
-    <div className="flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:flex-row xl:justify-between">
+    <div className="flex flex-col items-center gap-5 sm:px-3 lg:px-0 xl:min-w-[1146px] xl:flex-row xl:justify-between">
       <div className="w-full flex flex-col items-center gap-5 xl:flex-row xl:items-start xl:h-[500px] xl:w-[500px]">
         <div className="flex flex-col gap-5 xl:w-[220px]">
           <div className="flex flex-col items-center gap-5 xl:self-center">
