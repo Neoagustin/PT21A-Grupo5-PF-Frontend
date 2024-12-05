@@ -2,7 +2,10 @@ import ILanguage, { ICreateLanguage, IUpdateLanguage } from "@/interfaces/ILangu
 import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchCreateLanguages = async (dataLanguage: ICreateLanguage): Promise<ILanguage[]> => {
+export const fetchCreateLanguages = async (
+  dataLanguage: ICreateLanguage,
+  token: string
+): Promise<ILanguage[]> => {
   try {
     const {
       name,
@@ -33,6 +36,7 @@ export const fetchCreateLanguages = async (dataLanguage: ICreateLanguage): Promi
     const response = await axios.post(`${API_URL}/language/create`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -44,6 +48,76 @@ export const fetchCreateLanguages = async (dataLanguage: ICreateLanguage): Promi
       throw new Error(err.message);
     } else {
       throw new Error("Ocurrio un error desconocido");
+    }
+  }
+};
+
+export const fetchUpdateImage_Url = async (id: string, img: File, token: string) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", img);
+
+    const response = await axios.put(`${API_URL}/language/${id}/image`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err);
+      throw new Error(err.message);
+    } else {
+      throw new Error("Ocurrió un error desconocido");
+    }
+  }
+};
+
+export const fetchUpdateFlag_Url = async (id: string, img: File, token: string) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", img);
+
+    const response = await axios.put(`${API_URL}/language/${id}/flag_url`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    console.log(err);
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Ocurrió un error desconocido");
+    }
+  }
+};
+
+export const fetchUpdateCountry_Photo = async (id: string, img: File, token: string) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", img);
+
+    const response = await axios.put(`${API_URL}/language/${id}/country_photo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    console.log(err);
+
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    } else {
+      throw new Error("Ocurrió un error desconocido");
     }
   }
 };
@@ -76,9 +150,13 @@ export const fetchLanguagesPage = async (page: number, limit: number) => {
   }
 };
 
-export const fetchDeleteLanguage = async (id: string) => {
+export const fetchDeleteLanguage = async (id: string, token: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/language/${id}`);
+    const response = await axios.delete(`${API_URL}/language/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -89,14 +167,26 @@ export const fetchDeleteLanguage = async (id: string) => {
   }
 };
 
-export const fetchUpdateLanguageById = async (id: string, languageData: IUpdateLanguage) => {
+export const fetchUpdateLanguageById = async (
+  id: string,
+  languageData: IUpdateLanguage,
+  token: string
+) => {
   try {
     const { name, general_description, brief_description } = languageData;
-    const response = await axios.put(`${API_URL}/language/update/${id}`, {
-      name,
-      general_description,
-      brief_description,
-    });
+    const response = await axios.put(
+      `${API_URL}/language/update/${id}`,
+      {
+        name,
+        general_description,
+        brief_description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err: unknown) {
     console.log(err);

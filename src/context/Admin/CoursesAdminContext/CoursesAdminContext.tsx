@@ -9,6 +9,7 @@ import {
   fetchUpdateCourseById,
 } from "@/services/courses/courses.service";
 import useSegment from "@/hooks/useSegment";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 const CoursesAdminContext = createContext<ICourseAdminContextProps | undefined>(undefined);
 
@@ -20,14 +21,17 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [maxPages, setMaxPages] = useState<number>(0);
   const { getLastTwoSegments } = useSegment();
   const languageName = getLastTwoSegments()[0];
+  const { token } = useToken();
   const dataLimit = 5;
+
+  if (!token) throw new Error("Token inexistente");
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
   const createCourse = async (dataCourse: ICreateCourse) => {
     try {
-      await fetchCreateCourse(dataCourse);
+      await fetchCreateCourse(dataCourse, token);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al actualizar el curso");
@@ -53,7 +57,7 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const deleteCourseById = async (id: string) => {
     try {
-      await deleteCourse(id);
+      await deleteCourse(id, token);
       setCourses((prev) => prev.filter((course) => course.id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al eliminar curso");
@@ -62,7 +66,7 @@ export const CoursesAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const updateCourseById = async (id: string, courseData: IUpdateCourse) => {
     try {
-      const updatedCourse = await fetchUpdateCourseById(id, courseData);
+      const updatedCourse = await fetchUpdateCourseById(id, courseData, token);
 
       setCourses((prevCourses) =>
         prevCourses.map((course) => (course.id === id ? { ...course, ...updatedCourse } : course))

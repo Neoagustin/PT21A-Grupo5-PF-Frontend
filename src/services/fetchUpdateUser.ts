@@ -4,11 +4,12 @@ import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchUpdateUser = async (id: string, userData: IUserUpdate) => {
+export const fetchUpdateUser = async (id: string, userData: IUserUpdate, token: string) => {
   try {
     const response = await axios.patch(`${API_URL}/users/${id}`, userData, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
