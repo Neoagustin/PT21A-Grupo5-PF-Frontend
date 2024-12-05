@@ -2,7 +2,7 @@ import ICourse from '@/interfaces/ICourse';
 import React from 'react'
 import EnrolledCoursesCards from './EnrolledCoursesCards/EnrolledCoursesCards';
 
-const EnrolledCourses: React.FC<{userCourses:ICourse[] | null}> = ({userCourses}): React.ReactElement => {
+const EnrolledCourses: React.FC<{userCourses:ICourse[] | undefined}> = ({userCourses}): React.ReactElement => {
   return (
     <div
                           className={`max-w-[1280px] ${
