@@ -11,6 +11,9 @@ export interface ICreateLanguage {
   name: string;
   general_description: string;
   brief_description: string;
+  image_url: File | null;
+  flag_url: File | null;
+  country_photo: File | null;
 }
 
 export interface ILanguage {

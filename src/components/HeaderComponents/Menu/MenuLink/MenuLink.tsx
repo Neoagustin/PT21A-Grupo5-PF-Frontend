@@ -24,8 +24,8 @@ export const MenuLink: React.FC<IMenuLinkProps> = ({
         <Link className="links" onClick={handleCloseMenu} href="/#subscriptions">
           Planes
         </Link>
-        <Link className="links" onClick={handleCloseMenu} href="/library">
-          Biblioteca
+        <Link className="links" onClick={handleCloseMenu} href="/contact">
+          Contacto
         </Link>
       </div>
     </nav>

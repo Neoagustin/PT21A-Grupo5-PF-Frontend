@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ICreateModalProps } from "../types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
@@ -7,12 +7,17 @@ import Swal from "sweetalert2";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import { validateCoursesCreateModal } from "./valuesCoursesCreateModal";
 import { useCoursesAdminContext } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
+import Image from "next/image";
 
 const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { allLanguages } = useLanguageAdminContext();
   const { createCourse } = useCoursesAdminContext();
 
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const handleOnSubmit = async (values: ICreateCourse) => {
+    console.log(values);
+
     try {
       createCourse(values);
       Swal.fire({
@@ -58,6 +63,23 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
     }
   };
 
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (field: string, value: File | null) => void,
+    fieldName: string,
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFieldValue(fieldName, file);
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       closeCreateModal();
@@ -77,11 +99,12 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
           level: "",
           general_description: "",
           brief_description: "",
+          img_url: null,
         }}
         validate={validateCoursesCreateModal}
         onSubmit={handleOnSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
             <Subtitle label={`Crear Curso`} />
 
@@ -189,6 +212,41 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
 
                 <ErrorMessage
                   name="level"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="img_url"
+                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
+              >
+                Imagen del curso:
+              </label>
+              <div className="flex flex-col gap-2">
+                <input
+                  id="img_url"
+                  name="img_url"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, setFieldValue, "img_url", setImagePreview)}
+                  className="text-[14px]"
+                />
+                {imagePreview && (
+                  <div className="mt-2 w-full h-[200px] relative">
+                    <Image
+                      src={imagePreview}
+                      alt="Vista previa"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-md"
+                    />
+                  </div>
+                )}
+                <ErrorMessage
+                  name="image_url"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />

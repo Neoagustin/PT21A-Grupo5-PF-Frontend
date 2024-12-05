@@ -4,15 +4,42 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCreateLanguages = async (dataLanguage: ICreateLanguage): Promise<ILanguage[]> => {
   try {
-    const { name, path, general_description, brief_description } = dataLanguage;
-    const response = await axios.post(`${API_URL}/language/create`, {
+    const {
       name,
       path,
       general_description,
       brief_description,
+      image_url,
+      flag_url,
+      country_photo,
+    } = dataLanguage;
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("path", path);
+    formData.append("general_description", general_description);
+    formData.append("brief_description", brief_description);
+
+    if (image_url) {
+      formData.append("files", image_url);
+    }
+    if (flag_url) {
+      formData.append("files", flag_url);
+    }
+    if (country_photo) {
+      formData.append("files", country_photo);
+    }
+
+    const response = await axios.post(`${API_URL}/language/create`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
+
     return response.data;
   } catch (err: unknown) {
+    console.log(err);
+
     if (err instanceof Error) {
       throw new Error(err.message);
     } else {
