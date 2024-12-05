@@ -5,7 +5,7 @@ export const MessageChatBot: React.FC<IMessageChatBotProps> = ({
   messages,
 }) => {
   return (
-    <div className="w-full min-h-[250px] max-h-[250px] bg-whitePage p-3 overflow-auto scrollY">
+    <div className="w-full p-1 min-h-[250px] max-h-[250px] bg-whitePage overflow-auto scrollY">
       {messages.map((msg, i) => (
         <div key={i}>
           <div
@@ -15,7 +15,7 @@ export const MessageChatBot: React.FC<IMessageChatBotProps> = ({
             } mb-2`}
           >
             <div
-              className={`p-2 rounded-lg max-w-xs flex gap-3 ${
+              className={`p-2 rounded-lg max-w-xs flex gap-2 ${
                 msg.sender === "user"
                   ? "bg-violet text-whitePage"
                   : "bg-lightgray text-blackPage"

@@ -6,7 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCourses = async () => {
   try {
-    const response = await axios.get(`${API_URL}/courses/page`);
+    const response = await axios.get(`${API_URL}/courses/page?limit=1000`);
 
     return response.data;
   } catch (err: unknown) {
