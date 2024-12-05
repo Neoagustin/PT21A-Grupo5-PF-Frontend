@@ -4,20 +4,44 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchCreateLessons = async (dataLesson: ICreateLesson) => {
+export const fetchCreateLessons = async (dataLesson: ICreateLesson, token: string) => {
   try {
-    const { title, content, course } = dataLesson;
-    const response = await axios.post(`${API_URL}/lessons`, { title, content, course });
-    console.log(response);
+    const { title, content, course, video } = dataLesson;
+    if (!token || typeof token !== "string") {
+      throw new Error("El token de autenticación es inválido o no se proporcionó.");
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("course", course);
+
+    if (video instanceof File) {
+      formData.append("files", video);
+    } else {
+      throw new Error("El video debe ser un archivo válido.");
+    }
+
+    const response = await axios.post(`${API_URL}/lessons`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.log(err);
+    console.log(err);
 
+    if (axios.isAxiosError(err)) {
+      throw new Error(
+        err.response?.data?.message ||
+          `Error en la petición: ${err.response?.statusText || err.message}`
+      );
+    } else if (err instanceof Error) {
       throw new Error(err.message);
     } else {
-      throw new Error("Unknown error occurred");
+      throw new Error("Ocurrió un error desconocido");
     }
   }
 };
@@ -41,9 +65,13 @@ export const fetchLessonsByCourse = async (
   }
 };
 
-export const fetchDeleteLessons = async (id: string) => {
+export const fetchDeleteLessons = async (id: string, token: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/lessons/${id}`);
+    const response = await axios.delete(`${API_URL}/lessons/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -54,10 +82,22 @@ export const fetchDeleteLessons = async (id: string) => {
   }
 };
 
-export const fetchUpdateLessonById = async (id: string, lessonData: IUpdateLesson) => {
+export const fetchUpdateLessonById = async (
+  id: string,
+  lessonData: IUpdateLesson,
+  token: string
+) => {
   const { title, content } = lessonData;
   try {
-    const response = await axios.put(`${API_URL}/lessons/${id}`, { title, content });
+    const response = await axios.put(
+      `${API_URL}/lessons/${id}`,
+      { title, content },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err: unknown) {
     console.log(err);

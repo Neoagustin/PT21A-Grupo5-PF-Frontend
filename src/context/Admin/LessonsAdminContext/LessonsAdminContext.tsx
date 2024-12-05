@@ -7,9 +7,10 @@ import {
   fetchLessonsByCourse,
   fetchUpdateLessonById,
 } from "@/services/lessons/lessons.service";
-import { useSearchParams } from "next/navigation"; // Importar el hook para manejar query params
+import { useSearchParams } from "next/navigation";
 import ILessonAdminContextProps, { ILessonTables } from "./types";
 import useSegment from "@/hooks/useSegment";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 const LessonsAdminContext = createContext<ILessonAdminContextProps | undefined>(undefined);
 
@@ -20,17 +21,20 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const [maxPages, setMaxPages] = useState<number>(0);
   const { segment } = useSegment();
+  const { token } = useToken();
   const dataLimit = 5;
 
   const searchParams = useSearchParams();
   const courseId = searchParams.get("id");
+
+  if (!token) throw new Error("Token inexistente");
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
   const createLesson = async (dataLesson: ICreateLesson) => {
     try {
-      await fetchCreateLessons(dataLesson);
+      await fetchCreateLessons(dataLesson, token);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
@@ -39,7 +43,7 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const deleteLessonById = async (id: string) => {
     try {
-      await fetchDeleteLessons(id);
+      await fetchDeleteLessons(id, token);
       setLessons((prev) => prev.filter((lesson) => lesson.id !== id));
     } catch (err) {
       setError(err instanceof Error ? `Page: ${err.message}` : "Error desconocido");
@@ -48,7 +52,7 @@ export const LessonsAdminProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const updateLessonById = async (id: string, lessonData: IUpdateLesson) => {
     try {
-      const updatedLesson = await fetchUpdateLessonById(id, lessonData);
+      const updatedLesson = await fetchUpdateLessonById(id, lessonData, token);
 
       setLessons((prevLessons) =>
         prevLessons.map((lesson) => (lesson.id === id ? { ...lesson, ...updatedLesson } : lesson))

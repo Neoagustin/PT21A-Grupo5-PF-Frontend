@@ -40,9 +40,9 @@ export const CourseIntro: React.FC<ICourseIntroProps> = ({
       <div className="flex items-center justify-between">
         <StarRating course={course} />
         <h3 className="text-gray text-xs font-medium sm:text-[14px]">
-
-          {`${course.students.length} ${course.students.length !== 1 ? 'estudiantes' : 'estudiante'}`}
-
+          {`${course.students.length} ${
+            course.students.length !== 1 ? "estudiantes" : "estudiante"
+          }`}
         </h3>
       </div>
       <div className="w-full h-[2px] bg-lightgray"></div>

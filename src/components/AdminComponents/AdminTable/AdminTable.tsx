@@ -3,11 +3,13 @@ import useSegment from "@/hooks/useSegment";
 import CreateModalButton from "../AdminModals/CreateModal/CreateModalButton/CreateModalButton";
 import CreateModal from "../AdminModals/CreateModal/CreateModal";
 import { useCreateModalContext } from "@/context/Modals/CreateModalContext";
-import { getAdminTableComponent } from "./utils";
+import { getAdminTableComponent } from "./utils"; //todo -> Renderización condicional
 
 const AdminTableBody = () => {
   const { segment } = useSegment();
   const { isCreateModalOpen, closeCreateModal } = useCreateModalContext();
+
+  //? EN UTILS SE ENCUENTRA LA RENDERIZACIÓN CONDICIONAL DE TABLAS
 
   return (
     <>
@@ -16,6 +18,7 @@ const AdminTableBody = () => {
       </div>
 
       {isCreateModalOpen && <CreateModal closeCreateModal={closeCreateModal} />}
+
       {segment !== "students" && <CreateModalButton />}
     </>
   );

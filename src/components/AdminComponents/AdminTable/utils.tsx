@@ -3,6 +3,7 @@ import AdminLanguagesTable from "./AdminTables/AdminLanguagesTable/AdminLanguage
 import AdminCoursesTable from "./AdminTables/AdminCoursesTable/AdminCoursesTable";
 import AdminLessonsTable from "./AdminTables/AdminLessonTable/AdminLessonTable";
 import React from "react";
+import AdminReferralsTable from "./AdminTables/AdminReferralsTable/AdminReferralsTable";
 
 export const getAdminTableComponent = (segment: string | null) => {
   switch (segment) {
@@ -15,6 +16,8 @@ export const getAdminTableComponent = (segment: string | null) => {
       return <AdminCoursesTable />;
     case "lessons":
       return <AdminLessonsTable />;
+    case "referrals":
+      return <AdminReferralsTable />;
     default:
       return null;
   }

@@ -1,6 +1,6 @@
 import { FormikErrors } from "formik";
 
-export const validateCouponCreateModal = (values: {
+export const validateReferralsCreateModal = (values: {
   quantity: number;
   issuer: string;
   discount: number;
