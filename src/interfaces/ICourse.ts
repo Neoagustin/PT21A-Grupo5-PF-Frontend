@@ -27,6 +27,7 @@ export interface ICreateCourse {
   brief_description: string;
   level: string;
   language: string;
+  img_url: File | null;
 }
 
 export interface IUpdateCourse {

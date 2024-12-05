@@ -11,7 +11,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }): React.ReactElement => {
   const [user, setUser] = useState<IUser | null>(null);
   const [modal, setModal] = useState<boolean>(false);
-console.log(user)
+
   useEffect(() => {
     const savedUser = localStorage.getItem("userData");
     if (savedUser) {
@@ -46,8 +46,6 @@ console.log(user)
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === null)
-    throw new Error(
-      "El contexto debe ser utilizado dentro de un UserProvider."
-    );
+    throw new Error("El contexto debe ser utilizado dentro de un UserProvider.");
   return context;
 };

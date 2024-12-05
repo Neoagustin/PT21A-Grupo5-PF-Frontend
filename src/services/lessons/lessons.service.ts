@@ -6,18 +6,32 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCreateLessons = async (dataLesson: ICreateLesson) => {
   try {
-    const { title, content, course } = dataLesson;
-    const response = await axios.post(`${API_URL}/lessons`, { title, content, course });
-    console.log(response);
+    const { title, content, course, video } = dataLesson;
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("course", course);
+
+    if (video instanceof File) {
+      formData.append("files", video);
+    } else {
+      throw new Error("El video debe ser un archivo válido.");
+    }
+
+    const response = await axios.post(`${API_URL}/lessons`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     return response.data;
   } catch (err: unknown) {
+    console.log(err);
     if (err instanceof Error) {
-      console.log(err);
-
       throw new Error(err.message);
     } else {
-      throw new Error("Unknown error occurred");
+      throw new Error("Ocurrió un error desconocido");
     }
   }
 };

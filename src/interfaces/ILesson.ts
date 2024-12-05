@@ -9,11 +9,12 @@ export interface ICreateLesson {
   title: string;
   content: string;
   course: string;
+  video: File | null;
 }
 
 export interface ILesson {
   id: string;
   title: string;
   content: string;
-  video_url: string;
+  video: File | null;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ICreateModalProps } from "../types";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
@@ -13,6 +13,8 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
   const courseId = urlParams.get("id");
   const { title } = useAdminContext();
   const { createLesson } = useLessonsAdminContext();
+
+  const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
   const handleOnSubmit = async (values: ICreateLesson) => {
     try {
@@ -60,6 +62,23 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
     }
   };
 
+  const handleVideoChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (field: string, value: File | null) => void,
+    fieldName: string,
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFieldValue(fieldName, file);
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       closeCreateModal();
@@ -78,11 +97,12 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
           title: "",
           content: "",
           course: courseId,
+          video: null,
         }}
         validate={validateLessonsCreateModal}
         onSubmit={handleOnSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form className="bg-whitePage space-y-4 p-6 border border-lightgray rounded shadow-lg w-[90vw] max-w-[400px] overflow-y-auto h-[90vh] max-h-[max-content] sm:text-[16px] sm:max-w-[460px]">
             <Subtitle label={`Crear ${title}`} />
 
@@ -127,6 +147,39 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
                 />
                 <ErrorMessage
                   name="content"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="video"
+                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
+              >
+                Video del curso:
+              </label>
+              <div className="flex flex-col gap-2">
+                <input
+                  id="video"
+                  name="video"
+                  type="file"
+                  accept="video/*"
+                  onChange={(e) => handleVideoChange(e, setFieldValue, "video", setVideoPreview)}
+                  className="text-[14px]"
+                />
+                {videoPreview && (
+                  <div className="mt-2 w-full h-[200px] relative">
+                    <video
+                      src={videoPreview}
+                      controls
+                      className="rounded-md w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <ErrorMessage
+                  name="video_url"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />
