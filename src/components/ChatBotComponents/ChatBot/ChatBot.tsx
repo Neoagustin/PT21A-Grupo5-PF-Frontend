@@ -22,6 +22,7 @@ export const ChatBot: React.FC = () => {
   const { token } = useToken();
   const { isAdmin } = useSegment();
   const { user } = useUser();
+  const { segment } = useSegment();
 
   useEffect(() => {
     const updateMaxHeight = () => setMaxHeight(window.innerHeight - 250);
@@ -64,7 +65,13 @@ export const ChatBot: React.FC = () => {
     }
   }, [token]);
 
-  if (isAdmin || !token || user?.role === "admin" || user?.role === "teacher")
+  if (
+    isAdmin ||
+    !token ||
+    user?.role === "admin" ||
+    user?.role === "teacher" ||
+    segment === "code-verification"
+  )
     return null;
 
   return (
