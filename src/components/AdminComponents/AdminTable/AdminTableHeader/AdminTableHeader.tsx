@@ -5,6 +5,7 @@ import {
   headersTeachersTable,
   headersCoursesTable,
   headersLessonsTable,
+  headersReferralsTable,
 } from "./utils";
 import useSegment from "@/hooks/useSegment";
 
@@ -19,11 +20,13 @@ const AdminTableHeader = () => {
       ? headersTeachersTable
       : segment === "courses"
       ? headersCoursesTable
-      : headersLessonsTable;
+      : segment === "lessons"
+      ? headersLessonsTable
+      : headersReferralsTable;
 
   return (
-    <thead>
-      <tr className="text-left text-blackPage border-lightgrayTransparent bg-lightgrayTransparent">
+    <thead className=" sticky top-[-2px] z-12">
+      <tr className="text-left text-blackPage border-lightgray bg-lightgray">
         {header.map((header, index) => (
           <th key={index} className="py-3 px-6 text-nowrap">
             {header}
