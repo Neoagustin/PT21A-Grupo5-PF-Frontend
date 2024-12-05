@@ -14,6 +14,7 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
   const { createCourse } = useCoursesAdminContext();
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
   const handleOnSubmit = async (values: ICreateCourse) => {
     console.log(values);
@@ -100,6 +101,7 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
           general_description: "",
           brief_description: "",
           img_url: null,
+          video_url: null,
         }}
         validate={validateCoursesCreateModal}
         onSubmit={handleOnSubmit}
@@ -247,6 +249,41 @@ const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
                 )}
                 <ErrorMessage
                   name="image_url"
+                  component="p"
+                  className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="video"
+                className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
+              >
+                Video de la clase:
+              </label>
+              <div className="flex flex-col gap-2">
+                <input
+                  id="video_url"
+                  name="video_url"
+                  type="file"
+                  accept="video/*"
+                  onChange={(e) =>
+                    handleImageChange(e, setFieldValue, "video_url", setVideoPreview)
+                  }
+                  className="text-[14px]"
+                />
+                {videoPreview && (
+                  <div className="mt-2 w-full h-[200px] relative">
+                    <video
+                      src={videoPreview}
+                      controls
+                      className="rounded-md w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <ErrorMessage
+                  name="video_url"
                   component="p"
                   className="flex items-center gap-2 text-red text-sm bg-red-50 border-l-4 border-red p-2 rounded-md"
                 />

@@ -4,6 +4,9 @@ export interface IUpdateLanguage {
   name?: string;
   general_description?: string;
   brief_description?: string;
+  image_url: File | string | null;
+  flag_url: File | string | null;
+  country_photo: File | string | null;
 }
 
 export interface ICreateLanguage {

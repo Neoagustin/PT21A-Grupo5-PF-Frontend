@@ -17,6 +17,8 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
   const handleOnSubmit = async (values: ICreateLesson) => {
+    console.log(values);
+
     try {
       createLesson(values);
       Swal.fire({
@@ -40,7 +42,7 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
 
       closeCreateModal();
     } catch (error) {
-      console.error("Error al crear la lección:", error);
+      console.log(error);
 
       Swal.fire({
         title: "Error",
@@ -118,7 +120,7 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
                   id="title"
                   name="title"
                   type="text"
-                  placeholder="Titulo del Curso"
+                  placeholder="Titulo de la clase"
                   className="inputUpdateUser"
                 />
                 <ErrorMessage
@@ -158,7 +160,7 @@ const LessonsCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) =
                 htmlFor="video"
                 className="pl-1 block mb-1 text-[14px] text-darkgray sm:text-[16px]"
               >
-                Video del curso:
+                Video de la clase:
               </label>
               <div className="flex flex-col gap-2">
                 <input

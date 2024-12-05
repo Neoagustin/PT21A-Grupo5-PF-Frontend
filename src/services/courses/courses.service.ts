@@ -18,7 +18,10 @@ export const fetchCourses = async () => {
   }
 };
 
-export const fetchCreateCourse = async (dataCourse: ICreateCourse): Promise<ICoursesTables> => {
+export const fetchCreateCourse = async (
+  dataCourse: ICreateCourse,
+  token: string
+): Promise<ICoursesTables> => {
   try {
     const {
       title,
@@ -47,6 +50,7 @@ export const fetchCreateCourse = async (dataCourse: ICreateCourse): Promise<ICou
     const response = await axios.post(`${API_URL}/courses`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -108,16 +112,28 @@ export const fetchGetCourseById = async (id: string): Promise<ICourse> => {
   }
 };
 
-export const fetchUpdateCourseById = async (id: string, courseData: IUpdateCourse) => {
+export const fetchUpdateCourseById = async (
+  id: string,
+  courseData: IUpdateCourse,
+  token: string
+) => {
   try {
     const { title, specialization, level, general_description, brief_description } = courseData;
-    const response = await axios.patch(`${API_URL}/courses/${id}`, {
-      title,
-      specialization,
-      level,
-      general_description,
-      brief_description,
-    });
+    const response = await axios.patch(
+      `${API_URL}/courses/${id}`,
+      {
+        title,
+        specialization,
+        level,
+        general_description,
+        brief_description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -128,9 +144,13 @@ export const fetchUpdateCourseById = async (id: string, courseData: IUpdateCours
   }
 };
 
-export const deleteCourse = async (id: string) => {
+export const deleteCourse = async (id: string, token: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/course/${id}`);
+    const response = await axios.delete(`${API_URL}/course/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -143,16 +163,31 @@ export const deleteCourse = async (id: string) => {
   }
 };
 
-export const fetchCourseRating = async (courseId: string, userId: string, stars: number) => {
+export const fetchCourseRating = async (
+  courseId: string,
+  userId: string,
+  stars: number,
+  token: string
+) => {
   try {
-    const response = await axios.post(`${API_URL}/courses/${courseId}/rate`, {
-      userId,
-      stars,
-    });
+    const response = await axios.post(
+      `${API_URL}/courses/${courseId}/rate`,
+      {
+        userId,
+        stars,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
+      console.log(err);
+
       throw Swal.fire({
         title: "¡Error al votar!",
         text: "Ya has votado.",

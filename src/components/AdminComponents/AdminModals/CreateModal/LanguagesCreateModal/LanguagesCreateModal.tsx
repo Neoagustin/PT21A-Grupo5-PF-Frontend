@@ -9,6 +9,7 @@ import { ICreateLanguage } from "@/interfaces/ILanguage";
 import { useLanguageAdminContext } from "@/context/Admin/LanguageAdminContext/LanguageAdminContext";
 import { validateLanguagesCreateModal } from "./valuesLanguagesCreateModal";
 import Loading from "@/components/GeneralComponents/Loading/Loading";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 const LanguagesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { title } = useAdminContext();
@@ -17,6 +18,7 @@ const LanguagesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal })
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [flagPreview, setFlagPreview] = useState<string | null>(null);
   const [countryPhotoPreview, setCountryPhotoPreview] = useState<string | null>(null);
+  const { token } = useToken();
 
   const handleOnSubmit = async (values: ICreateLanguage) => {
     console.log(values);
@@ -103,6 +105,7 @@ const LanguagesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal })
           image_url: null,
           flag_url: null,
           country_photo: null,
+          token: token,
         }}
         validate={(values) =>
           validateLanguagesCreateModal(values, imagePreview, flagPreview, countryPhotoPreview)

@@ -6,6 +6,7 @@ import {
   fetchGetReferral,
 } from "@/services/referral-codes/Referral-Codes.Service";
 import IReferral, { ICreateReferral } from "@/interfaces/IReferral";
+import { useToken } from "@/context/TokenContext/TokenContext";
 
 const ReferralsAdminContext = createContext<IRefferalAdminContextProps | undefined>(undefined);
 
@@ -13,10 +14,13 @@ export const ReferralsAdminProvider: React.FC<{ children: React.ReactNode }> = (
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [referrals, setReferrals] = useState<IReferral[]>([]);
+  const { token } = useToken();
+
+  if (!token) throw new Error("Token inexistente");
 
   const createReferral = async (referralData: ICreateReferral) => {
     try {
-      await fetchCreateReferral(referralData);
+      await fetchCreateReferral(referralData, token);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al crear Referidos");
@@ -27,7 +31,7 @@ export const ReferralsAdminProvider: React.FC<{ children: React.ReactNode }> = (
     const getReferrals = async () => {
       setLoading(true);
       try {
-        const referralsList: IReferral[] = await fetchGetReferral();
+        const referralsList: IReferral[] = await fetchGetReferral(token);
         setReferrals(referralsList);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al obtener Referidos");
@@ -37,7 +41,7 @@ export const ReferralsAdminProvider: React.FC<{ children: React.ReactNode }> = (
     };
 
     getReferrals();
-  }, []);
+  }, [token]);
 
   return (
     <ReferralsAdminContext.Provider
