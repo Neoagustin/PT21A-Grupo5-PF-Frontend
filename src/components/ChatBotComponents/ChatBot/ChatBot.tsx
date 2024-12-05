@@ -50,7 +50,10 @@ export const ChatBot: React.FC = () => {
         setMessages((prev) => [...prev, { sender: "bot", content: message }]);
       });
       newSocket.on("response-message", (message: string) => {
-        setMessages((prev) => [...prev, {sender: 'bot', content: `Bot: ${message}`}]);
+        setMessages((prev) => [
+          ...prev,
+          { sender: "bot", content: `Bot: ${message}` },
+        ]);
       });
       newSocket.on("disconnect", () => {
         console.warn("Desconectado del servidor Socket.IO");
@@ -61,7 +64,8 @@ export const ChatBot: React.FC = () => {
     }
   }, [token]);
 
-  if (isAdmin || !token || user?.role === 'admin' || user?.role === 'teacher') return null;
+  if (isAdmin || !token || user?.role === "admin" || user?.role === "teacher")
+    return null;
 
   return (
     <>
@@ -76,12 +80,15 @@ export const ChatBot: React.FC = () => {
         style={{
           maxHeight: isOpen ? maxHeight : 0,
         }}
-        className={`w-[300px] transition-all overflow-y-auto duration-500 shadow-md shadow-gray rounded-md fixed right-3 bottom-24 bg-violet overflow-hidden scrollYNone`}
+        className={`w-[300px] transition-all overflow-y-auto duration-500 shadow-md shadow-gray rounded-md fixed right-3 bottom-24 bg-violet overflow-hidden scrollY`}
       >
         <HeaderChatBot />
-        <MessageChatBot messages={messages} />
-        <div className="w-full h-[1px] bg-lightgray"></div>
-        <FormChatBot socket={socket} setMessages={setMessages} />
+        <div className="p-3 bg-whitePage">
+          <MessageChatBot messages={messages} />
+        </div>
+        <div className="border-t border-lightgray sticky bottom-0">
+          <FormChatBot socket={socket} setMessages={setMessages} />
+        </div>
       </div>
     </>
   );

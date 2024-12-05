@@ -51,6 +51,7 @@ export interface ICourse {
   lessons: ILesson[];
   users: IUser[];
   students: IUser[];
+  teachers: IUser[];
   averageRating: number;
   totalRatings: number;
 }

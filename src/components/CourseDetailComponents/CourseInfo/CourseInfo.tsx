@@ -9,6 +9,7 @@ export const CourseInfo: React.FC<ICourseInfoProps> = ({ generalDescription, cou
     const cutDescription = generalDescription.split('.');
 
     cutDescription.pop();
+    console.log(course)
 
     return (
 
@@ -39,8 +40,10 @@ export const CourseInfo: React.FC<ICourseInfoProps> = ({ generalDescription, cou
             <div className="flex flex-col gap-5">
                 <Subtitle label="Instructores" />
                 <div className="flex gap-5 items-center">
-                    <div className="w-[80px] h-[80px] bg-gray rounded-full"></div>
-                    <h3 className="text-gray text-sm font-semibold md:text-base">Agustin Ancona</h3>
+                    <div className="w-[80px] h-[80px] bg-gray rounded-full overflow-hidden">
+                        <Image src={course.teachers[0].photo} alt="Foto del profesor." width={80} height={80} />
+                    </div>
+                    <h3 className="text-gray text-sm font-semibold md:text-base">{course.teachers[0].name}</h3>
                 </div>
             </div>
         </div>
