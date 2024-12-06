@@ -18,7 +18,9 @@ export const Chart: React.FC = () => {
     }, 0);
   });
 
-  if (allLanguages.length === 0) return <Loading />
+  if (allLanguages.length === 0) return <Loading />;
+
+  const totalUsers = dataValues.reduce((sum, value) => sum + value, 0);
 
   const chartData = {
     labels,
@@ -60,8 +62,14 @@ export const Chart: React.FC = () => {
   };
 
   return (
-    <div className="w-[320px] h-[320px] m-auto sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px]">
-      <Doughnut data={chartData} options={options} />
+    <div className="flex justify-center items-center">
+      {totalUsers !== 0 ? (
+        <div className="w-[320px] h-[320px] m-auto sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px]">
+          <Doughnut data={chartData} options={options} />
+        </div>
+      ) : (
+        <p>¡No se encontró ningún usuario inscripto!</p>
+      )}
     </div>
   );
 };

@@ -7,15 +7,14 @@ import { LanguageAdminProvider } from "@/context/Admin/LanguageAdminContext/Lang
 import { CoursesAdminProvider } from "@/context/Admin/CoursesAdminContext/CoursesAdminContext";
 import { CreateModalProvider } from "@/context/Modals/CreateModalContext";
 import { LessonsAdminProvider } from "@/context/Admin/LessonsAdminContext/LessonsAdminContext";
+import { ReferralsAdminProvider } from "@/context/Admin/ReferralAdminContext/ReferralAdminContext";
 
 export const metadata: Metadata = {
   title: "Admin - Rompiendo Barreras",
   description: "Área administrativa de la plataforma.",
 };
 
-export default function AdminLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <AdminMenuProvider>
       <AdminProvider>
@@ -24,7 +23,9 @@ export default function AdminLayout({
             <CoursesAdminProvider>
               <CreateModalProvider>
                 <LessonsAdminProvider>
-                  <main className="my-[-40px]">{children}</main>
+                  <ReferralsAdminProvider>
+                    <main className="my-[-40px]">{children}</main>
+                  </ReferralsAdminProvider>
                 </LessonsAdminProvider>
               </CreateModalProvider>
             </CoursesAdminProvider>

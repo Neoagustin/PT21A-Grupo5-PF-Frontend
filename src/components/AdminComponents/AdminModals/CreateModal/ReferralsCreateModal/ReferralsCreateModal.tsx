@@ -2,14 +2,16 @@ import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Subtitle from "@/components/GeneralComponents/Subtitle/Subtitle";
 import Swal from "sweetalert2";
-import IReferral from "@/interfaces/IReferral";
-import { validateCouponCreateModal } from "./valuesReferralsForm";
-import { fetchCreateReferral } from "@/services/referral-codes/Referral-Codes.Service";
+import { ICreateReferral } from "@/interfaces/IReferral";
 import { useUser } from "@/context/UserContext/UserContext";
-const CoursesCreateModal: React.FC = () => {
+import { validateReferralsCreateModal } from "./valuesReferralsCreateModal";
+import { ICreateModalProps } from "../types";
+import { useReferralsAdminContext } from "@/context/Admin/ReferralAdminContext/ReferralAdminContext";
+const CoursesCreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { user } = useUser();
+  const { createReferral } = useReferralsAdminContext();
 
-  const handleOnSubmit = async (values: IReferral) => {
+  const handleOnSubmit = async (values: ICreateReferral) => {
     const convertedValues = {
       ...values,
       discount: Number(values.discount),
@@ -17,7 +19,9 @@ const CoursesCreateModal: React.FC = () => {
     };
 
     try {
-      await fetchCreateReferral(convertedValues);
+      console.log(convertedValues);
+
+      createReferral(convertedValues);
       Swal.fire({
         title: "¡Cupón de Referido Creado!",
         text: "El cupón de referido se ha creado exitosamente.",
@@ -36,6 +40,7 @@ const CoursesCreateModal: React.FC = () => {
           popup: "animate__animated animate__fadeOutDown",
         },
       });
+      closeCreateModal();
     } catch (error) {
       console.error("Error al crear el cupón de referido:", error);
 
@@ -59,10 +64,19 @@ const CoursesCreateModal: React.FC = () => {
     }
   };
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeCreateModal();
+    }
+  };
+
   if (!user?.id) throw new Error("ID de Entidad invalido");
 
   return (
-    <div className=" inset-0  bg-opacity-50 flex items-center justify-center z-0">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      onClick={handleOverlayClick}
+    >
       <Formik
         initialValues={{
           quantity: 1,
@@ -70,7 +84,7 @@ const CoursesCreateModal: React.FC = () => {
           discount: 10,
           expiration: 1,
         }}
-        validate={validateCouponCreateModal}
+        validate={validateReferralsCreateModal}
         onSubmit={handleOnSubmit}
       >
         {({ isSubmitting }) => (
@@ -167,6 +181,13 @@ const CoursesCreateModal: React.FC = () => {
                 className="bg-violet text-white px-4 py-2 hover:bg-violetHover text-[14px] mt-8 sm:text-[16px] transition 200"
               >
                 {isSubmitting ? "Creando Nuevo..." : "Crear Nuevo"}
+              </button>
+              <button
+                onClick={closeCreateModal}
+                className="bg-darkgray text-white px-4 py-2 hover:opacity-90 text-[14px] mt-3 sm:text-[16px] sm:mt-8 transition-all duration-200"
+                aria-label="Cerrar formulario"
+              >
+                Cerrar Menú
               </button>
             </div>
           </Form>

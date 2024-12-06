@@ -54,3 +54,14 @@ export const headersLessonsTable = [
   "Editar",
   "Eliminar",
 ];
+
+export const headersReferralsTable = [
+  "",
+  "ID",
+  "Código",
+  "Descuento",
+  "Emitido en",
+  "Fecha de Expiración",
+  "Canjeado en",
+  "Canjeado",
+];

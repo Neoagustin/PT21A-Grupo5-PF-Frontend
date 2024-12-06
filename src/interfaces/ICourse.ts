@@ -27,6 +27,8 @@ export interface ICreateCourse {
   brief_description: string;
   level: string;
   language: string;
+  img_url: File | null;
+  video_url: File | null;
 }
 
 export interface IUpdateCourse {
@@ -35,6 +37,8 @@ export interface IUpdateCourse {
   level?: string;
   general_description?: string;
   brief_description?: string;
+  img_url: File | string | null;
+  video_url: File | string | null;
 }
 
 export interface ICourse {
@@ -51,6 +55,7 @@ export interface ICourse {
   lessons: ILesson[];
   users: IUser[];
   students: IUser[];
+  teachers: IUser[];
   averageRating: number;
   totalRatings: number;
 }

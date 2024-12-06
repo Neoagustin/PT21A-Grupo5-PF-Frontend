@@ -19,8 +19,9 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
   useEffect(() => {
     const changeNameButton = !token
       ? "ELEGIR PLAN"
-      : (token && (user?.role === "admin" || user?.role === 'teacher')) ||
-        (user && user.courses &&
+      : (token && (user?.role === "admin" || user?.role === "teacher")) ||
+        (user &&
+          user.courses &&
           course.id ===
             user.courses.find(
               (findCourse: ICourse) => findCourse.id === course.id
@@ -47,7 +48,9 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         timerProgressBar: true,
         showConfirmButton: false,
       });
-    await fetchUserInscriptionCourse(userId, courseId);
+    if (token) {
+      await fetchUserInscriptionCourse(userId, courseId, token);
+    }
     const updateUser = {
       ...user,
       courses: [...user.courses, course],
@@ -66,7 +69,7 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
   };
   return (
     <>
-      {nameButton === "VER CURSO" || nameButton === 'ELEGIR PLAN' ? (
+      {nameButton === "VER CURSO" || nameButton === "ELEGIR PLAN" ? (
         <Link
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
           href={link}
@@ -75,7 +78,9 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         </Link>
       ) : (
         <button
-          onClick={() => user?.id && course.id && handleInscriptionUser(user?.id, course.id)}
+          onClick={() =>
+            user?.id && course.id && handleInscriptionUser(user?.id, course.id)
+          }
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
         >
           {nameButton}

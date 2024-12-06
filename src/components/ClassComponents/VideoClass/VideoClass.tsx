@@ -10,15 +10,10 @@ export const VideoClass: React.FC<IVideoClass> = ({
 }: IVideoClass) => {
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-bold text-center sm:text-2xl">
-        {lesson.title}
-      </h1>
+      <h1 className="text-lg font-bold text-center sm:text-2xl">{lesson.title}</h1>
       <video className="sm:w-[640px] sm:self-center" controls>
         <source
-          src={
-            lesson.video_url ||
-            "https://www.youtube.com/embed/JrorqbFNMF4?si=76z3zydM4FiHv0ka"
-          }
+          src={lesson.video || "https://www.youtube.com/embed/JrorqbFNMF4?si=76z3zydM4FiHv0ka"}
           type="video/mp4"
         />
       </video>

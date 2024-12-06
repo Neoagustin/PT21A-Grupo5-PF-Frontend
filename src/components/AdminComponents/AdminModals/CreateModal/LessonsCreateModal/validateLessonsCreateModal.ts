@@ -15,7 +15,7 @@ export const validateLessonsCreateModal = (values: {
     errors.content = "El contenido es requerido.";
   }
 
-  if (!values.course.trim()) {
+  if (!values.course) {
     errors.course = "El curso es requerido.";
   }
 

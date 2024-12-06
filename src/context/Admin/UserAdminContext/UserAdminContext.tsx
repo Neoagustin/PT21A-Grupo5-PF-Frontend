@@ -1,9 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ICreateUser, IUpdateUser, IUser } from "@/interfaces/IUser";
-import { fetchUsers } from "@/services/fetchUsers";
 import {
+  fetchUsers,
   fetchCreateUser,
   fetchDeactivateUser,
   fetchUpdateUserAdmin,
@@ -14,6 +13,8 @@ import IUserAdminContextProps from "./types";
 import { usePathname } from "next/navigation";
 import { fetchGetSubscriptions } from "@/services/fetchSubscriptions";
 import { ISubscription } from "@/components/GeneralComponents/SubscriptionPlanCard/types";
+import { useToken } from "@/context/TokenContext/TokenContext";
+import { ICreateUser, IUpdateUser, IUser } from "@/interfaces/IUser";
 
 const UserAdminContext = createContext<IUserAdminContextProps | undefined>(undefined);
 
@@ -25,14 +26,17 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [role, setRole] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState<number>(0);
+  const { token } = useToken();
   const recordsPerPage = 5;
+
+  if (!token) throw new Error("Token inexistente");
 
   const previousPage = () => page > 1 && setPage((prev) => prev - 1);
   const nextPage = () => page < maxPages && setPage((prev) => prev + 1);
 
   const createUser = async (dataUser: ICreateUser) => {
     try {
-      await fetchCreateUser(dataUser);
+      await fetchCreateUser(dataUser, token);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desactivando usuario");
@@ -48,7 +52,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
       if (!subscription) throw new Error("Nombre de suscripcion inexistente.");
 
-      await fetchUsersSubscriptions(userId, subscription.id);
+      await fetchUsersSubscriptions(userId, subscription.id, token);
 
       setUsers((prev) =>
         prev.map((user) =>
@@ -73,7 +77,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const updateUserById = async (id: string, userData: IUpdateUser) => {
     try {
-      await fetchUpdateUserAdmin(id, userData);
+      await fetchUpdateUserAdmin(id, userData, token);
 
       setUsers((prev) =>
         prev.map((user) =>
@@ -87,7 +91,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const deactivateUserById = async (id: string) => {
     try {
-      await fetchDeactivateUser(id);
+      await fetchDeactivateUser(id, token);
       setUsers((prev) =>
         prev.map((user) => (user.id === id ? { ...user, isActive: false } : user))
       );
@@ -114,7 +118,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   useEffect(() => {
     const fetchUsersByRole = async () => {
       try {
-        const usersList: IUser[] = await fetchUsers();
+        const usersList: IUser[] = await fetchUsers(token);
         const filteredUsers = usersList.filter((user) => user.role === role);
         setMaxPages(Math.ceil(filteredUsers.length / recordsPerPage));
       } catch (err) {
@@ -125,13 +129,13 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (role) {
       fetchUsersByRole();
     }
-  }, [role]);
+  }, [role, token]);
 
   useEffect(() => {
     const fetchUsersPageData = async () => {
       setLoading(true);
       try {
-        const usersPage: IUser[] = await fetchUsersPage(page, recordsPerPage, role);
+        const usersPage: IUser[] = await fetchUsersPage(page, recordsPerPage, role, token);
         setUsers(usersPage);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Ha ocurrido un error");
@@ -143,7 +147,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (role) {
       fetchUsersPageData();
     }
-  }, [page, role]);
+  }, [page, role, token]);
 
   return (
     <UserAdminContext.Provider

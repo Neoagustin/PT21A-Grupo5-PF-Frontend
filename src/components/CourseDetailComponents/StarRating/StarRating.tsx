@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { IStarRatingProps } from "./types";
 import { useRouter } from "next/navigation";
 import { useToken } from "@/context/TokenContext/TokenContext";
-
 export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
   const [hover, setHover] = useState<number>(0);
   const [averageRating, setAverageRating] = useState<number>(
@@ -24,15 +23,17 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
     userId: string,
     stars: number
   ) => {
-    await fetchCourseRating(courseId, userId, stars);
-    const newTotalRatings = totalRatings + 1;
-    const newAverageRating = (
-      (averageRating * totalRatings + stars) /
-      newTotalRatings
-    ).toFixed(1);
+    if (token) {
+      await fetchCourseRating(courseId, userId, stars, token);
+      const newTotalRatings = totalRatings + 1;
+      const newAverageRating = (
+        (averageRating * totalRatings + stars) /
+        newTotalRatings
+      ).toFixed(1);
 
-    setAverageRating(parseFloat(newAverageRating));
-    setTotalRatings(newTotalRatings);
+      setAverageRating(parseFloat(newAverageRating));
+      setTotalRatings(newTotalRatings);
+    }
   };
 
   return (

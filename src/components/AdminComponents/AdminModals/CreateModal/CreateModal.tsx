@@ -5,6 +5,7 @@ import useSegment from "@/hooks/useSegment";
 import LanguagesCreateModal from "./LanguagesCreateModal/LanguagesCreateModal";
 import CoursesCreateModal from "./CoursesCreateModal/CoursesCreateModal";
 import LessonsCreateModal from "./LessonsCreateModal/LessonsCreateModal";
+import ReferralsCreateModal from "./ReferralsCreateModal/ReferralsCreateModal";
 
 const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
   const { segment } = useSegment();
@@ -20,6 +21,8 @@ const CreateModal: React.FC<ICreateModalProps> = ({ closeCreateModal }) => {
         return <CoursesCreateModal closeCreateModal={closeCreateModal} />;
       case "lessons":
         return <LessonsCreateModal closeCreateModal={closeCreateModal} />;
+      case "referrals":
+        return <ReferralsCreateModal closeCreateModal={closeCreateModal} />;
       default:
         return null;
     }

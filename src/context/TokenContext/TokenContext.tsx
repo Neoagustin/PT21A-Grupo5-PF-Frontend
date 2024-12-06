@@ -12,14 +12,19 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const {setUser} = useUser();
+  const { setUser } = useUser();
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("userToken");
-    if (savedToken) {
-      setToken(savedToken);
+    try {
+      const savedToken = Cookies.get("userToken") || localStorage.getItem("userToken");
+      if (savedToken) {
+        setToken(savedToken);
+      }
+    } catch (error) {
+      console.error("Error al cargar el token:", error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   const handleLogout = () => {
@@ -28,22 +33,20 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     Cookies.remove("userToken");
     Cookies.remove("userData");
     setToken(null);
-    setUser(null)
-    router.push('/');
+    setUser(null);
+    router.push("/");
   };
 
   return (
     <TokenContext.Provider value={{ token, setToken, handleLogout }}>
-      {isLoading ? null : children}{" "}
+      {isLoading ? <div>Cargando...</div> : children}
     </TokenContext.Provider>
   );
 };
 
 export const useToken = () => {
   const context = useContext(TokenContext);
-
   if (context === null)
     throw new Error("El contexto debe ser utilizado dentro de un TokenProvider.");
-
   return context;
 };
