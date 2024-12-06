@@ -10,6 +10,8 @@ export const fetchCourses = async () => {
 
     return response.data;
   } catch (err: unknown) {
+    console.log(err);
+
     if (err instanceof Error) {
       throw new Error(err.message);
     } else {

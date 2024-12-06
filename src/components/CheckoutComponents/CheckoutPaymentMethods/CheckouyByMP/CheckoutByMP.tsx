@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { checkout, ICheckoutByMPProps } from "./types";
 import Image from "next/image";
-import { handleSelectPaymentMethod } from "../../CheckoutView/types";
+import { handleSelectPaymentMethod } from "../../checkoutView/types";
 import { ISuscription } from "@/interfaces/ISubscription";
 
 const CheckoutByMP: React.FC<ICheckoutByMPProps> = ({
@@ -23,7 +23,7 @@ const CheckoutByMP: React.FC<ICheckoutByMPProps> = ({
 
     try {
       const data = await checkout(idMembership, idSubscription, discountCode);
-      
+
       const userDataString = localStorage.getItem("userData");
       if (userDataString) {
         const userData = JSON.parse(userDataString);
@@ -108,7 +108,7 @@ const CheckoutByMP: React.FC<ICheckoutByMPProps> = ({
         className={`w-[250px] h-[40px] bg-emerald-800 text-whitePage font-bold transition-all hover:bg-emerald-900 justify-center ${
           loading ? "opacity-50 cursor-not-allowed" : ""
         }`}
-        onClick={()=>handleCheckout(subscriptionPlan!)}
+        onClick={() => handleCheckout(subscriptionPlan!)}
         disabled={loading}
       >
         {loading ? "Procesando..." : "Confirmar Suscripción"}
