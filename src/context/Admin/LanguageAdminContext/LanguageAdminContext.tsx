@@ -97,6 +97,7 @@ export const LanguageAdminProvider: React.FC<{ children: React.ReactNode }> = ({
         flag_url: "",
         country_photo: "",
       };
+
       const updatedLanguage = await fetchUpdateLanguageById(id, languageData, token);
 
       if (image_url instanceof File) await fetchUpdateImage_Url(id, image_url, token);

@@ -17,7 +17,7 @@ export const fetchCreateLessons = async (dataLesson: ICreateLesson, token: strin
     formData.append("course", course);
 
     if (video instanceof File) {
-      formData.append("files", video);
+      formData.append("file", video);
     } else {
       throw new Error("El video debe ser un archivo válido.");
     }

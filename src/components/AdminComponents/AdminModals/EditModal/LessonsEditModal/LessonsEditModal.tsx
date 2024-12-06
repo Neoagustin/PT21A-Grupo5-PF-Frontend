@@ -14,10 +14,8 @@ const LessonsEditModal: React.FC<ILessonsEditModalProps> = ({ data, onClose }) =
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
   const handleOnSubmit = (values: IUpdateLesson) => {
-    console.log(values);
-
     try {
-      // updateLessonById(data.id, values);
+      updateLessonById(data.id, values);
       Swal.fire({
         title: "¡Éxito!",
         text: "Los cambios se han guardado correctamente.",
