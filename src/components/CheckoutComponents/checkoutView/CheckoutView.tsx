@@ -25,7 +25,6 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }) =>
   }, [slug]);
 
   const { subscriptionPlan } = useSubscriptionPlan(slug);
-  const idSubscription: string | undefined = subscriptionPlan?.id;
 
   const idMembership: string | undefined = userData?.membership?.id;
 
@@ -46,7 +45,7 @@ const CheckoutView: React.FC<{ slug: string }> = ({ slug }: { slug: string }) =>
           <CheckoutByCards />
           <CheckoutByMP
             suscription={suscription}
-            idSubscription={idSubscription}
+            subscriptionPlan={subscriptionPlan}
             selectedPaymentMethod={selectedPaymentMethod}
             setSelectedPaymentMethod={setSelectedPaymentMethod}
             idMembership={idMembership}

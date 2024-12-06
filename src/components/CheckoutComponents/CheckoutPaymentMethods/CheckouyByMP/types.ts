@@ -1,3 +1,4 @@
+import { ISuscription } from "@/interfaces/ISubscription";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -6,7 +7,7 @@ export interface ICheckoutByMPProps {
     setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string | null>>;
     suscription: string | null;
     idMembership: string | undefined;
-    idSubscription: string | undefined
+    subscriptionPlan: ISuscription | null
 };
 
 
