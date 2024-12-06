@@ -23,6 +23,9 @@ const CertificationsCards: React.FC<ICertificationsCardsProps> = ({flag, languag
     }
   }, [plan, language, specialization, courseName, level, name]);
 
+
+
+  
   
   
   return (
