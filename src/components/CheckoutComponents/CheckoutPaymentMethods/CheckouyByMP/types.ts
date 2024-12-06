@@ -16,6 +16,10 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
       console.log(idMembership)
       console.log(idSubscription)
       console.log(discountCode);
+      const token = localStorage.getItem('userToken')
+      const tokenOk = token?.replace(/^"|"$/g, '')
+      console.log(tokenOk);
+      
       
 
 
@@ -23,6 +27,7 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tokenOk}`
         },
         body: JSON.stringify({
           "subs_id" : idSubscription,
