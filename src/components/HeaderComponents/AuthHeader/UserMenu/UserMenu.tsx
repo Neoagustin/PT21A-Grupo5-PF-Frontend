@@ -1,5 +1,5 @@
 import { useUserMenu } from "@/context/UserMenuContext/UserMenuContext";
-import { faUser, faSignOutAlt, faCog, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSignOutAlt, faCog, faUsers, faBook } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useToken } from "@/context/TokenContext/TokenContext";
 import LinkUserMenu from "./LinkUserMenu/LinkUserMenu";
@@ -45,7 +45,15 @@ const UserMenu = () => {
               href={"/dashboard/profile"}
               onClick={closeMenu}
             />
-          ) : null}
+          ) : (
+            <LinkUserMenu
+              text={"Mi Biblioteca"}
+              icon={faBook}
+              href={"/library"}
+              onClick={closeMenu}
+            />
+          )}
+
           <LinkUserMenu
             text={"Cerrar sesión"}
             icon={faSignOutAlt}

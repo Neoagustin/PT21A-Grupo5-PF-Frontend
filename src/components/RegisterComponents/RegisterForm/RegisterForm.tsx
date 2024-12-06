@@ -6,25 +6,47 @@ import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import React from "react";
 import Link from "next/link";
 import { fetchRegisterUser } from "@/services/fetchRegisterUser";
-import { useRouter } from "next/navigation";
 import { IUserRegister } from "@/helpers/validateForms/types";
+import Swal from "sweetalert2";
 
 export const RegisterForm: React.FC = (): React.ReactElement => {
-  const router = useRouter();
-
   return (
     <Formik
       initialValues={{ name: "", email: "", idNumber: "", password: "", repeatPassword: "" }}
       validate={validateRegister}
       onSubmit={async (userData, { resetForm }) => {
-        const data = await fetchRegisterUser(userData);
-        console.log(data);
+        try {
+          const data = await fetchRegisterUser(userData);
 
-        if (data) {
-          router.push(`/register/codeVerification?email=${encodeURIComponent(userData.email)}`);
+          if (data) {
+            Swal.fire({
+              icon: "success",
+              title: "¡Correo enviado!",
+              text: `Te hemos enviado un correo a ${userData.email} con un código para verificar tu cuenta.`,
+              confirmButtonText: "Aceptar",
+            });
+          } else {
+            throw new Error("Error al registrar el usuario.");
+          }
+        } catch (error) {
+          if (typeof error === "string") {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: error,
+              confirmButtonText: "Aceptar",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: error instanceof Error ? error.message : "Ocurrió un error inesperado.",
+              confirmButtonText: "Aceptar",
+            });
+          }
+        } finally {
+          resetForm();
         }
-
-        resetForm();
       }}
     >
       {({ errors, touched }: FormikProps<IUserRegister>) => (

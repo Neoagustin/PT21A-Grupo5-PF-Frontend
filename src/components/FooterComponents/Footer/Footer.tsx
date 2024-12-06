@@ -13,7 +13,7 @@ const Footer: React.FC = (): React.ReactNode => {
   const { segment, isAdmin } = useSegment();
 
   if (isAdmin) return null;
-  if (segment === "codeverification") return null;
+  if (segment === "code-verification") return null;
 
   return (
     <footer className="flex flex-col gap-20 items-center px-2 pt-10">
