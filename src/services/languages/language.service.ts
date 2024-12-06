@@ -33,7 +33,7 @@ export const fetchCreateLanguages = async (
       formData.append("files", country_photo);
     }
 
-    const response = await axios.post(`${API_URL}/language/create`, formData, {
+    const response = await axios.post(`${API_URL}/language`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

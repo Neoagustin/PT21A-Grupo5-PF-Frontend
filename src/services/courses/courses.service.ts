@@ -31,6 +31,7 @@ export const fetchCreateCourse = async (
       general_description,
       brief_description,
       img_url,
+      video_url,
     } = dataCourse;
 
     const formData = new FormData();
@@ -42,9 +43,15 @@ export const fetchCreateCourse = async (
     formData.append("brief_description", brief_description);
 
     if (img_url instanceof File) {
-      formData.append("files", img_url);
+      formData.append("img_file", img_url);
     } else {
       throw new Error("img_url debe ser un archivo");
+    }
+
+    if (video_url instanceof File) {
+      formData.append("video_file", video_url);
+    } else {
+      throw new Error("video_url debe ser un archivo");
     }
 
     const response = await axios.post(`${API_URL}/courses`, formData, {
@@ -56,7 +63,7 @@ export const fetchCreateCourse = async (
 
     return response.data;
   } catch (err: unknown) {
-    console.log(err);
+    console.error(err);
 
     if (err instanceof Error) {
       throw new Error(err.message);
@@ -118,28 +125,52 @@ export const fetchUpdateCourseById = async (
   token: string
 ) => {
   try {
-    const { title, specialization, level, general_description, brief_description } = courseData;
-    const response = await axios.patch(
-      `${API_URL}/courses/${id}`,
-      {
-        title,
-        specialization,
-        level,
-        general_description,
-        brief_description,
+    const {
+      title,
+      specialization,
+      level,
+      general_description,
+      brief_description,
+      img_url,
+      video_url,
+    } = courseData;
+
+    const formData = new FormData();
+
+    if (title) formData.append("title", title);
+    if (specialization) formData.append("specialization", specialization);
+    if (level) formData.append("level", level);
+    if (general_description) formData.append("general_description", general_description);
+    if (brief_description) formData.append("brief_description", brief_description);
+
+    if (img_url instanceof File) {
+      formData.append("img_url", img_url);
+    }
+
+    if (video_url instanceof File) {
+      formData.append("video_url", video_url);
+    }
+
+    const response = await axios.put(`${API_URL}/courses/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    });
+
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof Error) {
+    console.error(err);
+
+    if (axios.isAxiosError(err)) {
+      throw new Error(
+        err.response?.data?.message ||
+          `Error en la petición: ${err.response?.statusText || err.message}`
+      );
+    } else if (err instanceof Error) {
       throw new Error(err.message);
     } else {
-      throw new Error("Unknown error occurred");
+      throw new Error("Ocurrió un error desconocido");
     }
   }
 };
