@@ -2,23 +2,19 @@
 import { useState, useEffect } from "react";
 import { ISubscription } from "../components/GeneralComponents/SubscriptionPlanCard/types";
 import { fetchGetSubscriptions } from "@/services/fetchSubscriptions";
-import { useToken } from "@/context/TokenContext/TokenContext";
 
 const useSubscriptionPlan = (subName: string) => {
   const [subscriptionPlan, setSubscriptionPlan] = useState<ISubscription | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isFree, setIsFree] = useState<boolean>(false);
-  const { token } = useToken();
-
-  if (!token) throw new Error("Token inexistente");
 
   useEffect(() => {
     const fetchSubscription = async () => {
       setLoading(true);
       setError(null);
       try {
-        const data: ISubscription[] = await fetchGetSubscriptions(token);
+        const data: ISubscription[] = await fetchGetSubscriptions();
         const plan = data.find(
           (sub) => sub.name.toLocaleLowerCase() === subName.toLocaleLowerCase()
         );
@@ -35,7 +31,7 @@ const useSubscriptionPlan = (subName: string) => {
     };
 
     fetchSubscription();
-  }, [subName, token]);
+  }, [subName]);
 
   // Logica para saber si es GRATIS
   useEffect(() => {

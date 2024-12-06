@@ -45,7 +45,7 @@ export const UserAdminProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const usersSubscriptions = async (userId: string, subscriptionName: string) => {
     try {
-      const allSubscriptions: ISubscription[] = await fetchGetSubscriptions(token);
+      const allSubscriptions: ISubscription[] = await fetchGetSubscriptions();
       const subscription = allSubscriptions.find(
         (sub) => sub.name.toLocaleLowerCase() === subscriptionName.toLocaleLowerCase()
       );

@@ -2,13 +2,9 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchGetSubscriptions = async (token: string) => {
+export const fetchGetSubscriptions = async () => {
   try {
-    const response = await axios.get(`${API_URL}/subscriptions`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(`${API_URL}/subscriptions`);
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
