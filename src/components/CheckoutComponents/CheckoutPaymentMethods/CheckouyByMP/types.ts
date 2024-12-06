@@ -1,3 +1,4 @@
+import { ISuscription } from "@/interfaces/ISubscription";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -6,7 +7,7 @@ export interface ICheckoutByMPProps {
     setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string | null>>;
     suscription: string | null;
     idMembership: string | undefined;
-    idSubscription: string | undefined
+    subscriptionPlan: ISuscription | null
 };
 
 
@@ -16,6 +17,10 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
       console.log(idMembership)
       console.log(idSubscription)
       console.log(discountCode);
+      const token = localStorage.getItem('userToken')
+      const tokenOk = token?.replace(/^"|"$/g, '')
+      console.log(tokenOk);
+      
       
 
 
@@ -23,6 +28,7 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tokenOk}`
         },
         body: JSON.stringify({
           "subs_id" : idSubscription,

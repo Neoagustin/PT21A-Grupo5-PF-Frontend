@@ -80,5 +80,6 @@ export interface ICertificationsCardsProps {
   courseName: string | undefined,
   specialization: string | undefined,
   level: string | undefined,
-  name: string | undefined
+  name: string | undefined,
+  plan: string | undefined
 }

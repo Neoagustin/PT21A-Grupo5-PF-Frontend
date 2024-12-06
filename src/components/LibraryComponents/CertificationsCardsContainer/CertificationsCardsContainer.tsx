@@ -10,7 +10,7 @@ const CertificationsCardsContainer: React.FC<{userData: IUserLocalStorage | null
     (userData?.courses.length !== 0 ? (
       userData?.courses?.map((course: ICourse)=>{
       return(
-      <CertificationsCards key={course.id} flag={course.language?.flag_url} language={course.language?.name} courseName={course.title} specialization={course.specialization} level={course.level} name={userData.name}/>  
+      <CertificationsCards key={course.id} flag={course.language?.flag_url} language={course.language?.name} courseName={course.title} specialization={course.specialization} level={course.level} name={userData.name} plan={userData.membership.subscription.name}/>  
       )
     })
     ) : (
