@@ -1,27 +1,44 @@
 "use client";
+import { fetchUserCodeVerification } from "@/services/users/users.service";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export const CodeVerificationView: React.FC = () => {
   const router = useRouter();
-  const [secondsLeft, setSecondsLeft] = useState<number>(5);
+  const [secondsLeft, setSecondsLeft] = useState<number>(3);
+  const searchParams = useSearchParams();
+
+  const email = searchParams.get("email");
+  const code = searchParams.get("code");
 
   useEffect(() => {
+    if (email && code) {
+      const fetchVerifyCode = async () => {
+        try {
+          await fetchUserCodeVerification(email, code);
+        } catch (error) {
+          console.error("Error verificando el código:", error);
+        }
+      };
+
+      fetchVerifyCode();
+    }
+
     const interval = setInterval(() => {
       setSecondsLeft((prev) => prev - 1);
     }, 1000);
 
     const timeout = setTimeout(() => {
       router.push("/login");
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [router]);
+  }, [router, email, code]);
 
   return (
     <div className="w-full h-[calc(100vh-80px)] flex flex-col justify-center items-center gap-10">
