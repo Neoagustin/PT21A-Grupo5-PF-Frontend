@@ -21,8 +21,6 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
       const tokenOk = token?.replace(/^"|"$/g, '')
       console.log(tokenOk);
       
-      
-
 
       const response = await fetch(`${API_URL}/membership/${idMembership}`, {
         method: 'PUT',
@@ -36,17 +34,11 @@ export const checkout = async (idMembership: string | undefined, idSubscription:
         }), 
       });
 
-      console.log(response)
+    const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(`Error: No se ha podido procesar el cambio de plan.`);
-      }
-  
-      const data = await response.json();
-     
-      return data;
-    } catch (error) {
-      console.error('Error en la solicitud fetch:', error);
-      throw error;
-    }
-  };
+    return data;
+  } catch (error) {
+    console.error("Error en la solicitud fetch:", error);
+    throw error;
+  }
+};

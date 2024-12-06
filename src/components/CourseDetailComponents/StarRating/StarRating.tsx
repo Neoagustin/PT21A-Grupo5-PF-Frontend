@@ -8,21 +8,32 @@ import { useRouter } from "next/navigation";
 import { useToken } from "@/context/TokenContext/TokenContext";
 export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
   const [hover, setHover] = useState<number>(0);
-  const [averageRating, setAverageRating] = useState<number>(course.averageRating || 0);
-  const [totalRatings, setTotalRatings] = useState<number>(course.totalRatings || 0);
+  const [averageRating, setAverageRating] = useState<number>(
+    course.averageRating || 0
+  );
+  const [totalRatings, setTotalRatings] = useState<number>(
+    course.totalRatings || 0
+  );
   const { user } = useUser();
   const { token } = useToken();
   const router = useRouter();
 
-  if (!token) throw new Error("Token inexistente");
+  const handleCourseRating = async (
+    courseId: string,
+    userId: string,
+    stars: number
+  ) => {
+    if (token) {
+      await fetchCourseRating(courseId, userId, stars, token);
+      const newTotalRatings = totalRatings + 1;
+      const newAverageRating = (
+        (averageRating * totalRatings + stars) /
+        newTotalRatings
+      ).toFixed(1);
 
-  const handleCourseRating = async (courseId: string, userId: string, stars: number) => {
-    await fetchCourseRating(courseId, userId, stars, token);
-    const newTotalRatings = totalRatings + 1;
-    const newAverageRating = ((averageRating * totalRatings + stars) / newTotalRatings).toFixed(1);
-
-    setAverageRating(parseFloat(newAverageRating));
-    setTotalRatings(newTotalRatings);
+      setAverageRating(parseFloat(newAverageRating));
+      setTotalRatings(newTotalRatings);
+    }
   };
 
   return (
@@ -35,7 +46,9 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
           {[1, 2, 3, 4, 5].map((star, i) => (
             <span
               className={`cursor-pointer text-xs transition-all ${
-                star <= hover || star <= averageRating ? "text-[#b4690e]" : "text-darkgray"
+                star <= hover || star <= averageRating
+                  ? "text-[#b4690e]"
+                  : "text-darkgray"
               }`}
               key={star}
               onMouseEnter={() => setHover(star)}
@@ -52,7 +65,9 @@ export const StarRating: React.FC<IStarRatingProps> = ({ course }) => {
         </div>
       </div>
       <h3 className="text-skyblue text-xs font-medium sm:text-[14px]">
-        {`${totalRatings} ${totalRatings !== 1 ? "calificaciones" : "calificación"}`}
+        {`${totalRatings} ${
+          totalRatings !== 1 ? "calificaciones" : "calificación"
+        }`}
       </h3>
     </>
   );

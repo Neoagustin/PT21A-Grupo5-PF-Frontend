@@ -20,7 +20,12 @@ export const fetchUsers = async (token: string): Promise<IUser[]> => {
   }
 };
 
-export const fetchUsersPage = async (page: number, limit: number, role: string, token: string) => {
+export const fetchUsersPage = async (
+  page: number,
+  limit: number,
+  role: string,
+  token: string
+) => {
   try {
     const response = await axios.get(`${API_URL}/users/page`, {
       params: { page, limit, role },
@@ -72,7 +77,11 @@ export const fetchCreateUser = async (userData: ICreateUser, token: string) => {
   }
 };
 
-export const fetchUpdateUserAdmin = async (id: string, userData: IUpdateUser, token: string) => {
+export const fetchUpdateUserAdmin = async (
+  id: string,
+  userData: IUpdateUser,
+  token: string
+) => {
   try {
     const response = await axios.patch(`${API_URL}/users/${id}`, userData, {
       headers: {
@@ -155,9 +164,34 @@ export const fetchUserInscriptionCourse = async (
   token: string
 ) => {
   try {
-    const response = await axios.put(`${API_URL}/users/enroll/${userId}`, courseId, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.put(
+      `${API_URL}/users/enroll/${userId}`,
+      { courseId },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err);
+
+      throw new Error(err.message);
+    } else {
+      throw new Error("Unknown error occurred");
+    }
+  }
+};
+
+export const fetchUserCodeVerification = async (
+  email: string,
+  code: string
+) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/codeVerification?email=${email}&code=${code}`
+    );
+
     return response.data;
   } catch (err: unknown) {
     if (err instanceof Error) {

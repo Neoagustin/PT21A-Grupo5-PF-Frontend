@@ -16,15 +16,16 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
   const [nameButton, setNameButton] = useState<string>("");
   const { refreshCourses } = useCourses();
 
-  if (!token) throw new Error("Token inexistente");
-
   useEffect(() => {
     const changeNameButton = !token
       ? "ELEGIR PLAN"
       : (token && (user?.role === "admin" || user?.role === "teacher")) ||
         (user &&
           user.courses &&
-          course.id === user.courses.find((findCourse: ICourse) => findCourse.id === course.id)?.id)
+          course.id ===
+            user.courses.find(
+              (findCourse: ICourse) => findCourse.id === course.id
+            )?.id)
       ? "VER CURSO"
       : "INSCRIBIRSE";
 
@@ -35,7 +36,10 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
 
   const handleInscriptionUser = async (userId: string, courseId: string) => {
     if (!user) return null;
-    if (user.membership.subscription.name === "Standard" && user.courses.length >= 2)
+    if (
+      user.membership.subscription.name === "Standard" &&
+      user.courses.length >= 2
+    )
       return Swal.fire({
         title: "¡Error al inscribirse al curso!",
         text: `Actualiza tu plan para obtener más cursos.`,
@@ -44,7 +48,9 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         timerProgressBar: true,
         showConfirmButton: false,
       });
-    await fetchUserInscriptionCourse(userId, courseId, token);
+    if (token) {
+      await fetchUserInscriptionCourse(userId, courseId, token);
+    }
     const updateUser = {
       ...user,
       courses: [...user.courses, course],
@@ -72,7 +78,9 @@ export const ButtonAction: React.FC<IButtonActionProps> = ({
         </Link>
       ) : (
         <button
-          onClick={() => user?.id && course.id && handleInscriptionUser(user?.id, course.id)}
+          onClick={() =>
+            user?.id && course.id && handleInscriptionUser(user?.id, course.id)
+          }
           className="w-full flex justify-center items-center h-[40px] bg-violet transition-all border-[1px] border-transparent text-whitePage text-sm font-bold hover:bg-whitePage hover:text-violet hover:border-violet"
         >
           {nameButton}

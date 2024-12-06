@@ -13,11 +13,10 @@ export const middleware = (req: NextRequest) => {
     /^\/course(\/.*)?$/,
     /^\/admin(\/.*)?$/,
     /^\/checkout(\/.*)?$/,
+    /^\/library(\/.*)?$/,
   ];
 
-  const pathAdmin = [
-    /^\/admin(\/.*)?$/,
-  ];
+  const pathAdmin = [/^\/admin(\/.*)?$/];
 
   if (token && pathAuth.some((path) => req.nextUrl.pathname.startsWith(path)))
     return NextResponse.redirect(new URL("/", req.url));
@@ -28,7 +27,11 @@ export const middleware = (req: NextRequest) => {
   )
     return NextResponse.redirect(new URL("/login", req.url));
 
-  if (token && user.role !== 'admin' && pathAdmin.some((path) => path.test(req.nextUrl.pathname)))
+  if (
+    token &&
+    user.role !== "admin" &&
+    pathAdmin.some((path) => path.test(req.nextUrl.pathname))
+  )
     return NextResponse.redirect(new URL("/", req.url));
 
   return NextResponse.next();
@@ -43,5 +46,6 @@ export const config = {
     "/admin/:path*",
     "/login",
     "/register",
+    "/library",
   ],
 };

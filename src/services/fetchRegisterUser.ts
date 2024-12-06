@@ -6,11 +6,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchRegisterUser = async (userData: IUserRegister) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/signup`, userData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(
+      `${API_URL}/auth/signup`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     Swal.fire({
       title: "¡Usuario registrado con éxito!",
@@ -47,7 +51,10 @@ export const fetchRegisterUser = async (userData: IUserRegister) => {
 
 export const fetchCodeVerifyEmail = async (email: string, code: string) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/verify-email`, { email, code });
+    const response = await axios.post(`${API_URL}/auth/verify-email`, {
+      email,
+      code,
+    });
 
     return response.data;
   } catch (err: unknown) {
